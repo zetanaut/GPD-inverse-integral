@@ -1,5 +1,5 @@
 
-# DNN Inversion of CFF ReH to GPD \(H^{(+)}\)
+# DNN Inversion of CFF ReH to GPD H
 
 This repository implements a **two–stage neural–network pipeline** to extract the
 charge–weighted, C–even GPD \(H^{(+)}\) from experimental DVCS data via the
