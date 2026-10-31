@@ -1,0 +1,16 @@
+"""Resume only checkpointed output refinement and its unexecuted final checks."""
+from pathlib import Path
+import argparse,json,subprocess,sys,time,shutil
+ROOT=Path(__file__).resolve().parents[1]
+def main():
+ ap=argparse.ArgumentParser();ap.add_argument('point',type=Path);a=ap.parse_args();wd=a.point.resolve();state=json.loads((wd/'PIPELINE.json').read_text());q2=state['Q2'];old=state.get('failure');plan=json.loads((wd/'OUTPUT_STRATEGY.json').read_text());bank=ROOT/'work/operators'/plan['benchmark']['key'];pr=json.loads((bank/'PROGRESS.json').read_text());key=json.loads((bank/'KEY.json').read_text());parentkey=json.loads((ROOT/state['raw']/'KEY.json').read_text());px={float(x).hex() for x in parentkey['output_coordinates']};remaining=sum(float(x).hex() not in px for x in key['output_coordinates'][len(pr['rows']):]);forecast={'reason':'Per-stretch cap reached; all completed rows finite and saved. Same geometry, source, tolerance and cache key; no numerical rerun of saved rows.','completed_rows':len(pr['rows']),'remaining_new_source_rows':remaining,'last_five_seconds':[r['seconds'] for r in pr['rows'][-5:]],'forecast_remaining_seconds':[200,600],'external_timeout_seconds':700,'original_internal_cap_seconds':1200};(wd/'RESUME_STRATEGY.json').write_text(json.dumps(forecast,indent=2)+'\n')
+ shutil.copy2(bank/'PROGRESS.json',bank/'PROGRESS_before_resume.json');shutil.copy2(wd/'PIPELINE.json',wd/'PIPELINE_output_cap.json');shutil.move(wd/'output48_build.log',wd/'output48_build_cap1.log');state.setdefault('recovered_failures',[]).append(state.pop('failure'));start=time.monotonic()
+ def run(script,*args,label,timeout=180):
+  path=wd/(label+'.log');cmd=[sys.executable,str(ROOT/'candidate'/script),*map(str,args)];t=time.monotonic()
+  try:
+   with path.open('w') as f:subprocess.run(cmd,cwd=ROOT,stdout=f,stderr=subprocess.STDOUT,check=True,timeout=timeout)
+  except Exception as ex:
+   state['failure']={'script':script,'error':repr(ex),'log':str(path.relative_to(ROOT))};(wd/'PIPELINE.json').write_text(json.dumps(state,indent=2)+'\n');raise
+  state['stages'].append({'script':script,'command':cmd,'seconds':time.monotonic()-t,'log':str(path.relative_to(ROOT)),'resumed':True});(wd/'PIPELINE.json').write_text(json.dumps(state,indent=2)+'\n');print('COMPLETE_STAGE',label,flush=True);return path.read_text()
+ raw=Path(run('refine_output.py',ROOT/state['raw'],'--special',48,'--cap',1200,label='output48_build',timeout=700).strip().split('COMPLETE ')[-1]);out=Path(run('correct_qg_rows.py',raw,label='correct_output48').strip());base=ROOT/state['base'];run('point_suite.py',out,'--q2',q2,label='output48_suite');run('compare_suites.py',base,out,'--q2',q2,'--out',wd/'OUTPUT_QUADRATURE.json',label='output_comparison');run('budget_suite.py',base/f'POINT_Q2_{q2:g}.json',wd/'SOURCE_QUADRATURE.json',wd/'OUTPUT_QUADRATURE.json','--out',wd/'BUDGET.json',label='budget');state.update(inner72=str(Path(json.loads((wd/'SOURCE_QUADRATURE.json').read_text())['second']).relative_to(ROOT)),output48=str(out.relative_to(ROOT)),status='completed measurements',seconds=None,resume_seconds=time.monotonic()-start,timing_note='Per-stage and pre-resume timings retained; overall pipeline wall duration not inferred');(wd/'PIPELINE.json').write_text(json.dumps(state,indent=2)+'\n');print(json.dumps(state,indent=2))
+if __name__=='__main__':main()

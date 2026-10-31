@@ -1,0 +1,22 @@
+{
+  "stage": "01",
+  "revision": "r1",
+  "claim_level": "finite declared constraints only; never complete physical admissibility",
+  "enforced_in_initial_synthetic_model": [
+    "Support H(x,xi,t)=0 for |x|>1 and endpoint envelope at x=+/-1.",
+    "Time-reversal/even-xi dependence where the chosen unpolarized H representation requires it; Sigma and T odd in x and Hg even in x under the baseline Hplus/Hg conventions.",
+    "Free-coefficient polynomiality for even spins N=2,4,6,8 on 41 reference-scale moment nodes equally spaced over the broad closed xi interval [0.02,0.98]. Retain every allowed coefficient free; 80 strictly disjoint diagnostic xi nodes, held-out N=10,12 and 96-versus-48 integration refinement are finite checks, not global proof.",
+    "D-term slots remain allowed; no mandatory fixed double-distribution profile and no interpretation of symbolic sparsity as true coefficient zeros."
+  ],
+  "not_enforced_without_external_input": [
+    "Forward PDFs and flavor-resolved quark/antiquark limits at matched Q and MSbar scheme; the electromagnetic CFF does not identify d versus s or all valence directions.",
+    "Flavor-separated Dirac form factors and physical normalization for valence Hq integrals. The Dirac sum rule integrates Hq on -1<=x<=1 (valence); it does not fix the zeroth moment of odd Hq_plus.",
+    "Positivity bounds for nucleon H and E require both relevant helicity-flip GPD E and matched forward PDFs, momentum fractions, and physical t. E is not set to zero by default. No such bound is imposed blindly on Sigma,T,Hg.",
+    "Physical-region inequality t<=t_min(xi) with target mass and exact external kinematics. Synthetic fixed t=0 at xi>0 is an analytic benchmark, not a physical proton point.",
+    "Dispersion/subtraction and impact-parameter bounds need their own assumptions and valid domains; neither is certified by finite polynomiality tests."
+  ],
+  "nlo_prior_policy": "A pointwise positive LO-style GPD/PDF prior is scheme- and scale-sensitive; at NLO no general positivity-preservation claim is made. If a positivity-inspired prior is later proposed, specify matched MSbar scale, all required flavor/E inputs and transformation, test bias/coverage, and obtain separate review.",
+  "polynomiality_domain": {"reference_scale": "Q0^2=2 GeV^2", "fit_xi": "41 equally spaced nodes xi_i=0.02+0.96*i/40, i=0,...,40", "diagnostic_xi": "80 interlaced midpoints xi_i=0.02+0.96*(i+0.5)/80, i=0,...,79; no overlap with fit nodes", "spins_fit": [2,4,6,8], "spins_heldout": [10,12], "allowed_powers": "all even xi powers 0,2,...,N for each channel and spin", "quadrature_per_side_fit": 48, "quadrature_per_side_reference": 96, "qualification": "These are reference-scale x-moment integration nodes, not additional CFF observations. If broad-domain enforcement is numerically difficult, stop for review rather than shrinking the domain."},
+  "tests_later": ["Parity and support on independent grids", "Polynomial moment residuals on fit and held-out spins/xi values with numerical-refinement audit", "Nonempty and violated examples for any added external constraint", "No claim of complete physical admissibility from these checks"],
+  "source": "https://arxiv.org/pdf/hep-ph/0307382, v2, Eqs. (21)-(24), (30), (192), (200), section 3.12.3"
+}

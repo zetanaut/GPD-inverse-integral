@@ -1,0 +1,37 @@
+#!/bin/bash
+#SBATCH --job-name=GPD_P2B_GPU_profile
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:a100:1
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=64G
+#SBATCH --time=01:00:00
+#SBATCH --account=REPLACE_WITH_VERIFIED_GPU_ACCOUNT
+#SBATCH --output=GPD_P2B_GPU_profile-%j.out
+#SBATCH --error=GPD_P2B_GPU_profile-%j.err
+set -euo pipefail
+# Implement/qualify this driver under performance/GPU_EFFICIENCY_PLAN.txt first.
+# The old source/qualify_joint.py is CPU reference-only and is NOT this driver.
+P2B_CUDA_PYTHON=REPLACE_WITH_CUDA_ENABLED_PYTHON
+P2B_PROFILE_DRIVER=REPLACE_WITH_IMPLEMENTED_FULL_PIPELINE_PROFILE_DRIVER
+P2B_PACKAGE=REPLACE_WITH_V3_PACKAGE_PATH
+P2B_CAPSULE=REPLACE_WITH_EXISTING_P1_CAPSULE
+P2B_OUTPUT=REPLACE_WITH_NEW_PROFILE_OUTPUT
+for P2B_VALUE in "$P2B_CUDA_PYTHON" "$P2B_PROFILE_DRIVER" "$P2B_PACKAGE" "$P2B_CAPSULE" "$P2B_OUTPUT"; do
+  if [[ "$P2B_VALUE" == REPLACE_* ]]; then exit 2; fi
+done
+test -f "$P2B_PROFILE_DRIVER"
+export OMP_NUM_THREADS=8 OPENBLAS_NUM_THREADS=8 MKL_NUM_THREADS=8
+export PYTHONDONTWRITEBYTECODE=1 CUBLAS_WORKSPACE_CONFIG=:4096:8
+"$P2B_CUDA_PYTHON" "$P2B_PACKAGE/verify_package.py"
+mkdir -p "$P2B_OUTPUT"
+nvidia-smi > "$P2B_OUTPUT/NVIDIA_SMI.txt"
+nvidia-smi --query-gpu=timestamp,index,name,utilization.gpu,memory.used,memory.total --format=csv -l 1 > "$P2B_OUTPUT/GPU_USAGE.csv" &
+P2B_MONITOR_PID=$!
+trap 'kill "$P2B_MONITOR_PID" 2>/dev/null || true' EXIT
+# Required driver CLI; implement it with synchronized timers and at most two
+# one-step diagnostics, one at each frozen state. This is not a fit launcher.
+srun --cpu-bind=cores "$P2B_CUDA_PYTHON" -B "$P2B_PROFILE_DRIVER" \
+  --packet "$P2B_PACKAGE" --capsule "$P2B_CAPSULE" --backend cuda_hybrid \
+  --threads 8 --max-diagnostic-steps 2 --out "$P2B_OUTPUT/full_profile"

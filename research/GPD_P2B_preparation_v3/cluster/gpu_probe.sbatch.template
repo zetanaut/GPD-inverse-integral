@@ -1,0 +1,33 @@
+#!/bin/bash
+#SBATCH --job-name=GPD_P2B_GPU_probe
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:a100:1
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=64G
+#SBATCH --time=00:15:00
+#SBATCH --account=REPLACE_WITH_VERIFIED_GPU_ACCOUNT
+#SBATCH --output=GPD_P2B_GPU_probe-%j.out
+#SBATCH --error=GPD_P2B_GPU_probe-%j.err
+set -euo pipefail
+# Resolve live GPU type/account and CUDA environment in a separate script copy.
+P2B_CUDA_PYTHON=REPLACE_WITH_CUDA_ENABLED_PYTHON
+P2B_PACKAGE=REPLACE_WITH_V3_PACKAGE_PATH
+P2B_CAPSULE=REPLACE_WITH_EXISTING_P1_CAPSULE
+P2B_OUTPUT=REPLACE_WITH_NEW_OUTPUT_DIRECTORY
+for P2B_VALUE in "$P2B_CUDA_PYTHON" "$P2B_PACKAGE" "$P2B_CAPSULE" "$P2B_OUTPUT"; do
+  if [[ "$P2B_VALUE" == REPLACE_* ]]; then exit 2; fi
+done
+export OMP_NUM_THREADS=8 OPENBLAS_NUM_THREADS=8 MKL_NUM_THREADS=8
+export PYTHONDONTWRITEBYTECODE=1 CUBLAS_WORKSPACE_CONFIG=:4096:8
+# The probe resets loaded Torch/BLAS thread settings after legacy imports.
+"$P2B_CUDA_PYTHON" "$P2B_PACKAGE/verify_package.py"
+mkdir -p "$P2B_OUTPUT"
+nvidia-smi > "$P2B_OUTPUT/NVIDIA_SMI.txt"
+nvidia-smi --query-gpu=timestamp,index,name,utilization.gpu,memory.used,memory.total --format=csv -l 1 > "$P2B_OUTPUT/GPU_USAGE.csv" &
+P2B_MONITOR_PID=$!
+trap 'kill "$P2B_MONITOR_PID" 2>/dev/null || true' EXIT
+srun --cpu-bind=cores "$P2B_CUDA_PYTHON" -B "$P2B_PACKAGE/performance/device_probe.py" \
+  --capsule "$P2B_CAPSULE" --device cuda --threads 8 --out "$P2B_OUTPUT/device_probe"
+# Exit here. Passing this small probe is NOT a full GPU implementation/fit pass.

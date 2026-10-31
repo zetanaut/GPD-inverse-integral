@@ -1,0 +1,102 @@
+{
+  "stage": "01",
+  "revision": "r1",
+  "status": "preregistered_proposal_for_review; no fitting in task 01",
+  "nominal_estimator": {
+    "model_source": "completion_runs/00/baseline/gpd_poly_symbolic_v5/vendor/gpd_lo_baseline_v4/src/models.py:ReferenceNetwork('film'); use source unchanged in a later task-scoped fitter",
+    "model_dtype": "torch.float64 on CPU; width 24, two conditioned residual blocks, channels [Sigma,T,Hg], parity and (1-x^2)^2 endpoint envelope, no Q2 input or fitted-checkpoint warm start",
+    "moment_source": "completion_runs/00/baseline/gpd_poly_symbolic_v5/src/polynomiality.py:MomentProjector; pass deterministic scales and new nodes from completion_runs/01/review_helpers.py without modifying the baseline",
+    "moment_constraint": {
+      "spins": [2,4,6,8],
+      "all_allowed_powers": "For each channel and N, V_N=span{(xi/0.6)^(2k): k=0,...,N/2}; all coefficients free, none fixed or symbolically pruned.",
+      "fit_nodes": {"source": "review_helpers.moment_grids()[0]", "count": 41, "closed_interval": [0.02,0.98], "formula": "xi_i=0.02+0.96*i/40, i=0,...,40"},
+      "diagnostic_nodes": {"source": "review_helpers.moment_grids()[1]", "count": 80, "open_interval": [0.02,0.98], "formula": "xi_i=0.02+0.96*(i+0.5)/80, i=0,...,79; strictly disjoint from fit nodes"},
+      "quadrature_per_side_fit": 48,
+      "quadrature_per_side_reference": 96,
+      "heldout_spins": [10,12],
+      "fixed_numerical_scales": {"source": "review_helpers.moment_scales()", "order": "channel-major [Sigma,T,Hg], then N=[2,4,6,8]", "Sigma_and_T": "s_N=16/[(N+1)(N+3)(N+5)]", "Hg": "s_N=16/[(N-1)(N+1)(N+3)]", "meaning": "Integrals of unit-amplitude shapes x(1-x^2)^2 and (1-x^2)^2; numerical penalty scales, not moments inferred from truths/observations or fixed GPD coefficients. Identical across starts, datasets and profiles."},
+      "domain_meaning": "Reference-scale moment-integration nodes only, not new CFF measurements and requiring no new perturbative banks; finite-spin/collocation checks do not prove global polynomiality. Broad-domain difficulty requires review, never silent narrowing."
+    },
+    "objective": {
+      "formula": "J(theta;y)=(r(theta;y)^T C^(-1) r(theta;y))/n_scalar+lambda_poly*L_poly(theta)",
+      "residual_order": "fit_xi order outer, fit_Q2 order inner, [ReH,ImH] order within each point; r=prediction-observation",
+      "n_scalar": 30,
+      "lambda_poly": 1.0,
+      "L_poly": "(1/(3*4*41))*sum over channel c, spin N and fit node i of [(M_cN(xi_i)-(Q_N Q_N^T M_cN)_i)/s_cN]^2; Q_N from QR of the entire allowed-power design on all 41 fit nodes; N quark moment x^(N-1), gluon moment x^(N-2), using 48 quadrature nodes per side",
+      "covariance": "Use the frozen block-diagonal synthetic Re/Im covariance from noise.rule; any PSD rank-deficient case obeys data_contract.json nullspace support checks, not arbitrary residual deletion.",
+      "no_extra_rescaling": "No extra division of L_poly by n_scalar, no adaptive scales, no start-specific normalization, no additional prior/penalty or truth-dependent selection. This is a prospective regularization change and is not asserted equal to the v5 loss.",
+      "same_everywhere": "This exact J, scales, covariance, numerical integration and model apply to every random start, unrestricted refit, constrained profile, calibration and test replicate."
+    },
+    "optimizer": {
+      "start_seed_rule": "Two independent initializations with labels 31 and 43; seed = first 63 bits of SHA256('20260923|'+phase+'|'+opaque_outer_index+'|'+start_label). Truth identity and final-test outcomes are not seed inputs; noise streams remain separate.",
+      "adam": {"steps": 400, "learning_rate": 0.003, "betas": [0.9,0.999], "epsilon": 1e-8, "weight_decay": 0},
+      "lbfgs": {"learning_rate": 1.0, "max_iterations": 400, "max_evaluations": 500, "history_size": 40, "line_search": "strong_wolfe", "tolerance_grad": 1e-10, "tolerance_change": 1e-13},
+      "convergence": "Run all 400 Adam steps, then L-BFGS. Accept a start only with finite J/gradients and either documented L-BFGS tolerance termination or final Euclidean gradient norm <=1e-6. Reaching caps without this evidence is a failure, not a converged solution.",
+      "selection_and_tie": "Choose smaller converged unrestricted J. If absolute J difference <=1e-10*max(1,abs(J_best)), choose start label 31. If neither converges, record failed fit and use conservative full-line interval only for coverage accounting; report failure separately.",
+      "no_tuning": "These are prospective v4-derived settings, not benchmarked on the new truths. Any later adjustment needs review before calibration/test."
+    },
+    "candidate_selection": "Nominal candidate is the all-allowed model only. Any future architecture/penalty/symbolic selection is exploratory unless its entire selection procedure is included inside every calibration and test replicate.",
+    "acceptance_diagnostics": "Record optimizer convergence, finite gradients, max normalized training CFF residual, fit-spin normalized moment RMS <=1e-3, 80 disjoint xi-node diagnostics, held-out spins 10,12 and 96-versus-48 integration refinement. A failed diagnostic is reported, never silently repaired by loosening thresholds."
+  },
+  "primary_estimands": [
+    {"id": "charge_bin_mean", "definition": "(1/0.20) integral_0.20^0.40 Hcharge_plus(x,xi=0.275,t=0,Q0^2=2 GeV2) dx, Hcharge_plus=(2/9)(Sigma+T)", "units": "dimensionless in baseline convention"},
+    {"id": "charge_x_moment", "definition": "integral_0^1 x*Hcharge_plus(x,xi=0.275,t=0,Q0^2=2 GeV2) dx", "units": "dimensionless in baseline convention"}
+  ],
+  "development_exclusion": "All v4/v5 smooth, skewed, dterm, oscillatory, endpoint_stress and dd_mixture truths and their train/holdout grids, fits, thresholds and figures are development evidence. They are not independent final calibration/test data.",
+  "frozen_final_truths": {
+    "basis_definition": "D_odd(j,b)=vendor/gpd_lo_baseline_v4/src/truths.py:dd_profile(x,xi,j,b,parity='odd',order=80); D_even similarly parity='even'. z=x/xi; qD=1_(|z|<1)*z*(1-z^2)^2; gD=1_(|z|<1)*xi*(1-z^2)^2. Evaluate at Q0^2; evolve with the final validated NLO forward model.",
+    "truth_A": {"role": "new D-term stress truth", "Sigma": "2.1*D_odd(0,3)+0.4*D_odd(2,3)+0.09*qD", "T": "0.7*D_odd(0,3)-0.15*D_odd(1,3)-0.02*qD", "Hg": "0.9*D_even(0,3)+0.2*D_even(3,3)+0.03*gD"},
+    "truth_B": {"role": "out-of-family fractional-profile/endpoint truth", "Sigma": "2.4*D_odd(0,0.5)+0.35*D_odd(4,0.5)+0.05*qD", "T": "0.6*D_odd(0,0.5)-0.18*D_odd(3,0.5)", "Hg": "0.8*D_even(0,0.5)+0.3*D_even(4,0.5)+0.025*gD"},
+    "qualification": "These are mathematical synthetic GPD truth definitions, not proven positive physical proton GPDs; b=3 and b=0.5 are outside the v4 DD comparator profiles b=1,2. No final truth has yet been numerically generated or fitted."
+  },
+  "kinematic_split": {
+    "fit_xi": [0.135,0.215,0.275,0.365,0.455],
+    "fit_Q2_GeV2": [2.3,4.7,9.3],
+    "fit_points": "full Cartesian product, 15 complex CFF points per dataset",
+    "selection_xi": [0.155,0.305,0.505],
+    "selection_Q2_GeV2": [3.4,7.1,15.3],
+    "selection_points": "full Cartesian product, nine complex CFF points reserved for predictive diagnostic only; not used to choose nominal estimator",
+    "t_GeV2": 0.0,
+    "development_disjoint": "The exact xi and Q2 coordinates are disjoint from the v4/v5 development train and holdout lists."
+  },
+  "noise": {
+    "rule": "At each kinematic point let r=ReH_true, i=ImH_true, sigma_R=0.04*max(1,abs(r)), sigma_I=0.04*max(1,abs(i)); draw centered bivariate normal with correlation rho=0.25 between Re and Im. Different kinematic points and outer datasets are independent. The covariance is known to the synthetic fitter; no inferred dense-grid pseudo-observations.",
+    "randomness": "Counter-based or independently seeded PRNG streams keyed by (truth ID, phase, outer index, geometry). Master seed 20260923. No seed reuse across smoke/calibration/test or fit initialization.",
+    "generator": "Use a separately refined and externally validated NLO forward route after stages 02-03; do not generate final arrays before approval."
+  },
+  "uncertainty_method": {
+    "interval": "For estimand j use the set of f with Delta_j(f)<=c_j, where Delta_j(f)=min_{theta:F_j(theta)=f}J(theta;y)-min_theta J(theta;y). Profile the identical frozen penalized objective over all other parameters. Report detected disconnected components as a union, not a falsely connected band; an analytically certified unbounded side remains unbounded. This is a simulation-calibrated profile-objective difference, not a Wilks claim. No Hessian pseudoinverse may manufacture finite width.",
+    "profile_algorithm": {
+      "statistic": "Delta_j(f)=J_constrained_min(f)-J_unrestricted_min with J and fixed scales exactly as nominal_estimator.objective; both minima use the same training data, model and covariance.",
+      "equality_solver": "SciPy SLSQP with Torch float64 autodiff objective/Jacobian and equality F_j(theta)-f=0; maxiter=500, ftol=1e-10; accept only solver success, finite J/gradient and |F_j(theta)-f|<=1e-6*max(1,|f|). No relaxed inequality surrogate.",
+      "slsqp_settings": {"method": "SLSQP", "max_iterations": 500, "ftol": 1e-10, "equality_tolerance_times_max1absf": 1e-6, "max_constrained_starts": 3},
+      "starts": "For each f, initialize constrained optimization from both converged unrestricted starts and, when available, the nearest already-converged constrained solution on the same profile side. At most three constrained starts; retain the smallest feasible J. Warm starts change initialization only, never J or scales. Failed starts are logged, not silently dropped.",
+      "unrestricted_inconsistency": "If any feasible constrained J is below the recorded unrestricted J by any amount, run up to two further unrestricted L-BFGS restarts initialized at that constrained solution, using the frozen J and L-BFGS settings. Replace unrestricted J only with an improved converged value. If Delta remains negative, record optimizer inconsistency/failure and a +infinity conservative calibration statistic or full-line test interval with failure flag; never max(0,Delta) or omit the record.",
+      "bracketing": "From unrestricted f_hat, probe both directions at step 0.05*max(1,|f_hat|), doubling up to 20 probes per direction and |f|<=1000. At each probed f use the fixed constrained solver; detect threshold crossings and possible re-entry/disconnected accepted components. Stop on solver failure rather than treating it as rejection.",
+      "bracketing_budget": {"initial_step_times_max1abs_fhat": 0.05, "growth_factor": 2, "max_probes_per_side": 20, "absolute_f_cap": 1000},
+      "refinement": "Bisection each detected crossing for at most 40 iterations or until f-width<=1e-5*max(1,|f_hat|), with the same constrained solver and equality tolerance. Report the union of detected accepted components and its outer hull/width as separate fields.",
+      "refinement_budget": {"max_bisections_per_crossing": 40, "width_tolerance_times_max1abs_fhat": 1e-5},
+      "search_cap_or_unbounded": "A 20-probe, |f|=1000 or 40-bisection cap without resolved endpoint is search_cap_limited, not proof of mathematical infinity; count as failed inversion and assign full-real-line interval for conservative coverage accounting. Mark a profile side mathematically unbounded only with a separately recorded constructive/analytic certificate. An infinite calibrated cutoff produces a full-line interval flagged calibration_infinite, not a claim that the profile itself was proven unbounded."
+    },
+    "calibration_rule": {
+      "truth_ids_for_calibration_only": ["A","B"],
+      "per_truth_order_statistic_rank": 73,
+      "common_reducer": "max",
+      "applied_cutoff_key": "estimand_id_only",
+      "per_truth_diagnostic": "For each estimand j and calibration truth h in {A,B}, require all 80 nonnegative profile statistics at the known F_j(truth_h). Ordinarily q_hj is the 73rd order statistic (ceil(0.90*(80+1))); conservatively set q_hj=+infinity if any of its 80 values is +infinity, even when its ordinary 73rd value is finite. Retain q_Aj and q_Bj only as oracle diagnostics.",
+      "applied_common_cutoff": "c_j=max(q_Aj,q_Bj), one cutoff keyed only by estimand ID. Apply exactly the same c_j to every test dataset in both truth classes without reading its truth label; no final-test result changes c_j. Implementation helper: review_helpers.freeze_common_cutoffs.",
+      "invalid_and_infinite": "All 80 statistics per truth/estimand are mandatory. NaN or negative values invalidate calibration and must not be deleted; a solver failure is explicitly flagged and represented conservatively by +infinity, which forces the affected common c_j to infinity under the supplied helper. Do not hide failure as a certified unbounded profile.",
+      "stored_cutoff_binding": {"hash": "SHA-256 of canonical sorted-key serialized configuration and source digests", "required_items": ["model source/architecture/dtype", "objective formula/lambda/n_scalar/fixed scales and optimizer", "forward prescription/source revision/nf/order", "input components ReH and ImH", "fit and diagnostic geometry", "covariance/noise rule", "profile solver/starts/bracketing/refinement/failure algorithm", "calibration dataset IDs and statistics"], "use": "Reject cutoff reuse on any mismatch; do not transfer a complex-CFF synthetic cutoff to ReH-only experimental data."},
+      "scope": "Calibration over two selected benchmark truths is not a uniform guarantee over all admissible GPDs. ReH-only experimental data require a separately reviewed uncertainty/calibration contract."
+    },
+    "critical_value": "One common c_j per estimand is max of the two truth-specific 73rd-of-80 calibration values, with a conservative +infinity override if any constituent statistic is +infinity. Apply the same c_j to all 240-per-truth test datasets; truth-specific values are oracle diagnostics only. Invalid statistics abort, and test truth labels never select a cutoff.",
+    "coverage": "Marginal 90% intervals are evaluated separately for both estimands and each truth. Report exact count/240, Wilson 95% interval, median and 90th-percentile finite width, unbounded fraction and failure fraction. Claim adequate coverage only if the one-sided 95% Wilson lower bound is >=0.85 in all four truth-by-estimand cells; no optional stopping or pooled-only pass.",
+    "failure_handling": "Solver/profile nonconvergence, invalid covariance, negative/NaN unrepairable statistic, search-cap exhaustion, failed refinement or unmet physical/numerical diagnostics are explicit failures. Assign full-real-line interval to a failed test inversion for conservative coverage accounting, and separately report failed-fit/profile fraction, successfully certified unbounded-profile fraction, calibration-infinite-cutoff fraction and finite-width distribution. Infinite intervals alone do not establish useful target resolution. If failure fraction exceeds 5% in any cell, overall method fails regardless of coverage. No deletion or favorable-subset selection."
+  },
+  "mandatory_controls": [
+    "Three-spin control: rerun a development-only nominal diagnostic with N=2,4,6 enforced and N=8 held out, then compare with four-spin fit; do not use to tune final cutoff after test outcomes.",
+    "D-term control: in truth_A isolate the explicit qD/gD contribution and verify that evolution/convolution includes it once; compare zero-D synthetic counterfactual as a labeled control, not a competing final truth.",
+    "Shadow control: construct a normalized training-bank weak right-singular direction using training geometry only, perturb a development truth, and report CFF shift versus both primary-estimand shifts; do not inspect final test noise to choose the direction."
+  ],
+  "counts": {"pilot": "2 truths x 1 deterministic seed each, no inference claim", "smoke_outer_datasets": "20 total, 10 per truth; discarded from calibration/test", "calibration_outer_datasets_per_truth": 80, "test_outer_datasets_per_truth": 240, "total_final_outer_datasets": 640}
+}

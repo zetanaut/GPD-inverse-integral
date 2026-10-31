@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "Please cite the associated Watkins–Keller manuscript and identify the repository commit used. The revised manuscript is in preparation on the same arXiv record."
+title: "GPD-inverse-integral: neural GPD inference with NLO QCD"
+authors:
+  - family-names: Watkins
+    given-names: Dima
+  - family-names: Keller
+    given-names: Dustin
+version: 0.2.0.dev0
+date-released: 2026-10-31
+url: "https://github.com/zetanaut/GPD-inverse-integral"
+repository-code: "https://github.com/zetanaut/GPD-inverse-integral"
+identifiers:
+  - type: url
+    value: "https://arxiv.org/abs/2512.21761"
+    description: "Associated manuscript; current public version describes the earlier formulation."

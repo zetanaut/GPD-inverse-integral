@@ -1,0 +1,199 @@
+P2B HALF-NOISE DEVELOPMENT: INDEPENDENT LOCAL REVIEW
+30 October 2026
+
+Decision
+
+Accept the returned run as a completed, numerically eligible execution of the
+frozen development case. Independently confirm STOP_DEVELOPMENT_FAILED: the
+selected stage 60 improves observed-slice H+ and target A, but target B worsens
+far beyond the permitted numerical tolerance. Independent assessment remains
+unreleased. This is a scientific gate failure, not an execution failure.
+
+The clean-input P2B preservation success remains valid. This noisy comparison
+shows useful forward-boundary improvement and mixed off-forward effects. It
+does not establish an overall validated improvement, an expected benefit over
+new noise realizations, or calibrated experimental uncertainty. It also does
+not establish that forward information can never help GPD inference.
+
+Primary frozen comparison
+
+All errors in this table are relative percentages, except PDF RMS.
+
+Metric                                Reused baseline     P2B stage 60
+Observed-slice H+ relative L2              11.463451          10.133640
+Absolute target A relative error           4.989625           3.540364
+Absolute target B relative error           1.281387           3.236364
+Wider-chart H+ relative L2                 28.612716          38.134372
+PDF whitened residual RMS                   3.031805           0.671390
+
+The primary score is squared observed-slice relative L2, not relative L2 itself:
+  baseline S = 0.013141070094419657 (original record)
+  selected S = 0.010269066129645186 (original record)
+  improvement = 21.85518% in S, or 11.60044% in relative L2.
+The independently replayed values agree to floating-point roundoff.
+
+A's signed relative error changes from -4.989625% to +3.540364%; its absolute
+error improves despite crossing the truth. B's signed error changes from
+-1.281387% to -3.236364%. Its absolute relative error increases by 0.01954977,
+against a tolerance of 3.24636e-8, about 602,205 times the allowed tolerance.
+The failure cannot be attributed to rounding the displayed percentages.
+
+The selected values are A=0.3747238249713769 and B=0.1069753711588962.
+True values are 0.3619108615320205 and 0.1105532776465300. A is
+5 integral_[.2,.4] H+ dx and B is integral_[0,1] x H+ dx, both at xi=.275,
+t=-.363 GeV^2 and Q0^2=2 GeV^2. These are the original diagnostic functionals.
+
+The original eligibility and three development comparisons are applied without
+alteration. The exact-center 2% thresholds and PDF RMS<=1 are not development
+gates. The PDF residual is a diagnostic, not an accuracy or coverage certificate.
+
+What improves, and what does not
+
+The added boundary information is accommodated substantially better than by
+the reused baseline. On the 201-point forward support, channel relative L2
+errors change as follows:
+  Sigma: 46.79649% -> 8.31216%
+  T:     31.66948% -> 7.10135%
+  Hg:    34.05821% -> 8.16622%.
+The integrated forward H+ relative L2 over [.02,.8] improves from 25.24383% to
+7.01459%. Low/high-x tail diagnostics also improve on this known truth, but
+those tails were not observed and these results do not supply uncertainty bounds.
+
+The observed-slice aggregate improvement is concentrated in DGLAP:
+  ERBL H+ relative L2:   17.64012% -> 19.48338% (worse)
+  DGLAP H+ relative L2:  10.57101% ->  8.50877% (better).
+Across the wider chart, both regions worsen:
+  ERBL:   20.97103% -> 42.77176%
+  DGLAP:  29.90692% -> 37.13806%.
+The largest wider-chart slice error rises from 75.08065% to 93.15129%.
+Observed-slice and wider-chart scores have distinct supports and must not be
+presented as interchangeable estimates of one accuracy measure.
+
+Wider-chart internal-channel effects are mixed:
+  Sigma: 28.29546% -> 39.75807% (worse)
+  T:    125.11851% -> 33.79804% (better)
+  Hg:    80.79636% -> 48.59442% (better).
+Thus better forward anchoring and some better internal channels do not imply
+uniformly better off-forward charge-weighted reconstruction. The mechanism of
+this tradeoff is not uniquely identified by the aggregate scores.
+
+Recorded CFF matching RMS in original sigma units worsens from 0.435886 to
+0.475308. Recorded ReH truth error at the input geometry improves modestly,
+from 4.15346% to 3.80719% relative L2. These CFF diagnostics are
+retained-source results, not an independent local NLO replay.
+
+Selection, objective and numerical interpretation
+
+The selected state is the original objective/eligibility winner, rank 0 stage 60.
+The saved candidate ordering, checkpoint identities, selection/score links and
+final state agree. The final checkpoint is identical to STAGE60 and to the
+terminal solver vector. Restoration chose the original fresh seed 31 state after
+400 Adam updates, and stage 0 matches that exported vector exactly.
+
+Saved stages diagnose the trajectory without changing the selection:
+
+Stage     J_joint        H+ observed error     |A error|      |B error|
+ 20       0.50412459           12.51602%          11.61193%       9.32058%
+ 40       0.40153117            9.23136%           7.83320%       2.23869%
+ 60       0.32734085           10.13364%           3.54036%       3.23636%
+
+Between stages 40 and 60 the objective falls while observed H+, wider-chart H+
+and B errors worsen, and A improves. Stage 40 would fail both target comparisons;
+none of the saved post-start candidates satisfies all three development gates.
+No truth-selected substitution or retrospective retuning is justified.
+
+Selected objective components are
+  J_CFF = 0.22591788648600203
+  J_poly = 0.000001073498047211419
+  J_PDF = 0.10142188744634693
+  J_joint = 0.32734084743039615.
+The PDF and polynomial values are independently replayed; the CFF component
+and total are checked for record-level arithmetic consistency. At the original
+baseline state, the same new joint objective is 2.2581625161, owing largely to
+its PDF mismatch. This two-state comparison shows the new objective prefers
+the selected joint solution, including its tradeoffs. It does not establish
+causation, a global optimum or expected risk over independent data.
+
+The run completed all 400 Adam updates and 60 accepted outer updates, with 199
+solver evaluations, 26 rejected trials and 119 SOC linear solves. Checkpoint,
+per-iteration journal and complete history agree. The stopping reason is the
+iteration budget. The final reported constraints are finite with zero
+exceedances; maximum normalized constraint is -2.58756e-10, close to its
+predictive moment boundary. Reported moment refinements and full-operator
+checks on rows 0/80/159 pass. The selected held-out moment RMS is about 0.000997779.
+Those full numerical eligibility checks were not recomputed locally.
+
+The last available KKT diagnostic is pre-final iteration 59 and fails
+stationarity (norm 0.354832). It precedes the last accepted move. There is no
+terminal convergence certificate. FINITE_BUDGET_FEASIBLE remains the correct
+numerical label; nonstationarity does not change the predeclared comparison.
+
+Execution, source integrity and cost
+
+Job 22157569 completed 0:0 in one attempt, with no continuation or resource stop.
+Elapsed time was 7:12:10 and TotalCPU 8:18:06. It used 8 CPUs, 64 GiB and no GPU;
+batch MaxRSS was 14.55238 GiB. Allocation cost was 57.62222 CPU-core-hours;
+TotalCPU/allocated CPU time was 14.4071%. Norm subproblems accounted for 81.43%
+of recorded solver time. No monetary cost is inferred from Slurm billing weights.
+
+All 166 returned payload hashes verify. The complete 54-file transfer matches
+the originally sent package. All 44 terminal-retained artifacts verify. The 13
+new driver source files, 54 frozen preparation files and 7 prior acceleration
+files verify locally. Five direct dependency/evidence pins are rechecked
+against locally held bytes;96 environment-file pins remain remote-reported.
+Original local model, truth, geometry, metric, seed and CFF input identities,
+as well as the original baseline bytes, are checked before saved-field replay.
+
+All 37 allocated fixture tests passed, with no skips, including all five Linux
+process-group tests. Four submission-tool mocks ran separately on the host;
+seven additional scheduler-adapter mocks are reported. The receiver preserved
+and corrected an earlier 41-allocated count label. It did not omit a required
+test group or alter scientific qualification to obtain a pass.
+
+A separate, exact submission adapter adds an explicit spinquest_standard account
+and GPD-prefixed job name to the immutable helper's sbatch invocation. Its source,
+review/ACK pins, once-only marker, command, response and readback are consistent.
+The job resource/scientific specification is unchanged. The real Slurm executable
+hash is a receiver record, not a local binary recheck. The returned accounting
+contains the parent and batch rows; no extern row was returned. Active scheduler
+records were purged by receiver review time; terminal sacct evidence is retained.
+
+The cpu_guarded source and one-thread field/rank plus eight-thread solver policy
+match the accepted prior qualification. This actual trajectory includes SOC
+work beyond the prior two-state qualification's empty-working-set/no-SOC scope.
+The successful execution is not a whole-trajectory CPU1 equivalence test. The
+7.2-hour fit and the previous 10-hour exact fit have different inputs and solver
+histories; their times are not an acceleration benchmark.
+
+Independent review scope
+
+This review replays five saved fields: the unchanged half-noise baseline and
+P2B stages 0/20/40/60. It checks observed-slice and wider-chart fields, targets,
+forward observations/whitening, supported-grid and tail scores, the covariance
+formula, saved noise formula, and the finite polynomial objective. Maximum
+replayed metric discrepancy is 5.66e-14. The noise was not redrawn.
+
+Full NLO maps, full-operator numerical checks, constraint Jacobians and optimizer
+steps were not rerun. Source/hash/record checks and direct field replay are
+reported separately. There was no new fit, cluster contact, scientific noise
+draw, source patch or change to the frozen selection.
+
+Disposition
+
+Close this frozen P2B development comparison at STOP_DEVELOPMENT_FAILED and
+retain every result. Independent assessment stays unreleased. Further scientific
+work should diagnose the existing boundary/off-forward and target tradeoffs,
+then specify a prospective estimator or information change with explicit
+preservation and independent-assessment tests. The evidence supports improving
+some information, not claiming uniformly improved reconstruction.
+
+For the proposal note, retain the demonstrated clean-control result and describe
+this noisy comparison as mixed benefit with a failed target safeguard. Its
+29 October 'development pending' statement is now superseded by this review.
+A defensible proposal can make resolving this tradeoff a research aim; it should
+not claim that noisy forward augmentation is already validated.
+
+Evidence files: INTAKE.json, PACKET_VERIFICATION.json, REVIEW_EVIDENCE.json,
+AUDIT.log and REPLAY.log. Current coordination is updated separately, with a
+snapshot and hashes. Original returned, launch and proposal artifacts are dated
+provenance and retain their original bytes.

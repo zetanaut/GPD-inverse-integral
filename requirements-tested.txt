@@ -1,0 +1,5 @@
+# Versions used to check this source distribution locally; CPU and CUDA wheels differ.
+numpy==1.26.3
+scipy==1.13.0
+torch==2.8.0
+pytest==8.4.2

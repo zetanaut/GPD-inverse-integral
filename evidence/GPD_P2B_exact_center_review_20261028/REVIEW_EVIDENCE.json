@@ -1,0 +1,874 @@
+{
+  "status": "PASS",
+  "scientific_decision": "ACCEPT_EXACT_CENTER_PRESERVATION",
+  "development_released": false,
+  "archive_sha256": "533306daffe457ff40a541cc91c951c9836a84248cee04f2659a2848d4de8bf9",
+  "selected": {
+    "case": "P2B",
+    "stage": 60,
+    "checkpoint": "review_GPD_P2B_exact_center_evaluation_v1/results/GPD_P2B_evaluation_20261028_a01/GPD_P2B_exact_center_s31/STAGE60.pt",
+    "J_recorded": 5.48017628083087e-07,
+    "observed": {
+      "all": 0.0046947703414268425,
+      "ERBL": 0.008657789576719697,
+      "DGLAP": 0.004031414279405558
+    },
+    "wider_chart": {
+      "charge_relative_L2": {
+        "all": 0.0053525851392840764,
+        "ERBL": 0.00716351930638552,
+        "DGLAP": 0.004911177407180219
+      },
+      "charge_absolute_RMS": {
+        "all": 0.0011259801221284553,
+        "ERBL": 0.0011749314352648367,
+        "DGLAP": 0.0011069399663338247
+      },
+      "charge_max_slice_relative_L2": 0.02277005800335831,
+      "internal_channel_relative_L2": [
+        0.07307261220914721,
+        0.21762310045465347,
+        0.013239316098119153
+      ],
+      "mesh": {
+        "nxi": 33,
+        "nu": 9,
+        "x_order_per_region": 160
+      },
+      "not_an_uncertainty_interval": true
+    },
+    "targets": [
+      0.3594617201592023,
+      0.11027507316927762
+    ],
+    "target_signed_relative_error": [
+      -0.0067672502628151054,
+      -0.0025164742572526544
+    ],
+    "boundary": {
+      "whitened_RMS": 0.0007957714822508807,
+      "chi2_PDF": 2.2797081070695494e-05,
+      "J_PDF": 1.4248175669184683e-07,
+      "channel_relative_L2": [
+        0.0005260713008028911,
+        0.0007397041370947844,
+        9.542255164368896e-05
+      ],
+      "support_and_tails": {
+        "low_x_tail": {
+          "80": {
+            "forward_Hplus_first_moment": 5.223259563324172e-06,
+            "truth_forward_Hplus_first_moment": 5.223886793895263e-06,
+            "integrated_squared_Hplus_error": 1.4754450797716094e-13,
+            "integrated_squared_truth_Hplus": 1.0233373015139429e-05
+          },
+          "160": {
+            "forward_Hplus_first_moment": 5.223259563324184e-06,
+            "truth_forward_Hplus_first_moment": 5.223886793895278e-06,
+            "integrated_squared_Hplus_error": 1.4754450797922622e-13,
+            "integrated_squared_truth_Hplus": 1.0233373015139459e-05
+          }
+        },
+        "observed_support": {
+          "80": {
+            "forward_Hplus_first_moment": 0.13018352851954573,
+            "truth_forward_Hplus_first_moment": 0.13013039191978382,
+            "integrated_squared_Hplus_error": 4.421226229584617e-08,
+            "integrated_squared_truth_Hplus": 0.1298361974395567
+          },
+          "160": {
+            "forward_Hplus_first_moment": 0.13018352851954532,
+            "truth_forward_Hplus_first_moment": 0.13013039191978332,
+            "integrated_squared_Hplus_error": 4.421226229584595e-08,
+            "integrated_squared_truth_Hplus": 0.12983619743955593
+          }
+        },
+        "high_x_tail": {
+          "80": {
+            "forward_Hplus_first_moment": 0.011998224354881716,
+            "truth_forward_Hplus_first_moment": 0.012086606415644442,
+            "integrated_squared_Hplus_error": 6.490851740151719e-08,
+            "integrated_squared_truth_Hplus": 0.0016737319947184113
+          },
+          "160": {
+            "forward_Hplus_first_moment": 0.011998224354881737,
+            "truth_forward_Hplus_first_moment": 0.012086606415644453,
+            "integrated_squared_Hplus_error": 6.490851740151637e-08,
+            "integrated_squared_truth_Hplus": 0.001673731994718423
+          }
+        }
+      }
+    },
+    "gates": {
+      "observed_Hplus": true,
+      "target_A": true,
+      "target_B": true,
+      "PDF_whitened_RMS": true
+    }
+  },
+  "baseline": {
+    "case": "exact_baseline",
+    "stage": 60,
+    "checkpoint": "review_GPD_P1_advice/reference_capsule/project/GPD_three_stage_closure/runs/exp_Re_exact_Z1_s31/final.pt",
+    "J_recorded": 3.505841339073696e-08,
+    "observed": {
+      "all": 0.009202873580698281,
+      "ERBL": 0.008757593668593125,
+      "DGLAP": 0.009250282544321824
+    },
+    "wider_chart": {
+      "charge_relative_L2": {
+        "all": 0.007501712911133446,
+        "ERBL": 0.006816466769028944,
+        "DGLAP": 0.0076313064976848855
+      },
+      "charge_absolute_RMS": {
+        "all": 0.0015780747806994114,
+        "ERBL": 0.0011180092831230553,
+        "DGLAP": 0.0017200352292874156
+      },
+      "charge_max_slice_relative_L2": 0.017508703761534582,
+      "internal_channel_relative_L2": [
+        0.03729789151737004,
+        0.12078817481569784,
+        0.006229305109239537
+      ],
+      "mesh": {
+        "nxi": 33,
+        "nu": 9,
+        "x_order_per_region": 160
+      },
+      "not_an_uncertainty_interval": true
+    },
+    "targets": [
+      0.36015643553540677,
+      0.10959246148774719
+    ],
+    "target_signed_relative_error": [
+      -0.004847674339440888,
+      -0.008690978496854962
+    ],
+    "boundary": {
+      "whitened_RMS": 0.7716135095546448,
+      "chi2_PDF": 21.43394669258049,
+      "J_PDF": 0.13396216682862808,
+      "channel_relative_L2": [
+        0.04107124199913414,
+        0.09622816415873853,
+        0.010427554979492961
+      ],
+      "support_and_tails": {
+        "low_x_tail": {
+          "80": {
+            "forward_Hplus_first_moment": 5.197077143474073e-06,
+            "truth_forward_Hplus_first_moment": 5.223886793895263e-06,
+            "integrated_squared_Hplus_error": 2.695350455275473e-10,
+            "integrated_squared_truth_Hplus": 1.0233373015139429e-05
+          },
+          "160": {
+            "forward_Hplus_first_moment": 5.19707714347409e-06,
+            "truth_forward_Hplus_first_moment": 5.223886793895278e-06,
+            "integrated_squared_Hplus_error": 2.695350455275123e-10,
+            "integrated_squared_truth_Hplus": 1.0233373015139459e-05
+          }
+        },
+        "observed_support": {
+          "80": {
+            "forward_Hplus_first_moment": 0.12707454153925996,
+            "truth_forward_Hplus_first_moment": 0.13013039191978382,
+            "integrated_squared_Hplus_error": 6.517980485789033e-05,
+            "integrated_squared_truth_Hplus": 0.1298361974395567
+          },
+          "160": {
+            "forward_Hplus_first_moment": 0.12707454153925948,
+            "truth_forward_Hplus_first_moment": 0.13013039191978332,
+            "integrated_squared_Hplus_error": 6.517980485789047e-05,
+            "integrated_squared_truth_Hplus": 0.12983619743955593
+          }
+        },
+        "high_x_tail": {
+          "80": {
+            "forward_Hplus_first_moment": 0.010787005843668535,
+            "truth_forward_Hplus_first_moment": 0.012086606415644442,
+            "integrated_squared_Hplus_error": 1.695117194675771e-05,
+            "integrated_squared_truth_Hplus": 0.0016737319947184113
+          },
+          "160": {
+            "forward_Hplus_first_moment": 0.01078700584366855,
+            "truth_forward_Hplus_first_moment": 0.012086606415644453,
+            "integrated_squared_Hplus_error": 1.6951171946757743e-05,
+            "integrated_squared_truth_Hplus": 0.001673731994718423
+          }
+        }
+      }
+    },
+    "gates": {
+      "observed_Hplus": true,
+      "target_A": true,
+      "target_B": true,
+      "PDF_whitened_RMS": true
+    }
+  },
+  "stages": [
+    {
+      "case": "P2B",
+      "stage": 0,
+      "checkpoint": "review_GPD_P2B_exact_center_evaluation_v1/results/GPD_P2B_evaluation_20261028_a01/GPD_P2B_exact_center_s31/STAGE0.pt",
+      "J_recorded": 23.71518781197123,
+      "observed": {
+        "all": 0.9995578116347419,
+        "ERBL": 1.0002916071539403,
+        "DGLAP": 0.9994775085427464
+      },
+      "wider_chart": {
+        "charge_relative_L2": {
+          "all": 1.000050666659129,
+          "ERBL": 1.0009629356825205,
+          "DGLAP": 0.9998682202674636
+        },
+        "charge_absolute_RMS": {
+          "all": 0.2103725849244688,
+          "ERBL": 0.16417388833167973,
+          "DGLAP": 0.22536227106416
+        },
+        "charge_max_slice_relative_L2": 1.0013052760592192,
+        "internal_channel_relative_L2": [
+          0.9238749645038354,
+          1.2285970228233911,
+          0.3070654306290851
+        ],
+        "mesh": {
+          "nxi": 33,
+          "nu": 9,
+          "x_order_per_region": 160
+        },
+        "not_an_uncertainty_interval": true
+      },
+      "targets": [
+        2.069307674546686e-05,
+        7.32104987720467e-05
+      ],
+      "target_signed_relative_error": [
+        -0.9999428227253034,
+        -0.9993377808389714
+      ],
+      "boundary": {
+        "whitened_RMS": 4.135421122693228,
+        "chi2_PDF": 615.6614830326237,
+        "J_PDF": 3.847884268953898,
+        "channel_relative_L2": [
+          0.9534657545620117,
+          1.119958952308586,
+          0.5014057749948237
+        ],
+        "support_and_tails": {
+          "low_x_tail": {
+            "80": {
+              "forward_Hplus_first_moment": 4.615768442565773e-10,
+              "truth_forward_Hplus_first_moment": 5.223886793895263e-06,
+              "integrated_squared_Hplus_error": 1.0231564677474788e-05,
+              "integrated_squared_truth_Hplus": 1.0233373015139429e-05
+            },
+            "160": {
+              "forward_Hplus_first_moment": 4.6157684425645937e-10,
+              "truth_forward_Hplus_first_moment": 5.223886793895278e-06,
+              "integrated_squared_Hplus_error": 1.023156467747482e-05,
+              "integrated_squared_truth_Hplus": 1.0233373015139459e-05
+            }
+          },
+          "observed_support": {
+            "80": {
+              "forward_Hplus_first_moment": 0.00010284808813673076,
+              "truth_forward_Hplus_first_moment": 0.13013039191978382,
+              "integrated_squared_Hplus_error": 0.12967204137367955,
+              "integrated_squared_truth_Hplus": 0.1298361974395567
+            },
+            "160": {
+              "forward_Hplus_first_moment": 0.00010284808813673107,
+              "truth_forward_Hplus_first_moment": 0.13013039191978332,
+              "integrated_squared_Hplus_error": 0.1296720413736788,
+              "integrated_squared_truth_Hplus": 0.12983619743955593
+            }
+          },
+          "high_x_tail": {
+            "80": {
+              "forward_Hplus_first_moment": 1.8829745007989005e-05,
+              "truth_forward_Hplus_first_moment": 0.012086606415644442,
+              "integrated_squared_Hplus_error": 0.0016686440922192938,
+              "integrated_squared_truth_Hplus": 0.0016737319947184113
+            },
+            "160": {
+              "forward_Hplus_first_moment": 1.8829745007989022e-05,
+              "truth_forward_Hplus_first_moment": 0.012086606415644453,
+              "integrated_squared_Hplus_error": 0.001668644092219305,
+              "integrated_squared_truth_Hplus": 0.001673731994718423
+            }
+          }
+        }
+      },
+      "gates": {
+        "observed_Hplus": false,
+        "target_A": false,
+        "target_B": false,
+        "PDF_whitened_RMS": false
+      }
+    },
+    {
+      "case": "P2B",
+      "stage": 20,
+      "checkpoint": "review_GPD_P2B_exact_center_evaluation_v1/results/GPD_P2B_evaluation_20261028_a01/GPD_P2B_exact_center_s31/STAGE20.pt",
+      "J_recorded": 0.003782664374051236,
+      "observed": {
+        "all": 0.04060066062516929,
+        "ERBL": 0.07693471873024033,
+        "DGLAP": 0.03436941368980971
+      },
+      "wider_chart": {
+        "charge_relative_L2": {
+          "all": 0.15492028374444233,
+          "ERBL": 0.18033826693167293,
+          "DGLAP": 0.14932172207053043
+        },
+        "charge_absolute_RMS": {
+          "all": 0.032589329356108775,
+          "ERBL": 0.029578352446168542,
+          "DGLAP": 0.033655917572842066
+        },
+        "charge_max_slice_relative_L2": 0.4329796445724802,
+        "internal_channel_relative_L2": [
+          0.08359047379943974,
+          0.4600644564002909,
+          0.16800217457014044
+        ],
+        "mesh": {
+          "nxi": 33,
+          "nu": 9,
+          "x_order_per_region": 160
+        },
+        "not_an_uncertainty_interval": true
+      },
+      "targets": [
+        0.3679734126974459,
+        0.11282844935810284
+      ],
+      "target_signed_relative_error": [
+        0.016751503781239796,
+        0.020579866648976042
+      ],
+      "boundary": {
+        "whitened_RMS": 0.09890626639463325,
+        "chi2_PDF": 0.3521681831565417,
+        "J_PDF": 0.0022010511447283854,
+        "channel_relative_L2": [
+          0.015369333891210726,
+          0.0080473693907886,
+          0.010870417338585807
+        ],
+        "support_and_tails": {
+          "low_x_tail": {
+            "80": {
+              "forward_Hplus_first_moment": 5.209116560510815e-06,
+              "truth_forward_Hplus_first_moment": 5.223886793895263e-06,
+              "integrated_squared_Hplus_error": 8.181046464358287e-11,
+              "integrated_squared_truth_Hplus": 1.0233373015139429e-05
+            },
+            "160": {
+              "forward_Hplus_first_moment": 5.209116560510832e-06,
+              "truth_forward_Hplus_first_moment": 5.223886793895278e-06,
+              "integrated_squared_Hplus_error": 8.181046464359422e-11,
+              "integrated_squared_truth_Hplus": 1.0233373015139459e-05
+            }
+          },
+          "observed_support": {
+            "80": {
+              "forward_Hplus_first_moment": 0.12830581416673623,
+              "truth_forward_Hplus_first_moment": 0.13013039191978382,
+              "integrated_squared_Hplus_error": 1.9809462084879718e-05,
+              "integrated_squared_truth_Hplus": 0.1298361974395567
+            },
+            "160": {
+              "forward_Hplus_first_moment": 0.12830581416673575,
+              "truth_forward_Hplus_first_moment": 0.13013039191978332,
+              "integrated_squared_Hplus_error": 1.9809462084879718e-05,
+              "integrated_squared_truth_Hplus": 0.12983619743955593
+            }
+          },
+          "high_x_tail": {
+            "80": {
+              "forward_Hplus_first_moment": 0.011511041080505335,
+              "truth_forward_Hplus_first_moment": 0.012086606415644442,
+              "integrated_squared_Hplus_error": 3.1726521501395135e-06,
+              "integrated_squared_truth_Hplus": 0.0016737319947184113
+            },
+            "160": {
+              "forward_Hplus_first_moment": 0.011511041080505355,
+              "truth_forward_Hplus_first_moment": 0.012086606415644453,
+              "integrated_squared_Hplus_error": 3.1726521501395144e-06,
+              "integrated_squared_truth_Hplus": 0.001673731994718423
+            }
+          }
+        }
+      },
+      "gates": {
+        "observed_Hplus": false,
+        "target_A": true,
+        "target_B": false,
+        "PDF_whitened_RMS": true
+      }
+    },
+    {
+      "case": "P2B",
+      "stage": 40,
+      "checkpoint": "review_GPD_P2B_exact_center_evaluation_v1/results/GPD_P2B_evaluation_20261028_a01/GPD_P2B_exact_center_s31/STAGE40.pt",
+      "J_recorded": 7.118321447220116e-06,
+      "observed": {
+        "all": 0.007754428752895471,
+        "ERBL": 0.014725956620788658,
+        "DGLAP": 0.006556459978015902
+      },
+      "wider_chart": {
+        "charge_relative_L2": {
+          "all": 0.013078615522937414,
+          "ERBL": 0.016465066469090028,
+          "DGLAP": 0.012290333496440112
+        },
+        "charge_absolute_RMS": {
+          "all": 0.0027512427585146006,
+          "ERBL": 0.0027005335437589417,
+          "DGLAP": 0.0027701425175337105
+        },
+        "charge_max_slice_relative_L2": 0.05817329619409111,
+        "internal_channel_relative_L2": [
+          0.08228417138569329,
+          0.2656598810221957,
+          0.025345478388648795
+        ],
+        "mesh": {
+          "nxi": 33,
+          "nu": 9,
+          "x_order_per_region": 160
+        },
+        "not_an_uncertainty_interval": true
+      },
+      "targets": [
+        0.3579335363658198,
+        0.11014176781328419
+      ],
+      "target_signed_relative_error": [
+        -0.010989792208402127,
+        -0.003722276191227336
+      ],
+      "boundary": {
+        "whitened_RMS": 0.004313069923038024,
+        "chi2_PDF": 0.0006696925977965481,
+        "J_PDF": 4.1855787362284255e-06,
+        "channel_relative_L2": [
+          0.0011556032918162795,
+          0.0008576392224209314,
+          0.0003238106782710351
+        ],
+        "support_and_tails": {
+          "low_x_tail": {
+            "80": {
+              "forward_Hplus_first_moment": 5.224379662804106e-06,
+              "truth_forward_Hplus_first_moment": 5.223886793895263e-06,
+              "integrated_squared_Hplus_error": 9.109522990711313e-14,
+              "integrated_squared_truth_Hplus": 1.0233373015139429e-05
+            },
+            "160": {
+              "forward_Hplus_first_moment": 5.224379662804121e-06,
+              "truth_forward_Hplus_first_moment": 5.223886793895278e-06,
+              "integrated_squared_Hplus_error": 9.109522990674324e-14,
+              "integrated_squared_truth_Hplus": 1.0233373015139459e-05
+            }
+          },
+          "observed_support": {
+            "80": {
+              "forward_Hplus_first_moment": 0.13018006843552288,
+              "truth_forward_Hplus_first_moment": 0.13013039191978382,
+              "integrated_squared_Hplus_error": 1.4428421455774388e-07,
+              "integrated_squared_truth_Hplus": 0.1298361974395567
+            },
+            "160": {
+              "forward_Hplus_first_moment": 0.13018006843552243,
+              "truth_forward_Hplus_first_moment": 0.13013039191978332,
+              "integrated_squared_Hplus_error": 1.4428421455774965e-07,
+              "integrated_squared_truth_Hplus": 0.12983619743955593
+            }
+          },
+          "high_x_tail": {
+            "80": {
+              "forward_Hplus_first_moment": 0.01198605164941112,
+              "truth_forward_Hplus_first_moment": 0.012086606415644442,
+              "integrated_squared_Hplus_error": 8.364322696893117e-08,
+              "integrated_squared_truth_Hplus": 0.0016737319947184113
+            },
+            "160": {
+              "forward_Hplus_first_moment": 0.011986051649411137,
+              "truth_forward_Hplus_first_moment": 0.012086606415644453,
+              "integrated_squared_Hplus_error": 8.364322696893102e-08,
+              "integrated_squared_truth_Hplus": 0.001673731994718423
+            }
+          }
+        }
+      },
+      "gates": {
+        "observed_Hplus": true,
+        "target_A": true,
+        "target_B": true,
+        "PDF_whitened_RMS": true
+      }
+    },
+    {
+      "case": "P2B",
+      "stage": 60,
+      "checkpoint": "review_GPD_P2B_exact_center_evaluation_v1/results/GPD_P2B_evaluation_20261028_a01/GPD_P2B_exact_center_s31/STAGE60.pt",
+      "J_recorded": 5.48017628083087e-07,
+      "observed": {
+        "all": 0.0046947703414268425,
+        "ERBL": 0.008657789576719697,
+        "DGLAP": 0.004031414279405558
+      },
+      "wider_chart": {
+        "charge_relative_L2": {
+          "all": 0.0053525851392840764,
+          "ERBL": 0.00716351930638552,
+          "DGLAP": 0.004911177407180219
+        },
+        "charge_absolute_RMS": {
+          "all": 0.0011259801221284553,
+          "ERBL": 0.0011749314352648367,
+          "DGLAP": 0.0011069399663338247
+        },
+        "charge_max_slice_relative_L2": 0.02277005800335831,
+        "internal_channel_relative_L2": [
+          0.07307261220914721,
+          0.21762310045465347,
+          0.013239316098119153
+        ],
+        "mesh": {
+          "nxi": 33,
+          "nu": 9,
+          "x_order_per_region": 160
+        },
+        "not_an_uncertainty_interval": true
+      },
+      "targets": [
+        0.3594617201592023,
+        0.11027507316927762
+      ],
+      "target_signed_relative_error": [
+        -0.0067672502628151054,
+        -0.0025164742572526544
+      ],
+      "boundary": {
+        "whitened_RMS": 0.0007957714822508807,
+        "chi2_PDF": 2.2797081070695494e-05,
+        "J_PDF": 1.4248175669184683e-07,
+        "channel_relative_L2": [
+          0.0005260713008028911,
+          0.0007397041370947844,
+          9.542255164368896e-05
+        ],
+        "support_and_tails": {
+          "low_x_tail": {
+            "80": {
+              "forward_Hplus_first_moment": 5.223259563324172e-06,
+              "truth_forward_Hplus_first_moment": 5.223886793895263e-06,
+              "integrated_squared_Hplus_error": 1.4754450797716094e-13,
+              "integrated_squared_truth_Hplus": 1.0233373015139429e-05
+            },
+            "160": {
+              "forward_Hplus_first_moment": 5.223259563324184e-06,
+              "truth_forward_Hplus_first_moment": 5.223886793895278e-06,
+              "integrated_squared_Hplus_error": 1.4754450797922622e-13,
+              "integrated_squared_truth_Hplus": 1.0233373015139459e-05
+            }
+          },
+          "observed_support": {
+            "80": {
+              "forward_Hplus_first_moment": 0.13018352851954573,
+              "truth_forward_Hplus_first_moment": 0.13013039191978382,
+              "integrated_squared_Hplus_error": 4.421226229584617e-08,
+              "integrated_squared_truth_Hplus": 0.1298361974395567
+            },
+            "160": {
+              "forward_Hplus_first_moment": 0.13018352851954532,
+              "truth_forward_Hplus_first_moment": 0.13013039191978332,
+              "integrated_squared_Hplus_error": 4.421226229584595e-08,
+              "integrated_squared_truth_Hplus": 0.12983619743955593
+            }
+          },
+          "high_x_tail": {
+            "80": {
+              "forward_Hplus_first_moment": 0.011998224354881716,
+              "truth_forward_Hplus_first_moment": 0.012086606415644442,
+              "integrated_squared_Hplus_error": 6.490851740151719e-08,
+              "integrated_squared_truth_Hplus": 0.0016737319947184113
+            },
+            "160": {
+              "forward_Hplus_first_moment": 0.011998224354881737,
+              "truth_forward_Hplus_first_moment": 0.012086606415644453,
+              "integrated_squared_Hplus_error": 6.490851740151637e-08,
+              "integrated_squared_truth_Hplus": 0.001673731994718423
+            }
+          }
+        }
+      },
+      "gates": {
+        "observed_Hplus": true,
+        "target_A": true,
+        "target_B": true,
+        "PDF_whitened_RMS": true
+      }
+    }
+  ],
+  "truth_targets": [
+    0.3619108615320205,
+    0.11055327764653002
+  ],
+  "max_replayed_metric_absolute_difference": 4.5703241538519457e-14,
+  "covariance": {
+    "rank": 36,
+    "condition_number": 11549.411092046437,
+    "formula_replay": true
+  },
+  "continuation": {
+    "completed_Adam_updates": 400,
+    "completed_outer_updates": 60,
+    "solver_evaluations": 121,
+    "history_consistency": true,
+    "additional_optimization": 0,
+    "stage60_equals_final_and_terminal_state": true
+  },
+  "last_prefinal_KKT": {
+    "iteration": 59,
+    "KKT": {
+      "pass": false,
+      "gates": {
+        "finite": true,
+        "inequality_feasible": true,
+        "equality_feasible": true,
+        "dual_feasible": true,
+        "stationarity": false,
+        "complementarity": true,
+        "multiplier_solve": true
+      },
+      "raw_gradient_L2": 0.0017848474758084551,
+      "stationarity_L2": 0.0017848474758084551,
+      "complementarity_max": 0.0,
+      "maximum_inequality_excess": 0.0,
+      "equality_max_abs": 0.0,
+      "active_indices": [],
+      "inequality_multipliers": [],
+      "equality_multipliers": [],
+      "qualification": "Necessary local KKT diagnostics only; not sufficiency, constraint qualification, global optimality, or coverage.",
+      "full_primal_feasible": true,
+      "full_maximum_excess": 0.0,
+      "evaluated_jacobian_indices": [],
+      "evaluated_constraint_names": [],
+      "constraint_qualification": {
+        "active_rows": 0,
+        "rank": 0,
+        "rank_relative_threshold": 1e-10,
+        "singular_values": [],
+        "LICQ_for_active_filter_rows": true,
+        "scope": "Rows within normalized active tolerance, not a proof of global regularity"
+      }
+    }
+  },
+  "numerical_eligibility": {
+    "reported_status": "FINITE_BUDGET_FEASIBLE",
+    "reported_constraint_max": -0.5622811580434117,
+    "reported_moments": {
+      "quadrature_RMS": {
+        "96": 0.00039561612152705947,
+        "192": 0.0003956161215274021,
+        "384": 0.0003956161215266692
+      },
+      "residual_refinement_RMS_192_384": 1.2058923905991533e-14,
+      "entries": [
+        {
+          "channel": 0,
+          "spin": 2,
+          "RMS": 0.0005910933275719092,
+          "max_abs": 0.0017845529594790602
+        },
+        {
+          "channel": 0,
+          "spin": 4,
+          "RMS": 0.0005442454494159247,
+          "max_abs": 0.002429300424603726
+        },
+        {
+          "channel": 0,
+          "spin": 6,
+          "RMS": 0.00037283613957870404,
+          "max_abs": 0.001285513937084596
+        },
+        {
+          "channel": 0,
+          "spin": 8,
+          "RMS": 0.00027825586441578573,
+          "max_abs": 0.0009694894296706962
+        },
+        {
+          "channel": 1,
+          "spin": 2,
+          "RMS": 0.0005627538555027086,
+          "max_abs": 0.0025189982108535405
+        },
+        {
+          "channel": 1,
+          "spin": 4,
+          "RMS": 0.00042090291714008617,
+          "max_abs": 0.0011001709084816494
+        },
+        {
+          "channel": 1,
+          "spin": 6,
+          "RMS": 0.00036235193036529545,
+          "max_abs": 0.0009325563932245321
+        },
+        {
+          "channel": 1,
+          "spin": 8,
+          "RMS": 0.00024946573140302266,
+          "max_abs": 0.0007287368455805505
+        },
+        {
+          "channel": 2,
+          "spin": 2,
+          "RMS": 0.00037039641185528,
+          "max_abs": 0.001577325892080407
+        },
+        {
+          "channel": 2,
+          "spin": 4,
+          "RMS": 0.0003374158102803503,
+          "max_abs": 0.0014119142711560213
+        },
+        {
+          "channel": 2,
+          "spin": 6,
+          "RMS": 0.00023512595140855782,
+          "max_abs": 0.0007819769235108045
+        },
+        {
+          "channel": 2,
+          "spin": 8,
+          "RMS": 0.00014969121243967978,
+          "max_abs": 0.00039536518081179496
+        }
+      ],
+      "pass": true,
+      "scope": "13 fixed t nodes, 160 disjoint xi; finite checks only"
+    },
+    "reported_full_operator": {
+      "pass": true,
+      "coordinate_selected_rows": [
+        {
+          "row": 0,
+          "xi_hex": "0x1.a7efeeb249d96p-3",
+          "Q2_hex": "0x1.d1eb851eb851fp+0",
+          "t_hex": "-0x1.604189374bc6ap-3",
+          "pass": true,
+          "gates": {
+            "CFF": true,
+            "fields": true,
+            "moments": true,
+            "Dterm_support": true,
+            "hard_no_warnings": true
+          },
+          "CFF_estimated_total": [
+            7.302428285238588e-06,
+            1.945543274210795e-06
+          ],
+          "CFF_limits": [
+            0.00014001860042510474,
+            0.00011864233764804852
+          ],
+          "file": "candidate0/FULL_OPERATOR_ROW0.json",
+          "sha256": "a4eec1099d42c5bc4cdae8387d24b18ba5e19f03b3a4d13cff164016d176ca5e"
+        },
+        {
+          "row": 80,
+          "xi_hex": "0x1.ed5b11ed5b11fp-4",
+          "Q2_hex": "0x1.e147ae147ae14p+0",
+          "t_hex": "-0x1.ccccccccccccdp-2",
+          "pass": true,
+          "gates": {
+            "CFF": true,
+            "fields": true,
+            "moments": true,
+            "Dterm_support": true,
+            "hard_no_warnings": true
+          },
+          "CFF_estimated_total": [
+            1.021656799046746e-05,
+            1.037129461136399e-05
+          ],
+          "CFF_limits": [
+            0.00012110137444748946,
+            0.0002232798264964338
+          ],
+          "file": "candidate0/FULL_OPERATOR_ROW80.json",
+          "sha256": "2c2371fb009c95dba67f0a5103c0585ef9ab780a1040d9949d86c1b140314a5f"
+        },
+        {
+          "row": 159,
+          "xi_hex": "0x1.c18f9c18f9c18p-3",
+          "Q2_hex": "0x1.0000000000000p+1",
+          "t_hex": "-0x1.374bc6a7ef9dbp-2",
+          "pass": true,
+          "gates": {
+            "CFF": true,
+            "fields": true,
+            "moments": true,
+            "Dterm_support": true,
+            "hard_no_warnings": true
+          },
+          "CFF_estimated_total": [
+            1.0002987854482764e-06,
+            1.0000548325062161e-06
+          ],
+          "CFF_limits": [
+            0.0001282870708009105,
+            0.0001
+          ],
+          "file": "candidate0/FULL_OPERATOR_ROW159.json",
+          "sha256": "c723b0770374fe0da0e8c54ae42bbc606f547ddcf58e4fac8cbfde9afade7897"
+        }
+      ],
+      "scope": "three first/mid/last geometry rows, source Python full-operator checks"
+    },
+    "replayed_locally": false
+  },
+  "costs": {
+    "parent_job": "22081808",
+    "parent_elapsed_seconds": 36153.0,
+    "parent_TotalCPU_seconds": 42198.0,
+    "evaluation_job": "22117473",
+    "evaluation_elapsed_seconds": 52.0,
+    "evaluation_TotalCPU_seconds": 28.938,
+    "total_elapsed_seconds": 36205.0,
+    "total_CPU_seconds": 42226.938,
+    "parent_batch_MaxRSS_GiB": 14.592632293701172,
+    "peak_process_RSS_bytes": 15521910784,
+    "solver_seconds": 35957.335189519916,
+    "norm_subproblem_seconds": 32776.537156343926,
+    "norm_subproblem_fraction": 0.9115396617571632,
+    "residual_jacobian_seconds": 264.4862259477377,
+    "CPU_efficiency_fraction": 0.1459007551240561,
+    "gpus": 0,
+    "includes_prior_profiling_jobs": false
+  },
+  "seconds": 2.610756083,
+  "review_peak_RSS_bytes": 286982144,
+  "environment": {
+    "python": "3.9.23 | packaged by conda-forge | (main, Jun  4 2025, 18:02:02) \n[Clang 18.1.8 ]",
+    "numpy": "1.26.3",
+    "torch": "2.8.0"
+  },
+  "scope": "Saved-field/target/forward-covariance replay, hashes, checkpoint history, selection, objective arithmetic and returned cost receipts. No optimizer, NLO bank, new noise or cluster operation."
+}

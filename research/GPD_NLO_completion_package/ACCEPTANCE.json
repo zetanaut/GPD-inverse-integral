@@ -1,0 +1,37 @@
+{
+  "purpose": "Mechanical evidence completeness and thresholds only; reviewer must assess independence and physics",
+  "inherited_CFF_component_rule": "abs(candidate-reference)<=1e-4*max(1,abs(reference)), separately Re/Im",
+  "inherited_field_rule": "relative physical-x L2<=1e-3, separately Sigma,T_rescaled,Hg, with absolute handling for zero channel",
+  "required_points": [
+    {
+      "xi": 0.135,
+      "Q2": 2.3
+    },
+    {
+      "xi": 0.275,
+      "Q2": 4.7
+    },
+    {
+      "xi": 0.455,
+      "Q2": 9.3
+    }
+  ],
+  "required_truths": [
+    "frozen_smooth",
+    "frozen_Dterm_added"
+  ],
+  "required_controls": [
+    "independent_full_support_action",
+    "kernel_quadrature_refinement",
+    "representation_refinement",
+    "ordered_evolution_refinement",
+    "hard_quadrature_refinement",
+    "physical_normalization",
+    "nlo_moment_identities",
+    "forward_adjoint_and_derivatives"
+  ],
+  "no_relaxed_thresholds": true,
+  "source_ABI_checks_are_independent_physics": false,
+  "two_resolution_agreement_alone_is_certificate": false,
+  "pilot_working_before_any_new_full_bank": true
+}

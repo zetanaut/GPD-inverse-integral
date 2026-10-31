@@ -1,0 +1,41 @@
+{
+  "status": "PASS_RETURNED_PAYLOAD_AND_SAVED_FIELD_REPLAY",
+  "archive_sha256": "533306daffe457ff40a541cc91c951c9836a84248cee04f2659a2848d4de8bf9",
+  "payload_files_verified": 112,
+  "result_retention_files_verified": 51,
+  "unchanged_staged_artifacts_verified": 26,
+  "prep_files_verified": 54,
+  "execution_source_files_verified": 11,
+  "evaluation_source_files_verified": 4,
+  "qualification_logs_verified": {
+    "execution_fixture_tests": 26,
+    "evaluation_fixture_tests": 10,
+    "rerun_locally": false,
+    "scope": "Tiny software fixtures, not full model/derivative qualification"
+  },
+  "original_local_source_bindings": {
+    "review_GPD_P1_advice/reference_capsule/project/GPD_three_stage_closure/vendor/gpd_reh/model.py": "a8340038b36d8f97cdd6da8dbb2c92a1d679aa7b663a028e7a966b033658885c",
+    "review_GPD_P1_advice/reference_capsule/project/GPD_three_stage_closure/vendor/gpd_reh/reference_model.py": "b6b1370ae431b2cccad96fc449c3f8407c249a90e4cb419928b8ac93dd996f95",
+    "review_GPD_P1_advice/reference_capsule/project/GPD_three_stage_closure/closure/truths.py": "818f4340ef7874f87647d37698848f3366e8440ecf2af44cea1d1ad4139d9ce2",
+    "review_GPD_P1_advice/reference_capsule/project/GPD_three_stage_closure/closure/geometry.py": "f70ce983cbd55f1309260dc9cde1c572e10c240eb5946e05d79c2bf2fb787515",
+    "review_GPD_P1_advice/reference_capsule/project/GPD_three_stage_closure/closure/metrics.py": "3a86dd13506c58bcfa0f927fcd5771d9fc504b668bfccfdf3961b25a2bf4ed33",
+    "review_GPD_P1_advice/reference_capsule/project/GPD_three_stage_closure/prepared/FIT_CONFIG.json": "798a7beac2c3d0524c09cb55ce2fea28d0e1c5d09a0ba3b2299f7a9b40f69517",
+    "review_GPD_P1_advice/reference_capsule/project/GPD_three_stage_closure/prepared/GEOMETRY.json": "f1b752a32203576990a50c4bd9fcc6e6ef7549ad20a226ebb73db74f68ea15e6",
+    "review_GPD_P2A_preservation_results_v1/GPD_P1_Rivanna/project/GPD_three_stage_closure/prepared/observed/exp_Re_exact_Z1.npz": "001690b6ff9783865819e9b9f35f15c8ba3acfedb86cf83189668c537ac36ab7",
+    "review_GPD_P1_advice/reference_capsule/project/GPD_three_stage_closure/runs/exp_Re_exact_Z1_s31/final.pt": "e12321c790fc89db5654448a4af130ff4857be3e09c69f6bbc62b9c80e3cff2f",
+    "review_GPD_P2B_exact_center_evaluation_v1/GPD_P1_Rivanna/project/GPD_three_stage_closure/runs/exp_Re_exact_Z1_s31/RESULT.json": "700e28b57cbb91204eaa05494d42331b71eee99695691655f4351f3c966f3b34",
+    "review_GPD_P1_advice/reference_capsule/reference/FRESH_SEED31.npy": "f66b94025d2a1ec53d19b83eb293e0550e7cd960644c15dffc96ba86fa16c831",
+    "review_GPD_P1_advice/reference_capsule/runtime/core.py": "77a5aff1e4540a30d0d7b28585c9b1fa461d59cff8689b59dd637c7114fe1371",
+    "review_GPD_P1_advice/reference_capsule/runtime/finalize.py": "03737369372bc0bed443799a41ce5fe97cb9970303e595ce63e2dd0a8b90f8cd",
+    "review_GPD_P1_advice/reference_capsule/runtime/resume_support.py": "74758e9f65a8ef51bbcaa248da799d27b0c20492004d47a74fea77e534eefd19"
+  },
+  "missing_acceleration_manifest": "575173e6a019f720654898a37a2ca0f9470fff6657ab2db3499bbfa03abd38f7",
+  "omitted_parent_control_and_submit_files": [
+    "/sfs/gpfs/tardis/home/dmk9m/GPD/control/GPD_P2B_exact_center_20261027_a01/scientific_readiness.json",
+    "/sfs/gpfs/tardis/home/dmk9m/GPD/control/GPD_P2B_exact_center_20261027_a01/hpc_resource_recommendation.json",
+    "/sfs/gpfs/tardis/home/dmk9m/GPD/submit/GPD_P2B_exact_center_20261027_a01.sbatch",
+    "/sfs/gpfs/tardis/home/dmk9m/GPD/control/GPD_P2B_acceleration_20261027_a02/performance_review.json",
+    "/sfs/gpfs/tardis/home/dmk9m/GPD/control/GPD_P2B_acceleration_20261027_a02/hpc_terminal_and_budget_audit.json"
+  ],
+  "limitation": "Acceleration overlay, its CPU/GPU parity/performance review, parent readiness and submission script are hash-bound but absent; not independently audited. Full NLO/constraints and optimizer trajectory not rerun."
+}

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gpd-inverse-integral"
+version = "0.2.0.dev0"
+description = "Neural GPD inference with NLO forward interfaces and finite-spin constraints"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.24,<3", "scipy>=1.10", "torch>=2.1"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+plot = ["matplotlib>=3.7", "pandas>=1.5"]
+
+[project.urls]
+Repository = "https://github.com/zetanaut/GPD-inverse-integral"
+Manuscript = "https://arxiv.org/abs/2512.21761"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

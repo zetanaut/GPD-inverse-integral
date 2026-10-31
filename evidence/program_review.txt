@@ -1,0 +1,326 @@
+GPD RECONSTRUCTION PROGRAM: PERSPECTIVE AFTER P2A PRESERVATION
+26 October 2026
+
+The reconstruction framework retains substantial positive evidence. P2A closes
+one unsuccessful attempt to stabilize its noisy inverse. The program now needs
+a better justified rule for selecting GPD information from the freedom left by
+the observations, with accuracy tested beyond the fitted loss. The latest result
+is particularly informative because the added penalty damages a clean benchmark
+that the existing procedure already reconstructs well.
+
+This assessment reviews the original scientific objective, principal completed
+branches, relevant fitting/model/regularizer/selection code, and reported numerical
+evidence. It is a synthesis of the existing program, not a fresh execution of every
+historical verification or a full line-by-line software audit. The immediately
+preceding preservation review independently replayed its saved fields. No new fit,
+noise draw, operator build, cluster operation or manuscript edit accompanies this
+synthesis. SOURCES.json records the consulted documents and code with hashes;
+EVIDENCE.json records the checked comparison values and arithmetic.
+
+The original purpose and the method that has survived
+
+The aim is to reconstruct a nontrivial reference-scale charge-weighted H+ field
+from CFF information, demonstrate the method on controlled examples, and support
+a quantitatively qualified experimental interpretation. The intended construction
+is flexible FiLM inference, unknown-coefficient polynomiality, symbolic hypothesis
+generation and refitting through the observables. A unique unrestricted inverse
+was never a defensible finish line. Neither was a collection of procedural passes
+without useful reconstruction. [S01-S03]
+
+The current reference network has 3,867 parameters. It learns three stored fields
+F=(Sigma,T_rescaled,Hg=xg), with H+=(2/9)(Sigma+T_rescaled), at Q0^2=2 GeV^2.
+It conditions on xi and t; Q2 dependence comes from the fixed coupled NLO forward
+map, not a learned Q2 input. Odd/even projections impose channel parity, and an
+(1-x^2)^2 envelope imposes endpoints. At spins 2,4,6,8 the moment penalty measures
+departure from the complete allowed polynomial spaces, retaining unknown allowed
+coefficients. These are finite-spin, approximate conditions. The neural envelope,
+finite capacity, collocation, numerical domain and finite optimizer budget are
+also substantive assumptions. The baseline already selects among alternatives;
+lambda_stab=0 does not mean an assumption-free or unregularized inverse in every
+sense. [S04-S07]
+
+The production real-input chain and the separate upstream experiments concern two
+inverse problems:
+
+  measured cross sections -> inferred ReH information -> reconstructed H+
+
+The intermediate CFF values are themselves estimates with bias, correlation and
+method dependence. Better cross-section RMS can coexist with worse ReH; better
+ReH matching can coexist with worse H+. Numerical precision in the forward map
+addresses another question again. This distinction organizes the whole record.
+
+What the completed branches establish
+
+1. The forward physics and neural interface have a validated numerical foundation.
+
+The accepted NLO milestone implements coupled singlet/gluon and nonsinglet
+evolution, two-loop running and the specified hard coefficients in fixed-nf=3
+MSbar. Point references, weak/strong discretizations, hard integration, moments,
+time ordering and derivative checks were separately exercised. Subsequent saved-
+field audits reproduce the intended contractions and derivatives. The reference
+discretizations share kernel sources, so this is bounded numerical validation,
+not independent certification by an unrelated full NLO library or a rigorous
+continuum error bound. Early failed source/portability checks are historical;
+later acceptance must be read in sequence. [S08-S09]
+
+The matched noiseless neural controls achieved small charge-field errors, and
+the symbolic/refit sequence was actually demonstrated. Yet compatible symbolic
+D-term proposals omitted eight known nonzero coefficients. Symbolic compactness
+therefore supplies interpretable alternatives, with no license to call omitted
+terms physical zeros. That remains a positive integration result and a measured
+resolution limitation. [S09-S10]
+
+2. Useful field recovery exists, including with real-only input.
+
+The t-dependent coarse complex-CFF demonstration achieved 4.90% H+ error on its
+declared checking chart. It used one Z1 truth and seed; denser L1/L2 calculations
+were paused. Sampling convergence and uniform accuracy have not been measured.
+At the 160 actual experimental coordinates, exact real-only inputs gave wider-
+chart H+ errors 0.75% and 3.05% for seeds 31 and 43. Under one frozen full-noise
+perturbation those became 32.69% and 49.21%. Exact input is thus a meaningful
+capacity/recovery control. The different complex and real-only geometries and
+weights prevent attributing their difference solely to the presence of ImH or
+to measurement density. [S03,S11-S12]
+
+Successful H+ recovery does not establish equally good identification of every
+internal channel. In the coarse complex-CFF case, the 4.90% charge-field error
+coexisted with Sigma/T_rescaled/Hg errors of 78.46%/235.01%/5.90% on that chart.
+This matters for P2A: its norm penalizes all three stored fields, including
+combinations not demonstrated to be separately well determined. [S11,S33]
+
+P1 made a more controlled precision comparison: same 160 rows, original sigmas,
+one noise direction and fresh seed31; only its perturbation amplitude changed.
+
+ Perturbation amplitude     Observed-slice H+ error     Wider-chart H+ error
+ 0                                  0.92%                      0.75%
+ 0.25                               7.81%                     18.46%
+ 0.50                              11.46%                     28.61%
+ 1                                 16.53%                     32.69%
+
+At quarter amplitude, target A/B signed errors were +1.49%/-1.01%; at half
+amplitude, -4.99%/-1.28%. Useful target recovery can coexist with larger whole-
+field error. Input ReH norm-relative errors of 31.78% and 63.56% at those two
+amplitudes became fitted ReH truth errors of 2.53% and 4.15%. The existing method
+already suppresses much of this particular input perturbation. A new stabilizer
+has to improve that capability, not assume none exists. These are sensitivity
+results for one truth/noise/seed, not an experimental precision requirement.
+Observed-slice and wider-chart norms have different support and weights. [S13]
+
+Here and in P2A, target A is 5*integral_[0.2,0.4] H+(x) dx and target B is
+integral_[0,1] x*H+(x) dx, both at xi=0.275, t=-0.363 and the reference scale.
+Their A/B labels must not be confused with the two truth strata named A/B in
+the earlier calibration campaign. [S13,S16]
+
+3. A finite-budget procedure can be calibrated for specified targets, even while
+   its optimizer is nonstationary.
+
+The completed, prospectively amended 442-case A/B study used 160 calibration and
+282 independent test observations. Joint coverage was 135/141 (95.74%) in A and
+131/141 (92.91%) in B, with a common absolute target half-width 0.01858363.
+It retained finite structural/numerical flags in the accounting and calibrated
+the actual fixed procedure. This is a substantive uncertainty result. It covers
+two targets under two fixed synthetic truths and a specified observation law.
+It does not calibrate the later t-dependent Z1 field, a full-function band, P2A,
+or experimental inference. Small target values in stratum A also make those
+finite intervals broad in relative terms. The 198 omitted tests were excluded
+prospectively, not failed or unfinished mandatory work. [S14-S16]
+
+4. The experimental central product is conditional and its propagation is unstable
+   over the budgets examined.
+
+The source audit excluded a malformed legacy merge and a raw-k=0 extrapolated
+surface. The later author-designated mixed CDNN/FQDNN ReH source is the settled
+input; the separate effective H-dominance Re/Im product must not be substituted
+for it. Original quoted combined errors are used once. [S17-S18]
+
+The nominated thirteen-t central field has ReH RMS residual 2.4335 in quoted-
+error units, with 30/160 absolute pulls above three. Those are weighted residual
+diagnostics, not goodness-of-fit probabilities under an established correlated
+likelihood. The thirteen-t change improved sampled moment consistency relative
+to its equal-iteration control while modestly worsening ReH agreement. Later
+smoothing and mean-target continuations reduced some residuals without settling
+the mismatch. [S18-S21]
+
+The 32-member CFF cohort is complete; only two members were propagated in the
+matched GPD budget comparison. From cumulative steps 5 to 20, the mean CFF RMS
+improved by 4.54%, while one member-minus-mean GPD response norm grew 4.803-fold.
+Changes from steps 10 to 20 were still substantial. A narrow early response is
+therefore not evidence of precise experimental determination. More members alone
+would estimate this chosen finite algorithm's distribution more thoroughly;
+they would not settle its bias or budget dependence. [S22-S23]
+
+The numerical-boundary probes identify a real interaction with the optimizer:
+its private field-discretization margin is 0.00095 versus an outer reporting
+guide of 0.001. Several rejected trials were below the outer guide. The composite
+checks find both norm-ratio curvature and neural nonlinearity. They do not prove
+a derivative bug or quantify how much experimental mismatch a different solver
+would remove. Relaxing numerical checks is not justified by these probes alone.
+[S24-S25]
+
+5. The data have strongly and weakly measured directions, independently of the solver.
+
+The constructed D-term pair differs by 25% in the specified field norm but has
+complete-vector whitened ReH separation d=0.558809 under the declared Gaussian
+law. Even optimal binary identification succeeds only 61.00% on average. At the
+same field separation, another direction in the tested two-dimensional span
+has d=42.53. This establishes directional information limits, alongside strongly
+measured information. It does not make every reconstruction impossible or explain
+the full error of the current estimator. [S26-S27]
+
+Those alternatives share forward distributions and their first relevant moment.
+Forward PDF information cannot distinguish that particular pair. Additional
+constraints can still improve other directions. The result is conditional on
+the structural benchmark, finite maps and stated covariance; full QCD physical
+admissibility or compatibility with the real experimental central values was
+not proved for the pair.
+
+6. Upstream improvement is possible, but its usefulness must be checked downstream.
+
+Hard reflection improved cross-section truth RMS over a matched unconstrained
+surrogate but barely improved ReH; both surrogates were worse than direct KMI.
+The response-space diagnosis showed much of the cleaned-up error lay outside
+the local CFF response. More exact head fitting of those surrogate outputs
+could lower the objective and greatly worsen ReH. [S28]
+
+A subsequent frozen physics-decoded/profiling/stabilization candidate reduced
+ReH RMSE by 29.18%/39.27% on fresh noise at the two existing Z1/Z2 truths, winning
+eight of eight paired draws per truth. Bias and empirical variation both fell.
+This is positive independent-noise evidence for that upstream procedure, with
+remaining bias and no calibrated band or direct validation of the publication's
+production formulation. It changes multiple method components, so the gain cannot
+be attributed solely to symmetry or optimization. [S29-S30]
+
+The downstream twelve-coordinate test then gave H+ input-slice errors of 1.58%
+for exact ReH, 293.50% for direct KMI and 184.75% for the improved candidate.
+The candidate helped this triplet but remained far from accurate, including
+wrong-sign target integrals. Near-exact fitting of biased CFF inputs did not
+recover the true field. This is a different observation geometry/law from P1,
+not another point on its precision curve. [S31]
+
+What P2A adds to this record
+
+P2A's purpose was reasonable: explicitly stabilize a selection procedure whose
+loss could improve while truth error worsened. The tested choice, however,
+was a particular zero-centered field norm, not a generic test of all smoothing:
+
+ R = (1/(3N)) sum_i sum_c integral_0^1
+       [F_c(x,xi_i,t_i)^2 + 0.10^2 (partial_x F_c)^2] dx,
+
+with split integration at x=xi, original observation multiplicities, N=160 and
+equal stored-channel scales. It penalizes amplitudes and first derivatives in
+three internal channels; it contains no PDF anchor, no xi/t derivative term and
+no direct information about the true field. The equal channel scales and fixed
+physical-x length define a substantive preference. The implementation retains
+the full residual block and its mixed derivatives, rather than replacing its
+Gauss-Newton geometry by one scalar residual. [S32-S34]
+
+The development outcome was already weak: low moved observed H+ error from
+11.46345% to 11.16003%, a 0.30342 percentage-point gain, while A error worsened
+from -4.99% to +10.23%. Wider-chart error improved from 28.61% to 18.37%. High
+gave 26.20090% observed error. Low won the declared numerical criterion; a
+numerical winner was never evidence of a practically robust gain. No independent
+noise assessment was reached. [S35]
+
+Preservation used that unchanged low lambda=0.03694325396955194 on the original
+exact input and fresh seed31. Its observed H+ error is 17.10372%, with A/B absolute
+errors 5.90349% and 14.75430%, versus baseline 0.92029%, 0.48477%, 0.86910%.
+Every frozen 2% gate fails. The completed continuation and selected stage remain
+valid recorded outcomes; their finite-budget eligibility is distinct from
+convergence. [S36-S37]
+
+The most useful interpretation goes beyond a threshold failure. Across saved
+stages 20/40/60, observed error rises 2.94% -> 7.31% -> 17.10% as J_lambda falls
+0.0188372 -> 0.0153005 -> 0.0133424. Using the exact baseline's recorded J_P1
+and independently replayed R gives its value under this same penalized objective:
+
+ state                         H+ observed error       J_lambda
+ accurate exact baseline             0.9203%           0.02199759
+ selected preservation field        17.1037%           0.01334240
+
+The frozen objective ranks the degraded field above this accurate baseline.
+That is direct two-state evidence that this preference conflicts with the desired
+clean reconstruction. It does not require a convergence claim. It also does not
+prove the unique cause of the trajectory, a global optimum, or that every lower
+objective field would be inaccurate. The 90.8% scalar penalty share is not a
+parameter-gradient or causal decomposition.
+
+There is an important qualification: the exact-input test retained the original
+nonzero sigmas, and lambda was calibrated in scale to a half-noise development
+case. An estimator designed to trade bias against noise at those fixed weights
+can remain biased when handed clean targets. The preservation rule deliberately
+required this candidate also to retain good clean recovery. Its failure rejects
+that combined design requirement. It does not mathematically prove that the
+penalty cannot improve expected noisy error somewhere. The independent data
+needed to establish such a benefit were never run, and the mixed development
+result alone does not establish it.
+
+This finding strengthens a program-wide conclusion: additional minimization of
+an objective whose ranking is misaligned with reconstruction accuracy is not,
+by itself, a route to accurate H+. Earlier solver limitations remain real, but
+they cannot serve as a blanket explanation or a reason to extend every run.
+Likewise, the information-limit calculation cannot explain away degradation of
+this specific recoverable clean benchmark. Separate information, objective
+preference, representation and finite optimization in future decisions.
+
+The next scientific direction
+
+My recommendation is to retain the original flexible NLO/FiLM/free-moment
+framework and the useful baseline, close this P2A candidate, and give priority
+to the already planned P2B information/compatibility design. This is a proposed
+research priority, not an executed new comparison or permission to release fits.
+
+P2B asks a different question: how much uncertainty-bearing forward information
+improves inference. First establish a compatible NLO/MSbar/fixed-nf=3 scale and
+channel mapping, a coherent uncertainty model, common CFF/PDF loss normalization,
+and a finite x interval the existing network can represent. The current odd
+quark network vanishes at x=0, and t=0 lies outside its observed negative-t nodes;
+endpoint and boundary behavior require an explicit check. A dense PDF grid is
+not a set of independent new measurements. [S38]
+
+The cleanest first controlled design uses a forward input consistent with the
+CFF-generating benchmark, with stated uncertainty. Real proton PDFs instead
+require a compatible benchmark; attaching them to unrelated Z1 CFFs would mix
+input inconsistency with method performance. Retain baseline versus PDF-only
+as the clean primary contrast. The failed P2A penalty is not automatically a
+beneficial ingredient in a combined arm. Forward constraints may anchor some
+channel/amplitude freedom, but the same-forward D-term pair sets a clear limit
+on what they can resolve.
+
+Any new stabilization proposal also needs a declared relationship between its
+strength, input precision and desired targets before more expensive full fits.
+Inspecting its ranking on existing accurate/degraded states is a useful cheap
+screen, though not validation of fresh optimization. Amplitude shrinkage,
+derivative smoothing, channel normalization and additional physical information
+should be separately interpretable. A derivative-only norm, smaller lambda,
+different architecture or altered solver is a hypothesis, not a remedy already
+established by this failure. Do not select stage 20/40 or another lambda
+retrospectively and reuse the old validation claim.
+
+The original exact-preservation and independent-assessment logic remains useful.
+New methods need matched exact/noisy controls, common supports/weights, separately
+reported field and A/B accuracy, and an independent assessment after selection.
+Observable holdouts test predictions; the existing weak-direction example means
+they cannot alone certify all H+ shapes. Further truth/seed/coverage expansion
+should follow a scientifically credible candidate, rather than enlarge a
+campaign whose basic ranking problem remains unresolved.
+
+The program's defensible endpoint is already clearer
+
+There is a substantial methods result: flexible, physics-coupled reconstruction
+works on controlled inputs; symbolic simplification and selected-target calibration
+work at bounded scopes; data quality and direction matter; estimator choices can
+introduce large bias; and some off-forward information is intrinsically weak
+under the stated observation law. Positive upstream improvement shows avoidable
+error exists. Failed P2A preservation shows an intuitively plausible downstream
+regularizer can lose a capability the baseline already possessed.
+
+The stronger experimental goal remains unfinished: a robust central reconstruction
+with justified total H+ uncertainty. The current central curve, method sensitivity,
+coherent input spread and finite-budget response are distinct evidence products.
+The synthetic A/B cutoff, P1 errors, two-member spread and P2A outcome cannot be
+combined into an experimental band. No manuscript work was initiated here.
+
+The appropriate perspective is to consolidate those established achievements and
+make the remaining estimator/information question explicit. P2A was a useful
+negative experiment that narrows the next design; it does not reset the program
+to numerical construction or erase its successful closures.

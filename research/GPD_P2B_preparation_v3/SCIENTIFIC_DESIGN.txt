@@ -1,0 +1,178 @@
+P2B v1: compatible synthetic forward information
+26 October 2026
+
+Purpose and present scope
+
+Test whether uncertain forward-boundary information improves the existing Z1
+reconstruction. The first comparison is CFF baseline versus CFF plus forward
+information, with lambda_stab=0. P2A's failed penalty is not included by default.
+This is a controlled information experiment, not an application of a real proton
+PDF set. Original P2A results remain unchanged and its assessment stays stopped.
+
+DESIGN.json specifies the prospective v1 choices before any new joint fit or
+scientific noise draw. This package prepares the observation adapter and bounded
+integration qualification. It does not contain a qualified full-fit/continuation
+driver, and releases no joint fit. It defines a conditional two-fit pilot, not an
+automatic campaign. User authorization in this turn is preparation for P2B.
+
+Benchmark and physical conventions
+
+Use the original Z1 structural generator for both the existing CFF targets and
+the new forward information. The original source explicitly does not certify
+individual-flavor PDFs, QCD positivity or proton sum rules. Do not call Z1 a
+measured proton PDF or interpret the synthetic uncertainty as one.
+
+Keep the original 3867-parameter FiLM, exported fresh seed31 vector, fixed-nf=3
+NLO/MSbar maps and coupling, Q0^2=2 GeV^2 (Q0=sqrt(2) GeV), thirteen negative-t
+moment slices, free permitted polynomial coefficients and numerical inequalities.
+There is no PDF evolution, new kernel, fixed skewness/t profile, measured moment,
+positivity restriction, or new experimental ImH/E/Htilde target.
+
+At x>0 and xi=t=0, U=u+ubar, D=d+dbar, S=s+sbar give
+  Sigma=U+D+S; T_rescaled=U-(D+S)/2; Hg=xg;
+  H+=(2/9)(Sigma+T_rescaled)=(4U+D+S)/9.
+The stored channels do not determine D and S separately. The xf conversion
+helper divides LHAPDF-convention quark x*f values by x and retains xg. Algebraic
+tests exercise that convention, but no LHAPDF provider or real set is selected
+or imported. Any future provider needs an explicit scheme/flavor/coupling and
+metadata adapter. No numerical type or metadata assertion alone certifies that
+an external set has matching physics.
+
+Finite boundary observation and covariance
+
+Use twelve fixed geometric x locations from 0.02 through 0.8 inclusive, three
+stored channels each, at xi=t=0 and Q0. Vector order is x-major/channel-minor.
+These are 36 correlated synthetic boundary measurements. They are not a claim
+to 36 independent measurements or to a continuous PDF band.
+
+With f_ic the central Z1 boundary value, define once, independently of fitted
+parameters,
+  s_ic=0.10*max(abs(f_ic), 0.05*max_j abs(f_jc));
+  Kx_ij=exp(-abs(log(x_i)-log(x_j))/0.7);
+  Kc=[[1,.5,0],[.5,1,0],[0,0,1]];
+  C_(ic,jd)=s_ic Kx_ij Kc_cd s_jd.
+
+The ten-percent scale, five-percent floor, support, correlation length and channel
+correlation are declared sensitivity-design choices, not fitted hyperparameters
+or empirically calibrated PDF uncertainties. They were specified before inspecting
+this package's boundary diagnostics. Their usefulness must be judged under this
+scope; there is no precision sweep or retrospective retuning in v1.
+
+The supplied covariance is full rank (36), condition number about 1.155e4. Use
+Cholesky whitening of the complete vector. Reject singular/indefinite inputs;
+do not invent jitter, zero uncertainty, diagonal errors or a pseudoinverse of a
+future replica covariance. Unmeasured continuum directions have no penalty,
+not zero uncertainty. Refining a display or checking grid does not add residuals.
+
+CENTRAL_FORWARD.npz contains only x, observed boundary values and covariance.
+The fitting adapter imports no truth generator. The central control sets observed
+values equal to the generator but RETAINS this finite covariance. It is a noiseless
+realization control, not an uncertainty-free equality boundary condition.
+
+The later development draw is prospective: PCG64 seed 2026102601, 36 standard
+normal variates in the declared vector order, y_PDF=f+L*z, L=chol(C). Archive the
+actual z and y bytes and generator/version identities once after release; reuse
+those arrays across platforms. Do not redraw for an unfavorable result. This
+draw has not been generated. Independence from CFF perturbations is an explicit
+synthetic assumption; it must not be transferred to real PDF/CFF data sets.
+
+Objective and estimator
+
+Append r_PDF=L^-1(F_theta(x,0,0)-y_PDF)/sqrt(160) to the 6010 original residuals.
+There are 6046 residuals, 3867 parameters and the original numerical constraints.
+Use the actual vector Jacobian, not one scalar sqrt(chi2_PDF) residual.
+
+  J_joint=J_P1+chi2_PDF/160
+         =(chi2_CFF+chi2_PDF)/160+J_poly.
+
+Keep original CFF sigmas and row masses, including repeated coordinates. There
+is no extra PDF strength or division by PDF grid count, and lambda_stab=0.
+Because the reused half-amplitude CFF perturbation has the ORIGINAL sigmas in the
+loss, this is a fixed-estimator sensitivity study with a declared working metric,
+not the exactly specified likelihood of the half-amplitude generative law.
+
+All scientific runs must use the exported fresh seed31 array, 400 Adam updates,
+at most 60 original outer iterations and 12000 total solver evaluations including
+continuations. Preserve deterministic objective/seed/stage ranking and original
+output eligibility. Save 0/20/40/60 or actual terminal stage, named objective
+terms, stopping/KKT diagnostics and actual resource costs. No truth-selected
+checkpoint, fitted-state warm start, new architecture or true-moment injection.
+
+Representation, boundary and tails
+
+The quark network is odd and vanishes at x=0; all channels have (1-x^2)^2
+envelopes. Restrict the observation to the declared finite support. t=0 is outside
+the original negative-t collocation range. New boundary data can constrain the
+network there without proving its finite-t interpolation or extrapolation.
+
+The local forward-only diagnostic fixes hidden weights at fresh seed31 and solves
+once for the existing output head on 81 training points. It checks 161 staggered
+points with predeclared rank tolerance and accuracy limits. This is not a joint
+fit or a proposed initializer. It demonstrates sampled boundary representability;
+its large head norm and cancellation do not demonstrate easy or stable joint
+optimization. Simultaneous CFF/moment feasibility is still a joint-fit question.
+
+No tail, endpoint or full-moment observations are added. The separate analytic
+Z1 tail diagnostic estimates 8.50% of its forward H+ first moment outside
+[.02,.8]; this is scoring-only generator information, not an error bound for a
+reconstructed field. Point observations also leave between-point freedom.
+
+The previously constructed D-term alternatives share forward functions. This
+new information gives them identical boundary likelihoods. It cannot resolve
+that ambiguity or provide a full off-forward uncertainty band.
+
+Conditional pilot and decisions
+
+1. P2B_exact_center_s31: original exact CFF input plus central forward vector
+   with finite covariance; reuse the P1 exact baseline. One new fit, conditional
+   on preparation/integration review and a qualified execution driver.
+   Require normal numerical eligibility, observed-slice H+ relative L2 <=.02,
+   absolute target A/B relative errors <=.02, and PDF whitened RMS <=1.
+   All tests use unrounded inclusive values. These are declared methodological
+   safeguards, not confidence or QCD thresholds. Failure stops v1 expansion.
+
+2. P2B_half_development_s31: original inspected half-amplitude CFF vector plus
+   the one prospective coherent PDF draw; reuse the P1 half baseline. One new fit
+   only after case 1 passes and is reviewed. Its existing CFF realization means
+   this is development, not an independent assessment.
+   Advance only if observed-slice squared H+ error improves beyond the frozen
+   tolerance and neither target's absolute relative error worsens beyond its
+   analogous tolerance: 1e-10+1e-6*max(abs(candidate),abs(baseline)). Keep every
+   outcome. Do not add a strength/grid/covariance/seed after seeing this result.
+
+Targets retain xi=.275, t=-.363, Q0: A=5 integral_.2^.4 H+ dx and
+B=integral_0^1 x H+ dx. Score observed-slice, ERBL/DGLAP, wider-chart, internal
+channels, A/B, CFF fit/truth errors, boundary fit/truth errors and omitted-support
+behavior separately. No threshold or improvement on one support transfers to
+another. Independent CFF/PDF noise pairs and another truth family are later
+experiments with separately frozen designs; none is released here.
+
+The eventual four-way baseline/stabilizer/PDF/combined comparison remains a
+possible design. The failed P2A candidate is historical evidence, not a required
+ingredient or an automatic combined arm. Real proton PDFs remain a separate
+compatibility and benchmark problem.
+
+Next concrete work
+
+The supplied allocated-node probe tests full residual/Jacobian, legacy Oracle,
+unchanged constraints, model construction, trial evaluation and checkpoint values
+with at most one diagnostic outer step. It reports whether a nonempty active
+constraint path actually occurred. It does not qualify the full finalizer,
+scientific selection gates, noise-generation controller or continuation driver.
+Those must be constructed and checked before the two-case pilot is launched.
+
+Preserve this package and returned evidence. A failed or incomplete preflight
+is not a failed scientific reconstruction. A passing preflight is not evidence
+that P2B improves H+, and does not automatically launch a scientific fit.
+
+Package revision 2 evidence update: all eight local original-interface value
+checks now pass. See INTERFACE_COMPLETION.txt. The full joint Jacobian and solver
+step remain pending; all scientific choices in DESIGN.json are unchanged.
+
+Package revision 3 operational update: the user requested efficient GPU-cluster
+execution after the long P2A run. NEXT_ACTION.txt and performance/COMPUTE_PLAN.json
+now govern implementation/profiling resources instead of the one-CPU limits
+above or in DESIGN.json. Compare CPU1, CPU8/cache and one-GPU hybrid at two
+frozen diagnostic states (at most six one-step probes, no scientific fits).
+All scientific choices and budgets remain unchanged. Full GPU code and
+performance are still to be implemented/qualified on the receiving cluster.

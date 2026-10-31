@@ -1,0 +1,148 @@
+{
+  "id": "published_ReH_Hplus_central_v1",
+  "status": "prepared; no experimental fits or experimental-coordinate maps run here",
+  "publication": "Le and Keller, arXiv:2504.15458v4",
+  "input": {
+    "path": "inputs/final_summary_by_DNN.csv",
+    "sha256": "8d7274db9dd7e4fcc3ab84c0230701242274e42868f9c3e66e3d61a1a6838696",
+    "role": "user-identified publication source; supplied unmerged analysis snapshot used explicitly",
+    "cuts": {
+      "Q2_GeV2_strictly_above": 1.5,
+      "abs_t_over_Q2_at_most": 0.25
+    },
+    "rows": 160,
+    "target_column": "Pred ReH",
+    "reported_sigma_column": "Pred ReH Std",
+    "uncertainty_content": "source statistical/systematic propagation retained; do not add again",
+    "loss_input": "ReH_internal = -source ReH, quoted sigma unchanged",
+    "no_new_merge": true,
+    "no_joint_H_dominance_substitution": true
+  },
+  "physics": {
+    "Q02_GeV2": 2.0,
+    "alpha0": 0.35691594851514724,
+    "order": "NLO",
+    "nf": 3,
+    "scheme": "MSbar",
+    "running": "two-loop",
+    "muF": "Q",
+    "muR": "Q",
+    "xi": "xB/(2-xB), explicitly leading-power mapping",
+    "quantum_numbers": "only vector H sector; internal Sigma,T_rescaled,Hg=xg for its closed evolution",
+    "reported_GPD": "Hcharge_plus=(2/9)*(Sigma+T_rescaled)",
+    "Q2_below_Q02": "integrate backwards with same ordered evolution; validate, do not discard or relabel"
+  },
+  "network": {
+    "architecture": "original reference-scale FiLM",
+    "parameters": 3867,
+    "input": [
+      "x",
+      "xi_squared",
+      "standardized_actual_t"
+    ],
+    "no_Q2_input": true,
+    "t_mean": -0.363197,
+    "t_std_population": 0.22654909308690688,
+    "seed_list": [
+      31,
+      43
+    ],
+    "no_pseudodata_warmstart": true
+  },
+  "objective": {
+    "data": "sum_i((ReH_pred_internal_i-ReH_internal_i)/sigma_reported_i)^2 / 160",
+    "covariance_role": "reported marginal errors used as diagonal numerical weights for the central fit",
+    "lambda_poly": 1.0,
+    "poly": "mean over fixed t slices of the original all-allowed, variable-projected moment penalty",
+    "moment_t_nodes": [
+      -1.3732,
+      -0.65465,
+      -0.47088,
+      -0.363,
+      -0.28,
+      -0.21,
+      -0.11
+    ],
+    "xi_nodes": {
+      "count": 41,
+      "min": 0.02,
+      "max": 0.98
+    },
+    "spins": [
+      2,
+      4,
+      6,
+      8
+    ],
+    "moment_coefficients": "all allowed coefficients free separately at each t; no symbolic support pruning",
+    "scales": "same deterministic unit-reference moment integrals as prior accepted model",
+    "data_denominator": 160,
+    "poly_denominator": 3444,
+    "nuisance_CFF_inputs": [],
+    "imaginary_data_loss": false
+  },
+  "optimization": {
+    "implementation": "adapt existing diagnostics-first finite-budget runtime, no new solver",
+    "adam_steps": 400,
+    "learning_rate": 0.003,
+    "trust_region_iterations": 60,
+    "starts": [
+      31,
+      43
+    ],
+    "candidate_stages": [
+      0,
+      20,
+      40,
+      60
+    ],
+    "ranking": [
+      "J",
+      "seed",
+      "stage"
+    ],
+    "max_candidates_checked": 4,
+    "record_both_seeds": true,
+    "reporting": "finite, fully evaluated candidates retained with continuous diagnostic flags; no stationarity claim"
+  },
+  "validation": {
+    "source_sign_and_input_hash": true,
+    "new_coordinate_map_refinement": true,
+    "moment_order_per_side": [
+      48,
+      96,
+      192
+    ],
+    "off_node_xi_count": 80,
+    "t_check": "all 79 actual t values; distinguish 7 fit t nodes from others",
+    "error_metrics": [
+      "ReH weighted residual",
+      "candidate/reference CFF components",
+      "field refinement",
+      "polynomiality by t/spin/channel",
+      "target quadrature",
+      "wall time and memory"
+    ],
+    "old_guides_reported_not_automatic_stops": {
+      "CFF": 0.0001,
+      "field_relative": 0.001,
+      "moment_RMS": 0.001
+    },
+    "hard_stops": [
+      "corrupted source/cache",
+      "wrong shape/convention",
+      "nonfinite/unusable numerical result",
+      "insufficient assigned compute/storage"
+    ]
+  },
+  "execution": {
+    "current_stage": "tested input/adapter; missing exact-coordinate maps require work on faster machine",
+    "families": 67,
+    "xi_Q2_maps": 102,
+    "preflight_families": 1,
+    "reuse": "one generator per exact xi/order/source/numerical recipe; all Q2 and t reuse it",
+    "no_replica_or_calibration_campaign": true,
+    "no_extra_physics_prior": true,
+    "no_experimental_intervals_yet": true
+  }
+}

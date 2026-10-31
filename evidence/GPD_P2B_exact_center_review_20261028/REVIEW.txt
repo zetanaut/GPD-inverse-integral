@@ -1,0 +1,196 @@
+P2B EXACT-CENTER RESULT: INDEPENDENT LOCAL REVIEW
+28 October 2026
+
+Decision
+
+Accept the returned exact-center preservation result at its stated scope. The
+normally selected, numerically eligible stage-60 output passes all four frozen
+gates, and independent saved-network replay reproduces the reported field,
+target and forward-boundary scores. This is a useful positive clean-input
+control after the failed P2A preservation experiment.
+
+It does not yet establish improved noisy reconstruction, calibrated uncertainty,
+uniform field accuracy, or recovery of all internal channels. Scientifically,
+the result supports proceeding to the already specified single half-noise
+development comparison. That case is not launched or released by this review.
+The omitted execution/acceleration evidence should be attached and reviewed
+before completing its execution package; recover existing evidence rather
+than repeat the completed exact-center fit.
+
+Primary comparison
+
+All field/target errors below are relative percentages; PDF RMS is dimensionless.
+The exact baseline and P2B use the same frozen scoring supports and seed 31.
+
+Metric                              Exact baseline       P2B        Gate
+Observed-slice H+ relative L2           0.920287         0.469477     <=2%
+Absolute target A relative error       0.484767         0.676725     <=2%
+Absolute target B relative error       0.869098         0.251647     <=2%
+Forward PDF whitened RMS               0.771614         0.000795771  <=1
+Wider-chart H+ relative L2              0.750171         0.535259     diagnostic
+
+Observed H+ error decreases by 48.99%, and wider-chart H+ error by 28.65%.
+Target B improves substantially. Target A worsens by 0.191958 percentage points
+while staying comfortably within the exact-center safeguard. This is permitted
+by the exact-center gates; the later development no-worsening rule is a separate
+prospective comparison and must not be retroactively applied here.
+
+A=5 integral_[.2,.4] H+ dx and B=integral_[0,1] x H+ dx at xi=.275,
+t=-.363 GeV^2 and Q0^2=2 GeV^2. The selected values are
+A=0.3594617201592023 and B=0.11027507316927768; both errors are negative.
+The truth values are 0.3619108615320205 and 0.1105532776465300.
+
+What the positive result establishes
+
+The unchanged flexible FiLM can accommodate the declared 36 correlated synthetic
+forward samples together with the original CFF and finite moment conditions at
+the selected state. The input covariance retains its finite ten-percent scale;
+its formula, rank 36 and Cholesky whitening reproduce locally. The objective is
+J_P1+chi2_PDF/160, with lambda_stab=0 and no new measured-moment injection.
+
+At stage 60 the recorded components are J_CFF=2.382336749430799e-7,
+J_poly=1.673021964481054e-7 and J_PDF=1.4248175669190178e-7, giving
+J_joint=5.48017628083087e-7. The PDF term is independently replayed; the
+other two terms and their sum are checked for record-level consistency only.
+The CFF RMS in original sigma units is 0.000488091871416724.
+
+The very small PDF whitened RMS is a residual to a noiseless central realization,
+not an inferred uncertainty or evidence of calibrated sub-permille precision.
+Even the original exact-CFF baseline has PDF RMS below 1. The new arm greatly
+improves its central-boundary match, but the gate alone would not demonstrate
+that PDF information is necessary or that it helps under random perturbations.
+
+The result is substantially stronger than the earlier forward-only output-head
+witness: it is a fresh full joint fit and an eligible selected state. Its scope
+remains one Z1 truth, one initialization, exact CFFs and central synthetic PDF
+values. It is not a real proton PDF application or independent noise assessment.
+
+Tradeoffs that the four gates do not capture
+
+The improvement is not uniform across the field or channel decomposition.
+On the identical wider chart, the maximum slice H+ relative L2 increases from
+1.75087% to 2.27701%. Wider-chart ERBL error increases slightly from 0.68165%
+to 0.71635%, while DGLAP improves from 0.76313% to 0.49112%.
+
+Wider-chart internal-channel errors all increase:
+  Sigma:       3.72979% -> 7.30726%
+  T_rescaled: 12.07882% -> 21.76231%
+  Hg=xg:       0.62293% -> 1.32393%
+
+At the forward boundary on the 201-point supported grid, their errors instead
+fall to 0.05261%, 0.07397% and 0.00954%. Better boundary/channel matching does
+not establish better off-forward channel identification. The charge-weighted
+combination remains much better recovered than its individual quark components.
+
+Post-selection tail checks improve too, but remain benchmark diagnostics. The
+high-x [.8,1] forward H+ relative L2 is 0.62274%, versus 10.06368% for the
+baseline; the high-x first-moment contribution error is -0.73124%. Finite-x
+observations do not measure those tails or distinguish the program's known
+same-forward D-term alternatives. No full-function uncertainty band follows.
+
+Checkpoint selection and finite-budget interpretation
+
+Saved stages show the following progression; these diagnostics do not reselect
+the estimator:
+
+Stage      J_joint            Observed H+ error     Wider-chart H+ error
+  0        23.715187812            99.95578%              100.00507%
+ 20         0.003782664374          4.06007%               15.49203%
+ 40         0.000007118321          0.77544%                1.30786%
+ 60         0.000000548018          0.46948%                0.53526%
+
+Stage 60 has the smallest supplied objective and passes original eligibility.
+The original finalizer seals objective/eligibility selection before truth
+scoring. The saved flat/state_dict agree, and final.pt, STAGE60.pt and the
+terminal solver vector agree. Stage 0 is exactly the exported fresh seed 31
+vector: original restoration chose the random start after the 400 Adam updates.
+
+The history contains 60 accepted outer updates and 121 solver evaluations,
+within the frozen 400 Adam / 60 outer / 12000 evaluation budget. The last
+available pre-final KKT diagnostic is iteration 59 and fails stationarity
+(gradient norm 0.00178485). It precedes the final accepted step. There is no
+terminal convergence certificate; FINITE_BUDGET_FEASIBLE is the right label.
+
+Original returned checks report finite constraints, zero exceedances, maximum
+normalized constraint -0.562281, passing moment refinements and passing full
+operator checks at rows 0/80/159. Those checks have consistent file identities;
+the local review does not recompute the NLO maps or numerical constraints.
+
+Execution and actual cost
+
+Parent job 22081808 reached the complete optimization budget, then exited 75 at
+its planned ten-hour checkpoint pause before summary/finalization. Its Slurm
+FAILED 75:0 status records that application pause, not a scientific failure.
+Evaluation job 22117473 completed 0:0 and used the original finalizer without
+additional Adam updates, outer updates or solver evaluations. The reconstructed
+summary and diagnostics exactly match their frozen control copies.
+
+Parent elapsed: 10:02:33. Evaluation elapsed: 00:00:52.
+Combined allocated-job elapsed: 10:03:25, excluding queue delay and earlier
+performance qualification. Combined TotalCPU: 11:43:46.938. Parent batch peak
+RSS: 14.59 GiB. Evaluation peak: about 4.99 GiB. Do not quote the 52-second
+evaluation as the cost of the scientific fit.
+
+The fit used no GPU: cpu_guarded, one field/rank thread and eight solver BLAS
+threads. Of 35,957.34 recorded solver seconds, 32,776.54 seconds (91.15%) were
+in norm subproblems; residual Jacobians took 264.49 seconds (0.74%). Recorded
+CPU utilization is about 14.6% of eight allocated CPU core-hours. These figures
+identify the dominant cost but do not establish a matched acceleration factor.
+Any further performance work should address the complete constrained step and
+retain the scientific algorithm; moving only field evaluation to a GPU cannot
+by itself remove the observed dominant cost. Prior profiling cost is omitted
+from this return and cannot be included in a complete program cost estimate.
+
+Independent verification and remaining evidence gap
+
+Archive: review_GPD_P2B_exact_center_evaluation_v1.zip
+SHA256: 533306daffe457ff40a541cc91c951c9836a84248cee04f2659a2848d4de8bf9
+
+Verified all 112 payload hashes, 51 result-retention entries, 26 staged parent
+artifacts against their recorded parent identities, 54 preparation entries,
+11 execution-source entries and 4 evaluation-source entries. The embedded v3
+ZIP is identical to the prior local package. Reused model, truth, metric,
+geometry, exact-input and initial/baseline arrays match the frozen P1 manifest.
+
+Independent CPU replay evaluates the baseline and P2B stages 0/20/40/60, observed
+and wider-chart fields, both targets, all forward samples, the covariance and
+whitened residuals, supported-grid channels and 80/160-node tail diagnostics.
+Maximum difference from the selected returned metrics is 4.57e-14. Replay used
+about 0.29 GB peak RSS and a few seconds. Checkpoint counters/history, selection,
+result links and objective arithmetic also agree. Returned logs/hash bindings
+confirm 26 execution and 10 evaluation software fixture tests; these tests were
+not rerun locally and are not full-model derivative qualification.
+
+The archive omits P2B_acceleration_a02 (including its manifest), the existing
+acceleration/parity/performance review and budget audit, and the parent fit's
+scientific-readiness/resource receipts and submitted script. Their hashes are
+bound by the parent RUN_SPEC, but a hash without content does not allow review
+of what the CPU cache/thread overlay changed or why this backend was selected.
+The exact missing paths and acceleration-manifest hash are recorded separately
+in PACKET_VERIFICATION.json. The complete original P1 capsule and cluster
+environment are also not duplicated; local scoring dependencies were reused
+with verified identities.
+
+Accordingly, acceptance here covers the saved scientific result and its
+documented consistency, not a fresh certification of the entire optimizer
+trajectory, full joint derivatives, CPU/GPU parity or acceleration claims.
+No fit, scientific noise, NLO rebuild, cluster operation or manuscript work
+was performed locally. Frozen returned and historical evidence remain unchanged.
+
+Next decision
+
+Keep P2A closed at STOP_PRESERVATION_FAILED. Retain this successful P2B control.
+Recover the omitted existing execution/qualification evidence, then prepare the
+one prospective P2B half-amplitude development case under the unchanged v1
+design. Use the existing CFF vector and baseline, original sigmas, fresh seed 31,
+lambda_stab=0, fixed covariance and fixed budget. Generate the prescribed
+PCG64 seed 2026102601 PDF draw once only when that case is released and archive
+the exact z/y bytes. Apply the frozen improvement/no-target-worsening rule.
+
+The already inspected CFF realization makes that next run development. Even a
+win would require separately designed independent CFF/PDF noise pairs and truth
+families before claiming robust reconstruction or calibrated uncertainty.
+
+Reproduction: /Users/dustin/miniforge3/bin/python -B
+GPD_P2B_exact_center_review_20261028/review_saved_results.py
+Numerical evidence: REVIEW_EVIDENCE.json. Provenance: PACKET_VERIFICATION.json.

@@ -1,0 +1,45 @@
+{
+  "status": "UNRESOLVED",
+  "scope": "full-support fixed-flavor unpolarized spacelike DVCS NLO; development only",
+  "xi": 0.135,
+  "q02": 2.0,
+  "q2": 2.3,
+  "nf": 3,
+  "scheme": "MSbar",
+  "alpha0": 0.35691594851514724,
+  "muF2": "Q2",
+  "muR2": "Q2",
+  "state": [
+    "Sigma",
+    "T_rescaled",
+    "Hg"
+  ],
+  "charge_GPD": "(2/9)*(Sigma+T_rescaled)",
+  "Hg_forward": "x*g(x)",
+  "truth_function": "src.replay.analytic_input",
+  "saved_original_eta_nx": [
+    48,
+    64
+  ],
+  "saved_physical_x_nx": [
+    48,
+    64,
+    96,
+    128
+  ],
+  "frozen_reference_points": [
+    {
+      "xi": 0.135,
+      "Q2": 2.3
+    },
+    {
+      "xi": 0.275,
+      "Q2": 4.7
+    },
+    {
+      "xi": 0.455,
+      "Q2": 9.3
+    }
+  ],
+  "fit_or_experiment_authorized": false
+}

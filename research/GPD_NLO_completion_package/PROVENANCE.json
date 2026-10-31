@@ -1,0 +1,27 @@
+{
+  "input_archives": [
+    {
+      "archive": "GPD_task03_resolution_decision.zip",
+      "sha256": "fd3deea6a0852bc655d846b8cfa7e38953b0a0e1df3287aa7278907fe0a6f25e"
+    },
+    {
+      "archive": "review_03_portable_precision_blocker.zip",
+      "sha256": "fd4002b84e326b00201f3e1d472cb8cd2af9bb7407436acdc9564399a51bc122"
+    },
+    {
+      "archive": "GPD_task03_portable_precision.zip",
+      "sha256": "8fc2cd4e4569a0ecdded56ccfc40f440d731e2b0208e80afc4657d17114826be"
+    },
+    {
+      "archive": "GPD_NLO_hard_repair.zip",
+      "sha256": "afd458c6dae0da495a42fc0d058f5e0b6885812854b234231419ad2b5e6cee59"
+    },
+    {
+      "archive": "review_01r1.zip",
+      "sha256": "ebb7a6a9abb2b4cafdfe2693eb0e51d66b64bf205372641bb37eed47a09757d7"
+    }
+  ],
+  "frozen_fortran_origin": "review_03_portable_precision_blocker.zip/candidate/f90src, complete captured portable source",
+  "physical_x_fields": "Saved exploratory fields only; exact generator build source differs from captured eta source in some helper modules. Do not claim these fields were regenerated from frozen/fortran.",
+  "no_experimental_data": true
+}

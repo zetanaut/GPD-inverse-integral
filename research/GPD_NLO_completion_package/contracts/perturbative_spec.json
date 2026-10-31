@@ -1,0 +1,48 @@
+{
+  "stage": "01",
+  "revision": "r1",
+  "status": "proposed_for_review_not_implemented",
+  "process": "leading-twist, helicity-conserving, unpolarized spacelike DVCS H at fixed t; no E=0 assumption for physical cross sections",
+  "scheme": "massless MSbar, fixed nf=3, Nc=3, CF=4/3, CA=3, TF=1/2; no automatic flavor switching or heavy-quark threshold matching",
+  "domain": {"xi": "0<xi<1", "x": "-1<=x<=1", "Q2_GeV2": "2<=Q2<=20 in the synthetic benchmark", "t": "fixed 0 GeV2 in mathematical synthetic closure only; physical-data t requires separate kinematic validation"},
+  "scales": {"Q0_squared_GeV2": 2.0, "muF_squared": "Q2", "muR_squared": "Q2", "scale_variations": "not part of nominal estimator; later matched variation requires consistent coefficient/evolution changes"},
+  "coupling": {
+    "variable": "a=alpha_s/(4*pi)",
+    "rge": "da/dln(muR^2)=-beta0*a^2-beta1*a^3+O(a^4)",
+    "beta0_nf3": 9,
+    "beta1_nf3": 64,
+    "boundary": "alpha_s(Q0^2)=4*pi/[9*ln(2/0.2^2)]=0.35691594851514724, inherited as a continuity convention from LO; solve the two-loop RGE from this boundary, not by reusing Lambda_LO=0.2 GeV as Lambda_NLO",
+    "thresholds": "none; synthetic nf=3 is not a physical charm treatment"
+  },
+  "basis": {
+    "state": "[Sigma,T,Hg], T=u_plus-(d_plus+s_plus)/2; Sigma=sum_q Hq_plus; Hq_plus(x)=Hq(x)-Hq(-x); Hg(x,0,0)=x*g(x) for x>0",
+    "parity": "Sigma and T odd in x; Hg even in x",
+    "charges_nf3": {"u": "4/9", "d": "1/9", "s": "1/9"},
+    "hard_quark_input": "Hcharge_plus=(2/9)*(Sigma+T); apply e_q^2 exactly once",
+    "hard_gluon_charge": "sum_q e_q^2=2/3 in direct gluon coefficient; no additional 2/9 prefactor on that term",
+    "nonsinglet": "Ncharge=(2/9)*T; retain distinct vector nonsinglet plus/minus kernels as required by charge-conjugation sector at NLO",
+    "conversion_gate": "Match R3 gluon convention to baseline Hg=xg and R2 ERBL normalization to full-support physical-x operator; no assumed factor of x, xi, 2, or nf"
+  },
+  "evolution": "dH/dln(muF^2)=[alpha_s/(2*pi) K0+(alpha_s/(2*pi))^2 K1] tensor H+O(alpha_s^3), with coupled Sigma/Hg and separate T; K0 must equal the frozen baseline operator. Convert R2's kernel normalization and distributional local terms explicitly before use.",
+  "hard": {
+    "order": "Cq0+O(alpha_s) Cq1 including quark factorization logarithm, and direct O(alpha_s) Cg1 including gluon factorization logarithm; evaluated with NLO-evolved GPDs and two-loop alpha_s",
+    "primary_formulas": "R3 Eq. (12) vector parity, Eq. (13) quark DVCS, Eq. (14) gluon DVCS; their C1 already contains alpha_s/(4*pi), CF or TF, and charge factors",
+    "baseline_LO": "ReH=PV integral_0^1 [1/(x-xi)+1/(x+xi)] Hcharge_plus dx; ImH=-pi Hcharge_plus(xi)",
+    "overall_sign_gate": "R3 uses Cq0=-e_q^2/(x+xi-i0) on -1<=x<=1; require an explicit LO convolution identity reproducing both baseline components before importing NLO terms. A common overall sign conversion is expected, not yet numerically certified.",
+    "i0": "Use x+xi-i0 and x-xi+i0 exactly as R3 Eqs. (13)-(14); ln(z-i0)=ln|z|-i*pi for negative real z. Treat poles and crossover logarithms distributionally, with two-sided limits and contour/adaptive checks; never evaluate a singular point by naive substitution.",
+    "muF_log": "ln(Q2/muF^2) vanishes nominally but retain Ccoll maps for scale-variation tests; muR dependence enters alpha_s and consistent truncation",
+    "d_term": "Evolve any included D-term with the GPD and convolve once; no separate fitted subtraction constant or extra hard factor"
+  },
+  "frozen_reference_points": [
+    {"xi": 0.135, "Q2_GeV2": 2.3, "t_GeV2": 0.0},
+    {"xi": 0.275, "Q2_GeV2": 4.7, "t_GeV2": 0.0},
+    {"xi": 0.455, "Q2_GeV2": 9.3, "t_GeV2": 0.0}
+  ],
+  "frozen_reference_input": "At Q0^2 and t=0 use Sigma=2*x*(1-x^2)^2*(1+0.2*xi^2), T=0.5*x*(1-x^2)^2*(1-0.1*xi^2), Hg=0.8*(1-x^2)^2*(1+0.1*xi^2) on |x|<=1, zero elsewhere; repeat separately with the explicit qD/gD terms defined in inference_contract.json. These smooth functions are numerical coefficient/evolution fixtures, not final polynomiality truths.",
+  "reference_acceptance_proposal": "At the three frozen points, require componentwise Re/Im absolute discrepancy <=1e-4 times max(1,abs(reference)) against independently implemented continuum coefficient quadrature, and evolved-field relative L2 discrepancy <=1e-3 against a converged pinned full-support reference; demonstrate a resolution plateau and tighten for derivatives. These are prospective thresholds to review before stage 02, not achieved results.",
+  "implementation_gates": [
+    "Stage 02: independently derive and numerically verify R3-to-baseline LO sign/normalization, direct-gluon normalization, complex branches, and derivatives.",
+    "Stage 03: verify complete full-support R2 kernels including qq/qg/gq/gg and both nonsinglet sectors, plus/local terms, crossover and forward limits against a pinned independent implementation; source availability alone is insufficient.",
+    "If any source transformation or independent full-support check cannot be established, report a named blocker and do not substitute guessed formulas."
+  ]
+}

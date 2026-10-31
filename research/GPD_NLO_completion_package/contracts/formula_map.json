@@ -1,0 +1,27 @@
+{
+  "stage": "01",
+  "revision": "r1",
+  "source_ids": {
+    "R1": {"url": "https://arxiv.org/pdf/hep-ph/9908337", "version": "v1", "use": "kinematics and original spacelike DVCS coefficient cross-check"},
+    "R2": {"url": "https://arxiv.org/pdf/hep-ph/9912379", "version": "v1", "use": "massless MSbar two-loop nonforward vector evolution"},
+    "R3": {"url": "https://arxiv.org/pdf/1301.3819", "version": "v1", "use": "explicit spacelike DVCS quark/gluon hard coefficients and i0 branches"},
+    "R4": {"url": "https://arxiv.org/pdf/hep-ph/0307382", "version": "v2", "use": "GPD conventions, sum rules and positivity scope"}
+  },
+  "local_baseline_root": "completion_runs/00/baseline/gpd_poly_symbolic_v5",
+  "proposed_local_functions": "Names below are future task-scoped interfaces, not existing code and not authorized for implementation by task 01.",
+  "terms": [
+    {"term": "LO amplitude and charge map", "source": "R3 Eqs. (11)-(13); baseline PRESCRIPTION.md sections 2,5", "existing": "vendor/gpd_lo_baseline_v4/vendor/gpd_perturbative_v3/gpdpert/matching.py:coefficient_rows; src/environment.py:rows", "future": "task02.match_lo_convention", "independent_test": "Full-flavor versus reduced [Sigma,T,Hg] over mixed shapes; Re and Im LO against adaptive complex contour; recover frozen v3 rows."},
+    {"term": "NLO quark vector coefficient and collinear log", "source": "R3 Eqs. (12)-(13), checked against R1 Eqs. (14)-(17) after convention conversion", "existing": "none", "future": "task02.cq1_msbar", "independent_test": "Independent R1/R3 formula comparison, complex-plane samples in ERBL/DGLAP, crossover limiting quadrature and muF-log derivative."},
+    {"term": "direct NLO gluon coefficient and collinear log", "source": "R3 Eqs. (12),(14); sum e_q^2 and TF included", "existing": "none", "future": "task02.cg1_msbar", "independent_test": "Independent R1/R3 expression comparison after gluon normalization conversion; zero at LO, nonzero at O(alpha_s); pure-gluon shape and branch checks."},
+    {"term": "one-loop kernels", "source": "R2 Eqs. (73)-(78), baseline PRESCRIPTION.md sections 3-4", "existing": "vendor/gpd_lo_baseline_v4/vendor/gpd_perturbative_v3/gpdpert/kernels.py:kernels,local_terms; evolution.py:Evolution", "future": "task03.k0_adapter", "independent_test": "Exact equality to frozen LO operator on resolved grid; adaptive crossover, forward DGLAP and finite conformal moments."},
+    {"term": "two-loop vector qq, qg, gq, gg and nonsinglet kernels", "source": "R2 Eqs. (175)-(185), including regularization/delta terms in (175)-(176), and full-support continuation discussed in section 4", "existing": "none", "future": "task03.k1_full_support", "independent_test": "Pinned tiktaalik vector NLO kernel matrices and evolved GPDs, each sector and ERBL/DGLAP/crossover; compare forward limits and NLO moments. Independent numerical check not yet run."},
+    {"term": "two-loop coupling and ordered evolution", "source": "R2 Eq. (3) kernel-order convention; fixed-nf QCD beta coefficients checked against pinned tiktaalik f90src/qcd/alpha_qcd.f90", "existing": "vendor/gpd_lo_baseline_v4/vendor/gpd_perturbative_v3/gpdpert/evolution.py:Prescription is LO only", "future": "task03.alpha_two_loop,task03.evolve_nlo", "independent_test": "RGE residual, reversibility/composition, nf=3 momentum and nonsinglet moments, independent pinned-code comparison with common alpha boundary."},
+    {"term": "GPD forward limits, sum rule and positivity applicability", "source": "R4 Eqs. (21)-(24),(30),(192),(200) and section 3.12.3", "existing": "vendor/gpd_lo_baseline_v4/src/truths.py:dd_profile only for synthetic references", "future": "task04.constraint_validator", "independent_test": "Parity/support/moment tests and external-PDF/E-bound checks only where required flavor and scheme inputs exist."}
+  ],
+  "reference_software": [
+    {"name": "tiktaalik", "url": "https://github.com/quantom-collab/tiktaalik", "commit": "62ad1f40acfb58f483fdd9d36e1e4923db439d91", "verified_source_capability": "f90src/kernels/kernels_nlo.f90 implements vector qq/qg/gq/gg and nonsinglet NLO kernels; tiktaalik/matrices.py exposes nlo=True kernels; evolution.py exposes nlo=True evolved singlet and nonsinglet grids", "limitation": "Source inspected only, not built or numerically validated here. Convenience Evolver changes flavor at thresholds; use explicit fixed-nf=3 matrix path and common coupling, subject to successful independent comparison."},
+    {"name": "Gepard", "url": "https://github.com/kkumer/gepard", "commit": "770f0dc1a3ea4f5d844f26e8f67a2a8e8dda681b", "verified_source_capability": "src/gepard/c1dvcs.py supplies NLO Mellin-space quark/gluon DVCS coefficients; evolution and wilson modules support conformal/Mellin-Barnes calculations", "limitation": "Not a full-support arbitrary x-grid GPD kernel oracle; use only for matched conformal-model amplitude cross-checks; not run here."},
+    {"name": "APFEL++", "url": "https://github.com/vbertone/apfelxx", "commit": "27deaec493d95bad0686b3b1c91fbbc910c891ff", "verified_source_capability": "public head pinned; PDF evolution infrastructure", "limitation": "No NLO nonforward GPD capability established; not accepted as full-support reference."}
+  ],
+  "branch_gate": "A published full-support formula source and a pinned candidate independent NLO kernel implementation were found. Implementation remains prohibited until exact convention conversion and independent numerical capability are demonstrated; failure then becomes a named branch blocker."
+}

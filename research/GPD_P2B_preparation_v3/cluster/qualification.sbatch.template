@@ -1,0 +1,32 @@
+#!/bin/bash
+# HISTORICAL CPU REFERENCE ONLY. V3 active task: ../NEXT_ACTION.txt.
+# Not a GPU implementation or an additional required profiling job.
+#SBATCH --job-name=GPD_P2B_qualify
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=32G
+#SBATCH --time=00:30:00
+#SBATCH --account=REPLACE_WITH_VERIFIED_ACCOUNT
+#SBATCH --partition=REPLACE_WITH_VERIFIED_PARTITION
+#SBATCH --output=GPD_P2B_qualify-%j.out
+#SBATCH --error=GPD_P2B_qualify-%j.err
+set -euo pipefail
+# Resolve these paths in a separate copy; preserve this packet unchanged.
+P2B_PYTHON=REPLACE_WITH_EXISTING_SCIENTIFIC_PYTHON
+P2B_PACKAGE=REPLACE_WITH_P2B_PACKAGE_PATH
+P2B_CAPSULE=REPLACE_WITH_EXISTING_P1_CAPSULE_PATH
+P2B_OUTPUT=REPLACE_WITH_NEW_QUALIFICATION_OUTPUT_PATH
+for P2B_VALUE in "$P2B_PYTHON" "$P2B_PACKAGE" "$P2B_CAPSULE" "$P2B_OUTPUT"; do
+  if [[ "$P2B_VALUE" == REPLACE_* ]]; then exit 2; fi
+done
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+export PYTHONDONTWRITEBYTECODE=1
+"$P2B_PYTHON" "$P2B_PACKAGE/verify_package.py"
+"$P2B_PYTHON" -B "$P2B_PACKAGE/source/resource_watch.py" \
+  --config "$P2B_PACKAGE/cluster/RESOURCE_LIMITS.json" \
+  --ledger "$P2B_OUTPUT/RESOURCE_LEDGER.json" \
+  --label joint_integration \
+  --log "$P2B_OUTPUT/QUALIFICATION.log" -- \
+  "$P2B_PYTHON" -B "$P2B_PACKAGE/source/qualify_joint.py" \
+  --capsule "$P2B_CAPSULE" --out "$P2B_OUTPUT/checks"

@@ -1,0 +1,48 @@
+{
+  "central_weighting": "diagonal reported-error weighted objective; no cross-row independence theorem asserted",
+  "component": "ReH only",
+  "moment_t_nodes": [
+    -1.3732,
+    -0.65465,
+    -0.47088,
+    -0.363,
+    -0.28,
+    -0.21,
+    -0.11
+  ],
+  "n_Q2_below_Q02_rows": 49,
+  "n_backward_map_requests": 23,
+  "n_boundary_flags_retained": 9,
+  "n_exact_evolution_families": 67,
+  "n_exact_xi_Q2_pairs": 102,
+  "n_excluded": 29,
+  "n_original": 189,
+  "n_selected": 160,
+  "n_t_coordinates": 79,
+  "ranges": {
+    "Q2_GeV2": [
+      1.51,
+      8.51
+    ],
+    "sigma_reported": [
+      0.07876299071125688,
+      11.818665346920286
+    ],
+    "t_GeV2": [
+      -1.3732,
+      -0.11
+    ],
+    "xi": [
+      0.10192837465564739,
+      0.44613159797541574
+    ]
+  },
+  "scope": "central experimental run preparation; no fit or uncertainty interval generated",
+  "source_file": "final_summary_by_DNN.csv",
+  "source_paper": "2504.15458v4",
+  "source_sha256": "8d7274db9dd7e4fcc3ab84c0230701242274e42868f9c3e66e3d61a1a6838696",
+  "t_mean": -0.363197,
+  "t_std_population": 0.22654909308690688,
+  "target": "Hcharge_plus=(2/9)*(Sigma+T_rescaled)",
+  "uncertainties": "quoted source uncertainties, including propagated statistical/systematic content; not added again"
+}

@@ -1,0 +1,255 @@
+Physics-constrained AI for
+generalized parton distributions
+
+METHODS NOTE FOR A NUCLEAR-THEORY PROPOSAL  |  UPDATED 30 OCTOBER 2026
+Technical formulation, completed evidence, and a focused publication path
+
+We develop a flexible reconstruction of reference-scale generalized parton distributions (GPDs) by combining a conditional neural representation with a fixed next-to-leading-order (NLO) QCD forward calculation, free-coefficient moment constraints, and observable-tested symbolic hypotheses. The scientific objective is to determine which field combinations and functionals the available information supports, and to quantify the freedom that remains. The current forward-information study adds uncertainty-bearing boundary observations to this same construction.
+
+1. Scientific motivation and the role of AI
+
+GPDs connect the longitudinal momentum structure of hadrons to off-forward matrix elements and, under appropriate conditions, transverse spatial information. They depend on average parton momentum fraction x, skewness ξ, invariant momentum transfer t, and factorization scale. Their moments link hard exclusive reactions to local operators and generalized form factors [1,2]. The broad nuclear-theory opportunity is a controlled bridge from exclusive measurements to nucleon structure, with a route to combining complementary information.
+
+The practical inverse problem has two stages: experimental observables determine Compton form factors (CFFs), and CFFs constrain convolution integrals of GPDs. Neural CFF analyses already address the first stage [5]. Our main construction addresses the second by fitting a continuous GPD field through the QCD operator. A good cross-section fit, a good CFF fit, and an accurate reconstructed GPD are therefore separate validation questions.
+
+[Method diagram] Reference-scale neural GPD -> fixed NLO evolution and hard coefficients -> CFF predictions; observable residuals update the shared GPD parameters.
+
+AI supplies an adaptable function class and differentiable inference machinery. The physical map remains explicit and fixed. This avoids assigning arbitrary scale dependence to the neural network, while allowing skewness and momentum-transfer dependence to be learned within the chosen representation. Interpretability comes from moments, tested functional sensitivity, and compact hypotheses returned to the observables. [I1]
+
+Scope. The present target is the charge-weighted, unpolarized H+ combination in a reduced three-channel basis. A determination of H+ alone does not determine individual flavors, E, nucleon angular momentum, or mechanical distributions. Ji's angular-momentum relation requires the appropriate moments of both H and E [3].
+
+
+----------------------------------------------------------------------
+
+
+2. Reference-scale field and QCD forward map
+
+The current implementation represents the vector Fθ = (Σ, T, Hg) at Q02 = 2 GeV2. For the positive-x charge-even quark combinations U = Hu(x) - Hu(-x), and analogously D and S, Σ = U + D + S and the stored nonsinglet is T = U - (D + S)/2. The gluon convention is Hg(x,0,0) = xg(x). Thus
+
+(1) H^{(+)}=\sum_{q=u,d,s}e_q^2\,[H^q(x,\xi,t)-H^q(-x,\xi,t)]=\frac{2}{9}(\Sigma+T).
+
+This basis can constrain the charge-weighted field without resolving D and S separately. Throughout this note H+ denotes this combination, and the reference scale is implicit when omitted. Its internal channels need not be determined as accurately as their measured combination. [I1]
+
+A differentiable, fixed perturbative calculation
+
+(2) \mathcal{H}(\xi,t,Q^2)=\left[\mathcal{C}_{\mathrm{NLO}}(Q^2)\circ\mathcal{U}_{\mathrm{NLO}}(Q^2,Q_0^2)\right]F_\theta(\cdot,\xi,t).
+
+Equation (2) is operator notation: U evolves the reference field, and C performs the channel-weighted hard convolution with its singularity prescriptions. The current leading-twist calculation uses fixed nf = 3, the MS-bar scheme, coupled singlet-gluon and nonsinglet evolution, two-loop running, and μF = μR = Q. This prescription is part of the estimator. It is not a treatment of heavy-flavor thresholds, higher twist, or perturbative truncation uncertainty. [1,2,I1]
+
+(3) \widehat y_{io}(\theta)=\sum_{c,k} W_{iock}\,F_{\theta,c}(x_{ik},\xi_i,t_i),\qquad o\in\{\mathrm{Re},\mathrm{Im}\}.
+
+Precomputed operator rows W include evolution, hard coefficients and quadrature for the actual observation coordinates. Their linear action on sampled fields is differentiated through the network. The current real-only studies fit Re ℋ; a predicted Im ℋ used in a numerical check is not an additional measured constraint. Common field evaluations are reused across scale rows with the same spatial coordinates.
+
+Feature-wise linear modulation (FiLM)
+
+The 3,867-parameter network has a width-24 x trunk and two residual blocks, conditioned on normalized ξ2 and t. Following the general FiLM idea [4], conditioning networks supply componentwise scales γ and shifts β:
+
+(4) h_{\ell+1}=h_\ell+\frac{1}{2}\tanh\!\left[(1+\gamma_\ell(c))\odot(W_\ell h_\ell+b_\ell)+\beta_\ell(c)\right].
+
+Odd projection in x for Σ and T, even projection for Hg, and dependence on ξ2 impose the chosen channel parities and skewness symmetry exactly. Every channel is multiplied by (1 - x2)2. This endpoint envelope, finite capacity and the quark field vanishing at x = 0 are explicit representation assumptions; they are not a universal small-x QCD parametrization. Q2 is not a neural input. [I1]
+
+
+----------------------------------------------------------------------
+
+
+3. Unknown-coefficient polynomiality and fitting
+
+Lorentz covariance restricts Mellin moments to skewness polynomials [1,2]. We impose their allowed structure without inserting the benchmark's moment values. For the even spins N = 2, 4, 6, 8 used here, the implemented quark and gluon moments are
+
+(5) M_N^{q}(\xi,t)=\int_{-1}^{1} dx\,x^{N-1}F_q(x,\xi,t),\qquad M_N^{g}(\xi,t)=\int_{-1}^{1}dx\,x^{N-2}H_g(x,\xi,t),
+
+(6) M_N^{c}(\xi,t)\ \in\ \mathrm{span}\{1,\xi^2,\ldots,\xi^N\},\qquad c\in\{\Sigma,T,g\}.
+
+Here q labels either quark channel (Σ or T). At each fixed t, the coefficients of every permitted power remain unknown. A QR decomposition of the polynomial design matrix separates its column space from the orthogonal complement. If M is the vector of moments on the skewness grid, the constraint residual is
+
+(7) r^{\mathrm{poly}}_{Nct}=\frac{(Q_N^\perp)^T\mathbf{M}_{Nct}(\theta)}{s_{Nc}},\qquad J_{\mathrm{poly}}=\frac{1}{Z}\sum_{N,c,t}\left\|r^{\mathrm{poly}}_{Nct}\right\|^2.
+
+This variable-projection construction tests whether moments belong to the allowed space; it does not set allowed coefficients to prescribed values. The scales s and normalization Z are declared numerical weights, not measurements. The current implementation uses 41 skewness collocation points and 13 fixed negative-t slices, with separate refinement and predictive checks. Coefficients at different t are not forced onto one common polynomial. [I1]
+
+What is enforced. Architectural parities are exact. Polynomiality is approximate and finite-spin, evaluated with finite quadrature and collocation. Passing these checks does not prove all-moment polynomiality, positivity, proton sum rules, or complete physical admissibility. The synthetic benchmark itself is not certified as a physical proton PDF/GPD model.
+
+Objective, numerical domain, and finite-budget selection
+
+(8) \min_\theta\ J_{\mathrm{joint}}=\frac{\chi^2_{\mathrm{CFF}}+\chi^2_{\mathrm{PDF}}}{160}+J_{\mathrm{poly}},\qquad g_{\mathrm{num}}(\theta)\leq 0.
+
+The CFF-only baseline omits the PDF term. With the current equal row masses, χ2CFF is the sum of squared residuals in the original quoted σ units over 160 Re ℋ observations. A known correlated input law would instead require its declared joint whitening. Numerical inequalities gnum monitor discretization, transport and moment consistency; they are distinct from additional experimental information.
+
+The fixed procedure uses 400 Adam updates, deterministic feasibility restoration, then a constrained residual-norm solver with trust-region steps, at most 60 outer iterations and 12,000 solver evaluations across continuations. Automatic differentiation is applied to integrated residual blocks. Eligible checkpoints are ranked by the supplied objective before truth scoring. Numerical feasibility at this budget is reported separately from stationarity or global optimality. [I1,I2]
+
+Keeping the full residual vector preserves the local Gauss-Newton geometry. Replacing an entire information block by one scalar square root of its χ2 would preserve its objective value but generally change that geometry. The present method retains all rows.
+
+
+----------------------------------------------------------------------
+
+
+4. Forward information, resolution, and interpretation
+
+Adding PDFs as uncertain boundary observations
+
+The forward limit supplies complementary information: at ξ = t = 0, U = u + ū, D = d + d̄, S = s + s̄, and Hg = xg. In the current controlled study, these values are generated consistently with the same synthetic truth that supplies the CFFs. Twelve geometric x points on [0.02, 0.8], with three stored channels each, define a 36-component observation vector at Q0. A fixed, full-rank correlated covariance CPDF gives
+
+(9) C_{\mathrm{PDF}}=LL^T,\qquad r_{\mathrm{PDF}}(\theta)=\frac{L^{-1}[\mathbf{f}_\theta-\mathbf{y}_{\mathrm{PDF}}]}{\sqrt{160}},\qquad \chi^2_{\mathrm{PDF}}=160\,\|r_{\mathrm{PDF}}\|^2.
+
+Here fθ stacks the forward predictions. The design uses a 10% channel-dependent scale with a 5% floor relative to each channel's grid maximum, exponential correlation in log x with length 0.7, and a specified cross-channel correlation. These are sensitivity-study choices. They are not an empirical PDF covariance, 36 independent observations, or a continuum uncertainty band. Grid refinement for plotting does not add information. [I3]
+
+The clean control uses central values with finite covariance. The released development case combines the existing half-amplitude CFF perturbation with one frozen correlated PDF draw. Original CFF σ values remain unchanged, and PDF noise uses the full covariance. Consequently this comparison tests a fixed estimator under a stated sensitivity law; its working loss is not the exact likelihood of the halved CFF noise. The half-noise development case is now complete: its selected fit improves observed H+ and target A, but fails the target B safeguard. [I2,I3]
+
+A future real-PDF application must match flavor content, normalization, scale, factorization scheme and coupling conventions, and account for correlations or shared input data. The present adapter does not import an external proton PDF set. Finite support leaves tails and between-point structure unmeasured, while t = 0 lies outside the original negative-t collocation range.
+
+Identify what the data resolve
+
+Convolution and finite kinematic coverage leave weakly constrained directions. Shadow-GPD constructions illustrate the resulting deconvolution ambiguity; scale evolution and wider kinematic coverage can constrain particular classes without establishing a general unique inverse [6,7]. Forward data can improve some directions but cannot distinguish alternatives that share the same forward limit. An allowed D-term contribution can vanish in that limit while changing off-forward structure.
+
+Our analysis therefore separates observable agreement, field error on a specified support, individual-channel resolution, and selected functional accuracy. Local Jacobian singular directions are useful diagnostics; nonlinear compatible-family exploration and repeated closure tests are needed before assigning uncertainty to the inferred physics. Seed scatter, a narrow finite-budget replica response, and a small training residual are not calibrated confidence bands. [I1]
+
+Symbolic hypotheses must return to the observables
+
+A second interpretive stage compresses inferred moments within the allowed polynomial dictionary. Sparse coefficient patterns are candidate restrictions, not discovered physical zeros. Each candidate must be refitted through the same QCD map and compared with an all-term control at matched optimization cost, using separate selection and untouched test data. This is the established methodological program; no symbolic restriction is imposed on the current nominal joint fit. [I1]
+
+
+----------------------------------------------------------------------
+
+
+5. What the completed evidence establishes
+
+Across the program, CFF fit, field recovery, and integral prediction are distinct tasks. Internal evidence [I1–I5] documents program synthesis, P1/P2A/P2B, calibration, and identifiability checks. Their scores come from different observation laws and must not be pooled.
+
+P2B: forward information helps some targets and harms others
+
+The exact-center and single frozen half-noise cases share a synthetic truth and target definitions. The noisy comparison is the reused CFF baseline against the selected CFF-plus-PDF fit. Errors are percentages relative to truth.
+
+Case | Observed H+ L2 | |A| relative error | |B| relative error | Wider-chart H+ L2
+
+Exact CFF baseline | 0.9203% | 0.4848% | 0.8691% | 0.7502%
+
+Exact CFF + PDF | 0.4695% | 0.6767% | 0.2516% | 0.5353%
+
+Half-noise CFF baseline | 11.4635% | 4.9896% | 1.2814% | 28.6127%
+
+Half-noise CFF + PDF | 10.1336% | 3.5404% | 3.2364% | 38.1344%
+
+A = 5∫0.20.4 H+ dx is a mid-x average; B = ∫01 xH+ dx is a global, x-weighted first moment, both at ξ = 0.275, t = -0.363 GeV2. The exact control passes its four preservation gates. In the noisy case squared observed-slice error improves 21.86%, and A improves; B fails its frozen no-worsening safeguard, while wider-chart error rises. A lower PDF residual does not settle these GPD targets. This is one synthetic truth and one fixed noise draw, not an estimate of expected benefit. [I2,I3]
+
+The surrounding record
+
+Recovery and stabilization. P1 varied one noise direction: at half amplitude observed/wider-chart H+ errors were 11.46%/28.61%; at full amplitude, 16.53%/32.69%. P2A tested one amplitude/derivative penalty; its exact-input candidate failed all three 2% gates (17.10%, 5.90%, 14.75%) against baseline (0.92%, 0.48%, 0.87%). This rejects that tested design, not every regularizer. [I1,I4]
+
+Selected-functional uncertainty. A separate 442-case study (160 calibration, 282 tests) at two fixed synthetic truths gave joint coverage 135/141 and 131/141 (95.74% and 92.91%); the common absolute half-width was 0.01858. This calibrates two targets for that estimator and observation law, not a full-field or experimental band. Its A/B truth strata are distinct from the target A/B above. [I5]
+
+Information and experiment. A constructed 25%-separated off-forward pair has whitened ReH distance 0.559 and 61.0% optimal binary identification under its stated law. An upstream candidate lowers ReH RMSE 29%/39% on two truths and eight paired draws each, yet its small downstream bridge retains 184.75% H+ input-slice error. The experimental central curve and its propagation remain conditional. [I1,I5]
+
+
+
+
+----------------------------------------------------------------------
+
+
+6. A comprehensive revision of the same paper
+
+Our earlier Watkins-Keller PV-DNN [8] will be replaced by this manuscript on the same arXiv record when the revised results are ready. Its leading-order ReH inversion, curvature regularization, and CFF replicas are the earlier formulation of this project. The current framework substantially broadens the physics map, field representation, and inference scope:
+
+Dimension | Earlier PV-DNN [8] | Current NLO program
+
+Field | Direct H+ network | Three reference-scale fields: Σ, T, Hg; charge-weighted H+
+
+QCD map | Leading-order quark PV kernel; no dynamical Q2 evolution | Fixed NLO evolution and hard map; coupled quark/gluon channels
+
+Structure | Parity/endpoint choices; x-curvature penalty | Parity/endpoint structure; unknown-coefficient finite-spin polynomiality residuals
+
+Evidence and errors | CFF replicas; experimental surface uncertainty reported | NLO synthetic closures and selected-target calibration; noisy PDF result is mixed; experimental coverage open
+
+Paper thesis. Present the more complete neural inference framework: reference-scale fields, coupled NLO physics, free-coefficient finite-spin constraints, complementary information, and explicit limits on recovery. Its scope is already substantially broader than the earlier LO draft. The results must establish the reliability and limitations of this formulation; a separate claim of outperforming that draft is optional.
+
+Evidence supporting the revised manuscript
+
+1. Establish reconstruction reliability. Use known truths and declared observation laws to assess fields, selected functionals, and held-out CFF predictions. Distinguish exact-input checks from noisy recovery. Repeated draws and multiple truths are needed for claims about average noise performance. A matched LO comparison can serve as an informative ablation.
+
+2. Test the physics additions. Ablate NLO evolution, channels, and finite-spin constraints separately. Report accuracy, numerical checks, and finite-budget cost. Leave the failed P2A penalty out absent a new prospective design.
+
+3. Support experimental interpretation. Report the current framework's predictions, CFF residuals, method sensitivity, and input-uncertainty propagation. The separate 442-case study calibrates selected synthetic targets; its bands cannot be transferred to experiment. State the conditions on any experimental reconstruction.
+
+4. Position the literature accurately. GUMP1.0 [10] supplies a global NLO benchmark without a neural network; NNGPD [9,16] supplies neural integral-constraint closure studies. Section 7 includes the wider literature. Explain the specific physics and inference contribution of the revised framework without claiming the first NN GPD model or first NLO extraction.
+
+Recommended path. Build the revised manuscript around the NLO framework and its completed evidence, with scoped uncertainty and identifiability statements. P2B's one half-noise case fails B; that limits claims for this PDF addition and does not by itself block publication of the framework. Update the existing arXiv record once the manuscript and its supporting evidence are ready.
+
+
+----------------------------------------------------------------------
+
+
+7. Neural GPD reconstruction in context
+
+The literature covers distinct stages and data regimes. A neural fit to Compton form factors (CFFs) addresses the observable-to-amplitude step [5,18]; it is not by itself a GPD reconstruction. Direct GPD-network papers also differ in whether they use synthetic closure, lattice information, pion rather than proton structure, or experimental CFFs.
+
+Line of work | Representation and evidence | Relation to this program
+
+Theory-constrained ANN GPDs [11–13] | 2022 models in (x, ξ) and double-distribution coordinates enforce polynomiality, symmetry, positivity, and forward limits. 2024 work tests partial-DGLAP extension and combines an ANN prior with mock lattice data. | Foundational field models and constraint designs; evidence is model-based, and the lattice combination uses mock data without full QCD evolution.
+
+NNGPD [9,16] | Networks use CFF and Mellin-moment projections with symmetry/end-point constraints; the expanded report adds a Bayesian network. Validation is a synthetic spectator/UVA2 closure. | Closest conceptual neighbor for integral-constraint inversion. The four-page JINST proceeding says training on actual CFF and lattice inputs is future work; the expanded report is also closure-only.
+
+Lattice-side NN GPDs [21] | A 2026 JHEP framework learns from lattice matrix elements using matched LaMET/SDE information and extends the neural representation to zero-skewness GPDs and tomography. | A direct lattice-to-GPD neural reconstruction, complementary to experimental CFF inversion; it addresses ξ = 0 rather than the full off-forward CFF problem.
+
+Pion and lattice-moment networks [14,15] | Pion quark/gluon GPDs use PDF replicas, form factors, and lattice inputs. A separate proton study uses networks for t-dependent generalized form factors in the first four moments at nonzero skewness. | Shows NN extraction with multiple data sources and lattice information; the target is a pion or moment-level proton output, not a proton x-dependent CFF inversion.
+
+Non-neural full-GPD references [10,17] | GUMP1.0 is a global NLO conformal-moment extraction using experiment and lattice. A 2026 lattice study reconstructs H and E over (x, ξ, t) with Gaussian-process regularization. | Important physics and field-reconstruction baselines; neither uses a neural network.
+
+Earlier version of this work [8] | A neural network maps experimental ReH CFF inputs through a leading-order principal-value kernel to proton H+, with CFF-replica uncertainty propagation. | Earlier formulation to be replaced on the same arXiv record; a useful optional LO ablation.
+
+A 2026 neural-field conference presentation reconstructs a double distribution from CFF projections and shows that the unmeasured ERBL region follows the supplied prior. It is an emerging closure result, not yet a full paper. [20]
+
+Contribution of the revised paper
+
+Neural GPD modeling and global NLO extraction are established. This work brings reference-scale proton quark/gluon fields, coupled-channel NLO evolution and hard coefficients, finite-spin polynomiality with unknown coefficients, and uncertain forward-PDF information into one inference formulation. The manuscript will replace the earlier LO version on the same arXiv record. Its contribution rests on this broader formulation and the evidence for what it can infer. The exact P2B control passes; the half-noise B failure limits claims of robust PDF benefit. Comparisons and repeated noise/truth studies should support the particular performance claims made.
+
+
+----------------------------------------------------------------------
+
+
+8. Proposal summary and selected sources
+
+Text for adaptation into the proposal
+
+We are developing a physics-constrained neural framework to determine which generalized parton distribution information is supported by hard exclusive observables. A conditional neural representation of reference-scale quark and gluon fields is coupled to a fixed next-to-leading-order QCD map, with exact channel symmetries and finite-spin Mellin moments constrained to their allowed polynomial spaces with unknown coefficients. Completed synthetic studies show useful charge-weighted field recovery and finite-sample calibration for selected functionals under declared conditions. A clean-input study accepts compatible forward-PDF information; one half-noise development case improves the observed-slice field and one target while worsening a second target beyond its safeguard. We will use this target-dependent outcome to design prospective tests of identifiability, information gain, and uncertainty coverage across independent noise and truth families. The objective is a reproducible account of what can be inferred, where the ambiguity remains, and which additional measurements reduce it.
+
+Selected literature
+
+[1] M. Diehl, Generalized Parton Distributions, Phys. Rept. 388, 41-277 (2003). hep-ph/0307382.
+
+[2] A. V. Belitsky and A. V. Radyushkin, Unraveling hadron structure with generalized parton distributions, Phys. Rept. 418, 1-387 (2005). hep-ph/0504030.
+
+[3] X. Ji, Gauge-Invariant Decomposition of Nucleon Spin, Phys. Rev. Lett. 78, 610-613 (1997). hep-ph/9603249.
+
+[4] E. Perez, F. Strub, H. de Vries, V. Dumoulin and A. Courville, FiLM: Visual Reasoning with a General Conditioning Layer, AAAI (2018). arXiv:1709.07871.
+
+[5] H. Moutarde, P. Sznajder and J. Wagner, Unbiased determination of DVCS Compton Form Factors, Eur. Phys. J. C 79, 614 (2019). arXiv:1905.02089.
+
+[6] V. Bertone, H. Dutrieux, C. Mezrag, H. Moutarde and P. Sznajder, The deconvolution problem of deeply virtual Compton scattering, Phys. Rev. D 103, 114019 (2021). arXiv:2104.03836.
+
+[7] E. Moffat et al., Shedding light on shadow generalized parton distributions, Phys. Rev. D 108, 036027 (2023). arXiv:2303.12006.
+
+[8] D. Watkins and D. Keller, Differentiable Principal-Value Inversion for Neural-Network Extraction of Generalized Parton Distributions (2026). arXiv:2512.21761.
+
+[9] Z. Panjsheeri and S. Liuti, Neural Network Generalized Parton Distributions (NNGPD), JINST 21 C07029 (2026), the AI4EIC proceedings contribution. DOI: 10.1088/1748-0221/21/07/C07029 arXiv:2605.13000.
+
+[10] Y. Guo, F. P. Aslan, X. Ji and M. G. Santiago, First Global Extraction of Generalized Parton Distributions from Experiment and Lattice Data with Next-to-Leading-Order Accuracy, Phys. Rev. Lett. 135, 261903 (2025). DOI: 10.1103/qct5-y7rp.
+
+[11] H. Dutrieux et al., Artificial neural network modelling of generalised parton distributions, Eur. Phys. J. C 82, 252 (2022). DOI: 10.1140/epjc/s10052-022-10211-5.
+
+[12] P. Dall’Olio et al., Unraveling generalized parton distributions through Lorentz symmetry and partial DGLAP knowledge, Phys. Rev. D 109, 096013 (2024). DOI: 10.1103/PhysRevD.109.096013.
+
+[13] M. J. Riberdy et al., Combining lattice QCD and phenomenological inputs on generalised parton distributions at moderate skewness, Eur. Phys. J. C 84, 201 (2024). DOI: 10.1140/epjc/s10052-024-12513-2.
+
+[14] S. Puhan, S. Sharma and N. Kumar, Extraction of Pion Unpolarized Quark and Gluon Generalized Parton Distributions using Deep Neural-Networks, arXiv:2608.07085 (2026). arXiv:2608.07085.
+
+[15] M.-H. Chu et al., Mellin Moments of Proton Unpolarized GPDs at Nonzero Skewness from Lattice QCD with a Neural-Network Parametrization, arXiv:2610.29726 (2026). arXiv:2610.29726.
+
+[16] J. Xu et al., Neural Network Representation of Generalized Parton Distributions (NNGPD), arXiv:2605.06994 (2026); DIS2026 contribution version arXiv:2610.23390. arXiv:2605.06994 arXiv:2610.23390.
+
+[17] H. Dutrieux et al., Reconstructing the full kinematic dependence of GPDs from pseudo-distributions, Phys. Rev. X, accepted 8 October 2026; Gaussian-process, not neural-network, reconstruction. DOI: 10.1103/77pv-msts.
+
+[18] Y. Huang and X. Cao, Constraining DVCS Compton Form Factors Using Lattice QCD informed Neural Network, arXiv:2606.09152 (2026); CFF-level analysis. arXiv:2606.09152.
+
+[19] J. Kumerički, D. Müller and A. Schäfer, Neural network generated parametrizations of deeply virtual Compton form factors, JHEP 07 (2011) 073; upstream CFF extraction. DOI: 10.1007/JHEP07(2011)073.
+
+[20] M. Čuić, Neural-field reconstruction of Generalized Parton Distributions, EuCAIFCon 2026 conference presentation. EuCAIFCon 2026 talk.
+
+[21] M.-H. Chu, K. Cichy, M. Constantinou, P. Sznajder and J. Wagner, A unified neural-network framework for nucleon imaging from numerical simulations of QCD, JHEP 05 (2026) 210. DOI: 10.1007/JHEP05(2026)210.

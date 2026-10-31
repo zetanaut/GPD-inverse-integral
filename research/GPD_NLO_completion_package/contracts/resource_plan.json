@@ -1,0 +1,18 @@
+{
+  "stage": "01",
+  "revision": "r1",
+  "environment_evidence": "completion_runs/00/reproduction.json: macOS arm64, eight logical CPUs, Torch 2.8.0, MPS=false, CUDA=false. The delivered Linux environment and its timings are not assumed to apply.",
+  "task01_allowed": "r1 contract revision, archiving, mechanical helper/structural tests and packet creation only; no repeat source browsing, benchmark, matrix-bank build, model training, NLO implementation, data upload or threshold relaxation.",
+  "future_sequence_requires_review": [
+    "After task 01 approval, task 02 source/convention matching and small deterministic coefficient tests only.",
+    "After task 02 approval, task 03 full-support NLO kernel/coupling validation against an independently built pinned reference on small grids before any expensive bank.",
+    "After forward approval, pilot exactly two frozen truths x one fit seed; use wall-clock and peak resident-memory measurements to decide feasibility, not to change statistical counts or thresholds based on coverage.",
+    "Then 20 outer-dataset smoke runs, 10 per truth, for execution/failure diagnostics; their outcomes are excluded from calibration and test.",
+    "Only after another review, 80 independent calibration plus 240 independent test datasets per truth (640 total). If budget is infeasible, stop and revise prospectively; do not silently reduce n or optionally stop when coverage looks favorable."
+  ],
+  "process_limits": {"max_concurrent_fit_processes": 2, "threads_per_fit": 1, "environment": {"OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1"}, "gpu": "none", "memory": "Measure peak RSS during approved pilot; require headroom and reduce concurrency to one if needed; do not infer total RAM from logical CPU count"},
+  "cache": "Cache deterministic forward banks by complete hash of source revision, prescription, order, nf, alpha boundary, scales, full CFF xi/Q2/t grid and numerical resolution. The new 41+80 polynomiality xi nodes are reference-scale moment integrations, not new CFF points: they require no perturbative banks. Pilot records build wall time, peak RAM and bank size; no estimate presented as measured. Never reuse LO banks for NLO.",
+  "checkpoint_resume": "For later approved fits write atomic task-scoped checkpoint with opaque outer-dataset ID, PRNG states, optimizer/profile states, source/model/objective/fixed-scale/geometry/covariance/profile-algorithm/bank hashes and software versions. Freeze applied cutoff by estimand ID plus those hashes; never key it by test truth label. Resume only on exact matching fingerprint; preserve old checkpoint on mismatch, log all attempts and timeouts.",
+  "timeouts_and_reporting": "Initial pilot per-fit cap 2 hours and bank cap 4 hours; cap later batch duration from observed pilot without modifying frozen sample size. The broader 41-node fit plus 80-node diagnostics and multiple constrained profile solves increase later CPU/RAM costs without additional banks; no cost benchmark was run now. The nominal 640 final outer datasets x two starts imply at least 1,280 unrestricted optimizations before profile searches, so the campaign is not approved or budget-certified by this plan. Log SLSQP starts, bracket/refinement evaluations, certified unbounded cases and search-cap failures separately. Report measured wall time, peak RSS, cache hit rate, fit/profile failure rates and projected cost at every review gate. These are prospective caps, not results.",
+  "privacy": "Source PDFs and public reference code may be fetched for verification. Raw private CFF table rows, upstream model weights and GPD checkpoints remain local and out of review packet."
+}

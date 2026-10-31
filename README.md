@@ -1,328 +1,102 @@
+# Neural GPD reconstruction with NLO QCD
 
-# DNN Inversion of CFF ReH to GPD H
+Physics-constrained neural inference of generalized parton distributions from Compton form factors, with coupled quark/gluon evolution, free-coefficient moment constraints, and complementary forward information.
 
-This repository implements a **two–stage neural–network pipeline** to extract the
-charge–weighted, C–even GPD \(H^{(+)}\) from experimental DVCS data via the
-Compton Form Factor (CFF) \(\Re\mathcal{H}\).
+**Research software and results through 30 October 2026.** This repository now contains the current framework alongside the original LO inversion and plotting tools. The revised manuscript will replace the earlier Watkins–Keller paper on the [same arXiv record, 2512.21761](https://arxiv.org/abs/2512.21761), once its results and manuscript are ready. The arXiv page currently describes the earlier version.
 
-The key script is **`GPD-H_pt.py`**, which takes as input a **global PyTorch
-ensemble fit of the CFF** and performs a **model–based inverse transform** to
-obtain an ensemble of GPDs \(H^{(+)}(x,\xi,t,Q^2)\).
+[Methods note (PDF)](docs/GPD_AI_Methods_Proposal_Note.pdf) · [Physics and conventions](docs/method.md) · [Results and limitations](docs/results.md) · [Software guide](docs/software.md) · [Literature](docs/literature.md) · [Original tools](docs/legacy.md)
 
-The code is written to be **educational**: it keeps the physics structure
-explicit (oddness, endpoint behavior, principal–value integral) while staying
-numerically simple enough for students to study and modify.
+## Current method
 
+A conditional FiLM network represents the reference-scale fields
 
-## 1. Conceptual Overview
+$$F_\theta(x,\xi,t;Q_0^2)=(\Sigma,T,H_g),\qquad Q_0^2=2\ \mathrm{GeV}^2.$$
 
-The CFF and GPD are related schematically by a principal–value integral:
+For the stored three-flavor basis, $\Sigma=U+D+S$, $T=U-(D+S)/2$, and $H_g(x,0,0)=xg(x)$. Here $U=H^u(x)-H^u(-x)$, with analogous definitions for $D,S$. The reported charge-weighted quark combination is
 
-\[
-\Re\mathcal{H}(\xi,t,Q^2)
-\;=\;
-\text{PV}\int_{-1}^{1}\!dx\;
-H^{(+)}(x,\xi,t,Q^2)\,
-\Big[ \frac{1}{\xi-x} - \frac{1}{\xi+x} \Big]
-\]
+$$H^{(+)}=\frac{2}{9}(\Sigma+T).$$
 
-This repository treats **both sides** with neural networks:
+The fixed NLO forward calculation maps reference-scale fields to complex CFF predictions. Scale dependence enters through QCD evolution and hard coefficients. The current experimental fits use Re $\mathcal H$; an unfitted imaginary prediction supplies no additional measurement.
 
-1. **CFF stage (forward):**  
-   A separate script trains a **global heteroscedastic NN** on experimental
-   data to model \(\Re\mathcal{H}(\xi,t,Q^2)\). It produces an **ensemble** of
-   networks \( \{\mathcal{M}_k\} \) in a directory called `reh_model_v3/`.
-   Each model corresponds to a Monte‑Carlo replica of the experimental data.
-
-2. **GPD stage (inverse):**  
-   `GPD-H_pt.py` reads that CFF ensemble and:
-
-   - builds a **dense regular grid** in \((\xi,t,Q^2)\),
-   - evaluates each ReH model on that grid, giving a smooth **CFF replica field**
-     \( \Re\mathcal{H}_k(\xi,t,Q^2)\),
-   - trains one **GPD replica** \(H^{(+)}_k\) per CFF replica, such that
-     its **PV convolution reproduces** that \(\Re\mathcal{H}_k\),
-   - saves the collection \(\{H^{(+)}_k\}\) as a **GPD ensemble**.
-
-The spread of the GPD ensemble reflects **experimental uncertainties** propagated
-through the learned CFF model into the GPDs.
-
-
-## 2. Files & Directory Layout
-
-A typical layout after running both stages looks like:
-
-```text
-.
-├── CFF_combined_minstd.csv         # experimental CFF input used in stage 1
-├── ReH_global_fit.py               # (example) script that trained the CFF ensemble
-├── reh_model_v3/                   # OUTPUT of stage 1 (CFF fit)
-│   ├── models/
-│   │   ├── model_000.pt
-│   │   ├── model_001.pt
-│   │   └── ...
-│   ├── scaler.pt
-│   └── training_summary.json
-├── GPD-H_pt.py                     # **this script** (stage 2: inversion)
-├── gpd_inverse_from_ReH/           # OUTPUT of stage 2
-│   ├── ReH_smooth_for_inverse.csv
-│   ├── gpd_models/
-│   │   ├── gpd_rep_000.pt
-│   │   ├── gpd_rep_001.pt
-│   │   └── ...
-│   ├── H_band_from_ReHfit.npz
-│   ├── H_band_from_ReHfit.png
-│   └── gpd_inverse_summary.json
-├── plot_gpd_surface_band_simple.py # optional: 3D surface with ±1σ
-└── plot_gpd_surface_multiQ.py      # optional: 3D surfaces at several Q²
-````
-
-You only **need** `reh_model_v3/` and `GPD-H_pt.py` to run the inversion,
-but the plotting scripts are useful for visualization.
-
-## 3. Dependencies & Installation
-
-* Python ≥ 3.8
-* PyTorch (CPU or GPU)
-* NumPy
-* pandas
-* matplotlib (optional, but used for quick plots)
-
-Install via:
-
-```bash
-pip install torch numpy pandas matplotlib
+```mermaid
+flowchart LR
+    NN[Reference-scale FiLM fields] --> QCD[Coupled NLO evolution and coefficients]
+    QCD --> CFF[CFF predictions and data residuals]
+    NN --> MOM[Finite-spin moment constraints]
+    NN --> PDF[Forward PDF observations and covariance]
+    CFF --> FIT[Constrained inference]
+    MOM --> FIT
+    PDF --> FIT
+    FIT --> OUT[GPD fields and selected functionals]
 ```
 
-Make sure `reh_model_v3/` has already been produced by the CFF training script
-(e.g. `ReH_global_fit.py` in the same repo).
+Implemented components include:
 
-## 4. Running the Inversion
+- A 3,867-parameter reference-scale network with exact quark/gluon parity, even skewness dependence, active t conditioning, and an explicit endpoint envelope.
+- Fixed-t Mellin constraints for even spins 2, 4, 6, and 8. Allowed polynomial coefficients remain unknown; the code penalizes components outside the allowed spaces.
+- Exact-coordinate NLO row adapters, paired nominal/reference banks, integrated residual derivatives, and finite-budget constrained optimization components.
+- Correlated forward-PDF observations, using the stored channel conventions and explicit covariance whitening.
+- Synthetic truth generators, closure workflows, selected-functional error calibration, and separate symbolic moment-support proposals followed by refitting.
 
-1. **Check the CFF ensemble exists**
+This is a reduced channel basis: recovery of $H^{(+)}$ alone does not identify all flavors, $E$, angular momentum, or mechanical distributions. Finite-spin collocation is not an all-orders polynomiality guarantee. See [method and assumptions](docs/method.md).
 
-   You should have:
+## Install and run
 
-   ```text
-   reh_model_v3/
-     ├── models/model_000.pt  (and friends)
-     ├── scaler.pt
-     └── training_summary.json
-   ```
+Use Python 3.9 or newer in your preferred virtual environment:
 
-2. **Run the GPD inversion**
+```bash
+git clone https://github.com/zetanaut/GPD-inverse-integral.git
+cd GPD-inverse-integral
+python -m pip install -e '.[dev,plot]'
+python examples/quickstart.py
+python examples/calibration.py
+python -m pytest -q
+```
 
-   ```bash
-   python3 GPD-H_pt.py
-   ```
+The quickstart evaluates a fresh neural field through the bundled validated NLO rows and reports a moment residual. It performs no fit; its numbers are interface demonstrations, not reconstructed physics. The calibration example illustrates the statistical API using artificial error records.
 
-   The script will:
+The source checkout includes the 189-row source CFF table (160 rows after the declared cuts), 102 exact-coordinate NLO row pairs, and a smaller development fixture for interface tests. Package installation alone does not fetch these data from another service. [Data provenance and supported workflows](docs/software.md#data-and-reproduction) describe the inputs, sign convention, and requirements for full research runs.
 
-   * print the device it is using (`cpu` or `cuda`),
-   * build the ReH grid,
-   * loop over CFF replicas, training one GPD replica per CFF model.
+## Completed evidence
 
-   Progress lines like
+The forward-PDF study, P2B, compares a CFF-only baseline with a joint CFF-plus-PDF fit. The following errors are percentages relative to the same synthetic truth:
 
-   ```text
-   [GPD rep 003] epoch  40/120  loss=1.2345
-   ```
+| Case | Observed-slice $H^{(+)}$ L2 | Absolute relative error in A | Absolute relative error in B | Wider-chart $H^{(+)}$ L2 |
+|---|---:|---:|---:|---:|
+| Exact CFF baseline | 0.9203 | 0.4848 | 0.8691 | 0.7502 |
+| Exact CFF + PDF | 0.4695 | 0.6767 | 0.2516 | 0.5353 |
+| Half-noise CFF baseline | 11.4635 | 4.9896 | 1.2814 | 28.6127 |
+| Half-noise CFF + PDF | 10.1336 | 3.5404 | 3.2364 | 38.1344 |
 
-   show the loss for each replica during training.
+At $\xi=0.275$, $t=-0.363\ \mathrm{GeV}^2$, $Q_0^2=2\ \mathrm{GeV}^2$,
 
-3. **Inspect outputs**
+$$A=5\int_{0.2}^{0.4}H^{(+)}dx,\qquad B=\int_0^1 xH^{(+)}dx.$$
 
-   * `gpd_inverse_from_ReH/ReH_smooth_for_inverse.csv`
-     → a table of the regular grid and ensemble mean/std of ReH.
+The clean-input control passes its four preservation gates. The single frozen half-noise case improves squared observed-slice error by 21.86% and improves A, but fails B's no-worsening safeguard and worsens the wider chart. This limits the claim of robust benefit from this PDF addition; it does not by itself prevent publication of the broader framework. Independent assessment for this P2B design remains unreleased.
 
-   * `gpd_inverse_from_ReH/gpd_models/gpd_rep_XXX.pt`
-     → one trained **GPD replica** per CFF replica.
+A separate 442-case study achieved joint selected-target coverage of 135/141 and 131/141 on its two synthetic test strata. It does not calibrate experimental or full-field bands. Other completed studies include complex-CFF closure, actual-coordinate ReH closure, symbolic refits, numerical consistency checks, and information-limit diagnostics. Their settings and metrics are documented separately in [results](docs/results.md).
 
-   * `gpd_inverse_from_ReH/H_band_from_ReHfit.png`
-     → 1D plot of (H^{(+)}(x,\xi_0,t_0,Q_0^2)) with an uncertainty band.
+## Software map
 
-   * `gpd_inverse_from_ReH/gpd_inverse_summary.json`
-     → metadata about the inversion (grid ranges, hyperparameters, etc.).
+| Location | Contents | Use |
+|---|---|---|
+| [`src/gpd_reh`](src/gpd_reh) | FiLM fields, input conventions, NLO row adapter, fixed-t moments, residual/Jacobian problem | Importable current inference components |
+| [`src/gpd_tools`](src/gpd_tools) | Calibration, PDF observation adapter, synthetic truths, solver primitives, exact-input cache, row importer | Reusable research tools |
+| [`examples`](examples) | Forward/model and calibration examples | Small local demonstrations |
+| [`tests`](tests) | Existing scientific interface and calibration checks | No optimization campaign |
+| [`data/experimental`](data/experimental) | Source CFF table, prepared observations, validated row pairs | Declared experimental geometry |
+| [`research`](research) | Numerical kernels, evolution, fitting workflows, closure, symbolic, upstream, and P2B source snapshots | Advanced workflows with original runtime contracts |
+| [`evidence`](evidence) | Compact review records and source metrics | Traceability of reported results |
+| [`SOURCE_MANIFEST.json`](SOURCE_MANIFEST.json) | Original project paths, hashes, and import adaptations | Source provenance |
 
-4. **Optional visualization**
+## Original tools retained
 
-   Once the GPD ensemble exists, you can run, e.g.,
+`GPD-H_pt.py`, `3d-update.py`, `Q2-plots.py`, `plot_H_band_pt.py`, `plot_H_surface_band_pt.py`, and `plot_gpd_surface_band_simple.py` remain at their original paths. They support the earlier LO model/checkpoint format and are useful for historical reproduction and visualization. They do not directly load the new three-channel FiLM checkpoints. The [original instructions](docs/legacy.md) are preserved with that scope.
 
-   ```bash
-   python3 plot_gpd_surface_band_simple.py
-   python3 plot_gpd_surface_multiQ.py
-   ```
+## Publication context and development
 
-   to make 3D GPD surfaces and uncertainty bands in ((\xi,t)) for fixed
-   (x_0, Q^2_0).
+Neural GPD representation, neural CFF inference, and global NLO extraction all have precedents. The contribution here is the specific inference formulation and the evidence for what it can recover. [The literature guide](docs/literature.md) covers theory-constrained neural GPDs, NNGPD, lattice and pion neural studies, CFF-only fits, GUMP1.0, and Gaussian-process reconstruction.
 
-## 5. How `GPD-H_pt.py` Works (High‑Level)
+The revised paper will present the current framework, numerical checks, completed reconstructions, uncertainty scope, and remaining ambiguities. The earlier LO formulation can provide an informative ablation. The repository update does not announce a completed manuscript or a new arXiv version.
 
-### 5.1 Stage 1 — CFF grid from the ReH ensemble
-
-* **Load CFF ensemble**
-  `load_reH_ensemble()` reads:
-
-  * `scaler.pt` → input normalization (mean & std) and `y_scale` for ReH,
-  * `training_summary.json` → model architecture and kinematic support,
-  * `models/model_*.pt` → heteroscedastic MLPs ( \mathcal{M}_k ).
-
-* **Build regular ((\xi,t,Q^2)) grid**
-  `build_reH_grid_and_evaluate()` uses the `support` ranges from the
-  training summary to create a dense, rectangular grid:
-
-  ```python
-  xi_grid = np.linspace(xi_min, xi_max, N_XI_GRID)
-  t_grid  = np.linspace(t_min,  t_max,  N_T_GRID)
-  q2_grid = np.linspace(q2_min, q2_max, N_Q2_GRID)
-  ```
-
-* **Evaluate ensemble on grid**
-
-  * `eval_reH_ensemble()` computes the **ensemble mean** and **predictive std**
-    at each grid point (epistemic + aleatoric variance).
-
-  * Optionally multiplies the std by a **calibration factor** τ (computed in
-    the CFF training step) so that ~68% of validation points lie within ±1σ.
-
-* **Save smooth CFF field**
-
-  The grid and ensemble statistics are saved to
-  `ReH_smooth_for_inverse.csv`:
-
-  ```text
-  xi, Q2, t, ReH_smooth, sigma_smooth
-  ```
-
-  This file is useful by itself for CFF plots and cross‑checks.
-
-### 5.2 Stage 2 — GPD replicas via PV inversion
-
-* **GPD parameterization**
-
-  The core network `GPDBaseNet` approximates a function (f(x,\xi,t,Q^2)).
-  The physical C‑even GPD is built as:
-
-  [
-  H^{(+)}(x,\xi,t,Q^2)
-  ====================
-
-  (1 - |x|)^{\beta} \frac{f(x,\xi,t,Q^2) - f(-x,\xi,t,Q^2)}{2}
-  ]
-
-  This enforces:
-
-  * **oddness in (x)** (C-even combination),
-  * a known **endpoint falloff** via the ((1-|x|)^\beta) envelope.
-
-* **Principal–value operator**
-
-  `PVForwardOperator` discretizes the integral defining (\Re\mathcal{H}):
-
-  ```python
-  xgrid  = torch.linspace(-1, 1, NX)
-  kernel = 1/(xi - x) - 1/(xi + x)
-
-  # exclude a small band around x=±xi for PV
-  mask = (|x - xi| > eps) & (|x + xi| > eps)
-
-  ReH_pred = Σ_x H(x) * kernel * mask * w_x
-  ```
-
-  Here `NX` is the number of points on the x‑grid, `w_x` are trapezoidal
-  integration weights, and `eps = PV_EPS_MULT * dx` is the PV cut‑out width.
-
-* **Loss function**
-
-  For each replica, we minimize:
-
-  [
-  \mathcal{L} =
-  \frac{1}{N}\sum_i
-  \frac{\left[\Re\mathcal{H}^{\text{pred}}_i -
-  \Re\mathcal{H}^{\text{grid}}*i\right]^2}
-  {\sigma*{\text{eff},i}^2}
-
-  * \lambda_x \int dx; \big(\partial_x^2 H^{(+)}\big)^2
-    ]
-
-  - The first term is a **weighted χ²** using the effective ReH uncertainty
-    `sigma_eff`.
-  - The second term is a **curvature penalty in x** (`GPD_LAM_X`) which
-    suppresses oscillatory solutions and stabilizes the inversion.
-
-* **Replica logic**
-
-  For each CFF model `m_k`:
-
-  1. evaluate its smooth CFF field `ReH_vals` on the grid,
-  2. build a dataset of `(xi, t, Q2, ReH_vals, sigma_eff)`,
-  3. train a fresh GPD network + PV operator to minimize the loss,
-  4. save the resulting network as `gpd_rep_XXX.pt`,
-  5. record the slice (H_k^{(+)}(x,\xi_0,t_0,Q_0^2)) for band plots.
-
-  The ensemble `{gpd_rep_*}` is then the **GPD uncertainty band**.
-
-## 6. Key Hyperparameters to Experiment With
-
-All are defined at the top of `GPD-H_pt.py`:
-
-* **ReH grid density**
-
-  * `N_XI_GRID`, `N_T_GRID`, `N_Q2_GRID`
-    → more points = smoother, but slower.
-
-* **GPD x‑grid and structure**
-
-  * `NX`           – number of x points in ([-1,1]),
-  * `BETA`         – endpoint envelope exponent,
-  * `GPD_HIDDEN`   – MLP width,
-  * `GPD_LAYERS`   – number of hidden layers.
-
-* **PV & regularization**
-
-  * `PV_EPS_MULT`  – controls how aggressively you excise the kernel
-    singularity; too small → numerical noise, too large → bias.
-  * `GPD_LAM_X`    – strength of curvature regularization in x.
-
-* **Replica control**
-
-  * `MAX_GPD_REPS` – cap the number of CFF replicas you invert (for speed).
-
-Students can change these and see how the GPD band and smoothness respond.
-
-## 7. Typical Workflow for Students
-
-1. **Inspect the CFF stage**
-
-   * Look at `reh_model_v3/training_summary.json` to see the ranges of
-     (\xi, t, Q^2) and the network architecture.
-   * Plot `ReH_smooth_for_inverse.csv` with a quick 3D surface or contour
-     plot to see the CFF landscape.
-
-2. **Study the inversion script**
-
-   * Read `GPD-H_pt.py` from top to bottom:
-
-     * How are ReH ensemble predictions combined?
-     * How is the PV integral implemented on the x‑grid?
-     * Where are physics constraints (oddness, envelope) imposed?
-
-3. **Run and visualize**
-
-   * Run `python3 GPD-H_pt.py`.
-   * Examine `H_band_from_ReHfit.png`.
-   * Use the plotting scripts to view 3D surfaces in ((\xi,t)) at various
-     (Q^2).
-
-4. **Modify and re‑run**
-
-   * Decrease or increase `NX`, `GPD_LAM_X`, or `N_XI_GRID` and observe
-     effects on smoothness and uncertainty.
-   * Try restricting to fewer replicas via `MAX_GPD_REPS` and see how the
-     band changes.
-
-
-
-You can find the ReH CFF model used at Rivanna under /project/UVA-Spin:
-https://ood.hpc.virginia.edu/pun/sys/dashboard/files/fs//project/UVA-Spin
+Sources derived from Tiktaalik retain their [upstream license](research/GPD_NLO_completion_package/frozen/fortran/LICENSE.tiktaalik); see [third-party notices](THIRD_PARTY_NOTICES.md). No new blanket license is assigned to the authors' code by this update.
