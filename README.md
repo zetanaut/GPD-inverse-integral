@@ -2,7 +2,7 @@
 
 This repository reconstructs generalized parton distributions (GPDs) from Compton form factors (CFFs). A neural network represents quark and gluon fields at a reference scale; next-to-leading-order QCD evolution and hard coefficients connect those fields to the observed amplitudes. The analysis follows the reconstruction from exact-input closure to uncertain experimental inputs and complementary forward information.
 
-**Analysis snapshot: 31 October 2026.** The repository includes the analysis scripts, all six current manuscript plots, their numerical inputs, and 54 saved model states. The figures and tables can be regenerated locally. Model evaluation also reproduces the closure field errors and experimental CFF predictions without retraining.
+The repository includes the analysis scripts, all six current manuscript plots, their numerical inputs, and 54 saved model states. The figures and tables can be regenerated locally. Model evaluation also reproduces the closure field errors and experimental CFF predictions without retraining.
 
 [Reproduce the analysis](analysis/README.md) · [Figure gallery](docs/figures.md) · [Method](docs/method.md) · [Results](docs/results.md) · [Software guide](docs/software.md) · [Related work](docs/literature.md)
 
