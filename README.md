@@ -1,102 +1,117 @@
 # Neural GPD reconstruction with NLO QCD
 
-Physics-constrained neural inference of generalized parton distributions from Compton form factors, with coupled quark/gluon evolution, free-coefficient moment constraints, and complementary forward information.
+This repository reconstructs generalized parton distributions (GPDs) from Compton form factors (CFFs). A neural network represents quark and gluon fields at a reference scale; next-to-leading-order QCD evolution and hard coefficients connect those fields to the observed amplitudes. The analysis follows the reconstruction from exact-input closure to uncertain experimental inputs and complementary forward information.
 
-**Research software and results through 30 October 2026.** This repository now contains the current framework alongside the original LO inversion and plotting tools. The revised manuscript will replace the earlier Watkins–Keller paper on the [same arXiv record, 2512.21761](https://arxiv.org/abs/2512.21761), once its results and manuscript are ready. The arXiv page currently describes the earlier version.
+**Analysis snapshot: 31 October 2026.** The repository includes the analysis scripts, all six current manuscript plots, their numerical inputs, and 54 saved model states. The figures and tables can be regenerated locally. Model evaluation also reproduces the closure field errors and experimental CFF predictions without retraining.
 
-[Methods note (PDF)](docs/GPD_AI_Methods_Proposal_Note.pdf) · [Physics and conventions](docs/method.md) · [Results and limitations](docs/results.md) · [Software guide](docs/software.md) · [Literature](docs/literature.md) · [Original tools](docs/legacy.md)
+[Reproduce the analysis](analysis/README.md) · [Figure gallery](docs/figures.md) · [Method](docs/method.md) · [Results](docs/results.md) · [Software guide](docs/software.md) · [Related work](docs/literature.md)
 
-## Current method
+## Start with the results
 
-A conditional FiLM network represents the reference-scale fields
-
-$$F_\theta(x,\xi,t;Q_0^2)=(\Sigma,T,H_g),\qquad Q_0^2=2\ \mathrm{GeV}^2.$$
-
-For the stored three-flavor basis, $\Sigma=U+D+S$, $T=U-(D+S)/2$, and $H_g(x,0,0)=xg(x)$. Here $U=H^u(x)-H^u(-x)$, with analogous definitions for $D,S$. The reported charge-weighted quark combination is
-
-$$H^{(+)}=\frac{2}{9}(\Sigma+T).$$
-
-The fixed NLO forward calculation maps reference-scale fields to complex CFF predictions. Scale dependence enters through QCD evolution and hard coefficients. The current experimental fits use Re $\mathcal H$; an unfitted imaginary prediction supplies no additional measurement.
-
-```mermaid
-flowchart LR
-    NN[Reference-scale FiLM fields] --> QCD[Coupled NLO evolution and coefficients]
-    QCD --> CFF[CFF predictions and data residuals]
-    NN --> MOM[Finite-spin moment constraints]
-    NN --> PDF[Forward PDF observations and covariance]
-    CFF --> FIT[Constrained inference]
-    MOM --> FIT
-    PDF --> FIT
-    FIT --> OUT[GPD fields and selected functionals]
-```
-
-Implemented components include:
-
-- A 3,867-parameter reference-scale network with exact quark/gluon parity, even skewness dependence, active t conditioning, and an explicit endpoint envelope.
-- Fixed-t Mellin constraints for even spins 2, 4, 6, and 8. Allowed polynomial coefficients remain unknown; the code penalizes components outside the allowed spaces.
-- Exact-coordinate NLO row adapters, paired nominal/reference banks, integrated residual derivatives, and finite-budget constrained optimization components.
-- Correlated forward-PDF observations, using the stored channel conventions and explicit covariance whitening.
-- Synthetic truth generators, closure workflows, selected-functional error calibration, and separate symbolic moment-support proposals followed by refitting.
-
-This is a reduced channel basis: recovery of $H^{(+)}$ alone does not identify all flavors, $E$, angular momentum, or mechanical distributions. Finite-spin collocation is not an all-orders polynomiality guarantee. See [method and assumptions](docs/method.md).
-
-## Install and run
-
-Use Python 3.9 or newer in your preferred virtual environment:
+Use Python 3.9 or newer in a virtual environment. For tables and plots, only NumPy, pandas, and Matplotlib are needed:
 
 ```bash
 git clone https://github.com/zetanaut/GPD-inverse-integral.git
 cd GPD-inverse-integral
-python -m pip install -e '.[dev,plot]'
-python examples/quickstart.py
-python examples/calibration.py
-python -m pytest -q
+python -m pip install -r analysis/requirements.txt
+python analysis/reproduce.py
 ```
 
-The quickstart evaluates a fresh neural field through the bundled validated NLO rows and reports a moment residual. It performs no fit; its numbers are interface demonstrations, not reconstructed physics. The calibration example illustrates the statistical API using artificial error records.
+Outputs go to `outputs/analysis/`: six PDF figures, six PNG previews, seven CSV tables, a readable results summary, and verification reports. Inputs are checked against a SHA-256 manifest before analysis. No fit is performed and no new noise is drawn.
 
-The source checkout includes the 189-row source CFF table (160 rows after the declared cuts), 102 exact-coordinate NLO row pairs, and a smaller development fixture for interface tests. Package installation alone does not fetch these data from another service. [Data provenance and supported workflows](docs/software.md#data-and-reproduction) describe the inputs, sign convention, and requirements for full research runs.
+To also evaluate the saved models and replay the experimental NLO predictions:
 
-## Completed evidence
+```bash
+python -m pip install -e '.[dev,plot]'
+python analysis/reproduce.py --replay-checkpoints
+python -m pytest -q
+python tools/verify_sources.py
+```
 
-The forward-PDF study, P2B, compares a CFF-only baseline with a joint CFF-plus-PDF fit. The following errors are percentages relative to the same synthetic truth:
+The [reproduction guide](analysis/README.md) explains each command, data format, metric, and validation level. Repeating an optimization campaign requires more than replaying its saved outputs; the [research workflow map](docs/workflows.md) identifies the relevant fit, scoring, and cluster scripts and their runtime dependencies.
 
-| Case | Observed-slice $H^{(+)}$ L2 | Absolute relative error in A | Absolute relative error in B | Wider-chart $H^{(+)}$ L2 |
-|---|---:|---:|---:|---:|
-| Exact CFF baseline | 0.9203 | 0.4848 | 0.8691 | 0.7502 |
-| Exact CFF + PDF | 0.4695 | 0.6767 | 0.2516 | 0.5353 |
-| Half-noise CFF baseline | 11.4635 | 4.9896 | 1.2814 | 28.6127 |
-| Half-noise CFF + PDF | 10.1336 | 3.5404 | 3.2364 | 38.1344 |
+## Follow the scientific progression
 
-At $\xi=0.275$, $t=-0.363\ \mathrm{GeV}^2$, $Q_0^2=2\ \mathrm{GeV}^2$,
-
-$$A=5\int_{0.2}^{0.4}H^{(+)}dx,\qquad B=\int_0^1 xH^{(+)}dx.$$
-
-The clean-input control passes its four preservation gates. The single frozen half-noise case improves squared observed-slice error by 21.86% and improves A, but fails B's no-worsening safeguard and worsens the wider chart. This limits the claim of robust benefit from this PDF addition; it does not by itself prevent publication of the broader framework. Independent assessment for this P2B design remains unreleased.
-
-A separate 442-case study achieved joint selected-target coverage of 135/141 and 131/141 on its two synthetic test strata. It does not calibrate experimental or full-field bands. Other completed studies include complex-CFF closure, actual-coordinate ReH closure, symbolic refits, numerical consistency checks, and information-limit diagnostics. Their settings and metrics are documented separately in [results](docs/results.md).
-
-## Software map
-
-| Location | Contents | Use |
+| Step | Question | Evidence and entry point |
 |---|---|---|
-| [`src/gpd_reh`](src/gpd_reh) | FiLM fields, input conventions, NLO row adapter, fixed-t moments, residual/Jacobian problem | Importable current inference components |
-| [`src/gpd_tools`](src/gpd_tools) | Calibration, PDF observation adapter, synthetic truths, solver primitives, exact-input cache, row importer | Reusable research tools |
-| [`examples`](examples) | Forward/model and calibration examples | Small local demonstrations |
-| [`tests`](tests) | Existing scientific interface and calibration checks | No optimization campaign |
-| [`data/experimental`](data/experimental) | Source CFF table, prepared observations, validated row pairs | Declared experimental geometry |
-| [`research`](research) | Numerical kernels, evolution, fitting workflows, closure, symbolic, upstream, and P2B source snapshots | Advanced workflows with original runtime contracts |
-| [`evidence`](evidence) | Compact review records and source metrics | Traceability of reported results |
-| [`SOURCE_MANIFEST.json`](SOURCE_MANIFEST.json) | Original project paths, hashes, and import adaptations | Source provenance |
+| 1. Define the inverse problem | Which fields are inferred, and how do they produce CFFs? | [Reference fields, NLO map, and moment constraints](docs/method.md) |
+| 2. Establish exact-input recovery | Can the method recover a known GPD from integral observations? | [Figures 1–2](docs/figures.md#1-exact-input-multiscale-closure): 45 complex-CFF positions and 512 disjoint prediction positions |
+| 3. Introduce experimental-scale noise | How does the inferred field respond to a fixed perturbation? | [Figure 3](docs/figures.md#3-exact-and-noisy-real-cff-inputs): exact/noisy real CFFs at 160 experimental coordinates, two initializations |
+| 4. Reconstruct experimental fields | What GPDs reproduce local CFF values, a mean CFF function, or individual CFF replicas? | [Figures 4–5](docs/figures.md#4-experimental-gpd-slices) and a common-data residual comparison |
+| 5. Examine the reconstruction rule | Does the response depend on the number of optimization iterations? | [Figure 6](docs/figures.md#6-dependence-on-optimization-iterations), matched input/output responses, and mean-distance decomposition |
+| 6. Add complementary information | Does a forward-boundary constraint improve the quantities of interest? | [CFF-only versus CFF+PDF comparison](docs/results.md#forward-information-comparison) with exact and half-noise inputs |
 
-## Original tools retained
+### Exact inputs and noise sensitivity
 
-`GPD-H_pt.py`, `3d-update.py`, `Q2-plots.py`, `plot_H_band_pt.py`, `plot_H_surface_band_pt.py`, and `plot_gpd_surface_band_simple.py` remain at their original paths. They support the earlier LO model/checkpoint format and are useful for historical reproduction and visualization. They do not directly load the new three-channel FiLM checkpoints. The [original instructions](docs/legacy.md) are preserved with that scope.
+| CFF input | Positions | Initialization | Wider-chart GPD error |
+|---|---:|---:|---:|
+| Exact complex CFFs | 45 | 31 | 4.90% |
+| Exact real CFFs | 160 | 31 | 0.75% |
+| Exact real CFFs | 160 | 43 | 3.05% |
+| Noisy real CFFs | 160 | 31 | 32.69% |
+| Noisy real CFFs | 160 | 43 | 49.21% |
 
-## Publication context and development
+These are relative L2 errors of the charge-weighted field for one analytic generating GPD. The noisy runs share one perturbation vector at the quoted error scale. Different sampling geometries and loss weights prevent interpreting the 45-versus-160 comparison as a test of whether imaginary CFF information is useful.
 
-Neural GPD representation, neural CFF inference, and global NLO extraction all have precedents. The contribution here is the specific inference formulation and the evidence for what it can recover. [The literature guide](docs/literature.md) covers theory-constrained neural GPDs, NNGPD, lattice and pion neural studies, CFF-only fits, GUMP1.0, and Gaussian-process reconstruction.
+![Exact and noisy real-CFF reconstruction](analysis/figures/fig03_exact_noisy.png)
 
-The revised paper will present the current framework, numerical checks, completed reconstructions, uncertainty scope, and remaining ambiguities. The earlier LO formulation can provide an informative ablation. The repository update does not announce a completed manuscript or a new arXiv version.
+The exact complex-CFF fit predicts real and imaginary CFFs at 512 disjoint positions with relative errors of 0.75% and 2.75%. Its separate singlet and nonsinglet errors are much larger than the error in their charge-weighted sum; the result does not establish flavor separation. [Definitions and full comparison](docs/results.md#exact-input-closure)
 
-Sources derived from Tiktaalik retain their [upstream license](research/GPD_NLO_completion_package/frozen/fortran/LICENSE.tiktaalik); see [third-party notices](THIRD_PARTY_NOTICES.md). No new blanket license is assigned to the authors' code by this update.
+### Experimental inputs and the reconstructed family
+
+The experimental analysis uses 160 retained local real-CFF extractions. Thirty-two perturbed input vectors are each fitted with a smooth CFF network. GPD fits use either the pointwise mean of those CFF functions or individual replicas 000 and 001. A separate local-CFF fit uses the unperturbed local values directly.
+
+![GPDs fitted to local, mean, and replica CFF inputs](analysis/figures/fig04_experimental_family.png)
+
+| GPD fit | RMS residual against its own CFF target | RMS residual against the same local CFF values |
+|---|---:|---:|
+| Local CFF values | 2.43350 | 2.43350 |
+| Replica-mean CFF | 1.32583 | 2.17274 |
+| CFF replica 000 | 1.52782 | 2.19179 |
+| CFF replica 001 | 1.58418 | 2.12619 |
+
+All residuals are divided pointwise by the original quoted errors. The mean and individual-replica fits use 20 additional outer iterations from a common starting network. The local-CFF fit has a different optimization history, so this comparison does not isolate the effect of smoothing. The GPD fitted to the mean CFF is **not an average of reconstructed GPDs**. Two propagated replicas illustrate input sensitivity; they do not define a statistical uncertainty band.
+
+## How the method works
+
+The network represents three fields at a common reference scale:
+
+$$\boldsymbol F_\theta(x,\xi,t;Q_0^2)=(\Sigma,T,H_g),\qquad Q_0^2=2\ \mathrm{GeV}^2.$$
+
+With $U=H^u(x)-H^u(-x)$ and analogous $D,S$, the basis is $\Sigma=U+D+S$, $T=U-(D+S)/2$, and $H_g(x,0,0)=xg(x)$. The reported charge-weighted quark GPD is
+
+$$H^{(+)}=\frac{2}{9}(\Sigma+T).$$
+
+```mermaid
+flowchart LR
+    INPUT[Local CFF data or synthetic truth CFFs] --> LOSS[CFF residuals]
+    FIELD[Reference-scale neural fields] --> QCD[NLO evolution and hard coefficients]
+    QCD --> LOSS
+    FIELD --> MOM[Finite-spin moment residuals]
+    LOSS --> FIT[Constrained optimization]
+    MOM --> FIT
+    FIT --> EVAL[Fields, CFF predictions, and diagnostics]
+    EVAL --> FIG[Tables and figures]
+```
+
+The 3,867-parameter FiLM network imposes quark/gluon parity and even skewness dependence exactly. Finite-spin polynomiality constrains the moment space while leaving the allowed coefficients free. There is no Q² input to the network: scale dependence comes from the QCD map. Reusable numerical rows keep the physics map explicit during optimization. [Equations, conventions, and implementation](docs/method.md)
+
+## Repository map
+
+| Location | Contents |
+|---|---|
+| [`analysis/`](analysis/README.md) | Runnable analysis, plotting, checkpoint replay, saved numerical inputs, and figure previews |
+| [`src/gpd_reh/`](src/gpd_reh) | FiLM fields, exact-coordinate NLO rows, input conventions, moment constraints, and residual derivatives |
+| [`src/gpd_tools/`](src/gpd_tools) | Solver, calibration, PDF-observation, truth-generator, and cache components |
+| [`data/experimental/`](data/experimental) | Source CFF table, 160 prepared observations, and 102 nominal/reference NLO row pairs |
+| [`examples/`](examples) | Small forward-interface and artificial-record calibration demonstrations |
+| [`research/`](research/README.md) | Original fitting, upstream-CFF, scoring, numerical-kernel, and cluster workflow sources |
+| [`evidence/`](evidence) | Bound scientific review records and distribution-validation reports |
+| [`tests/`](tests) | Model, convention, derivative, calibration, and analysis checks |
+| [`SOURCE_MANIFEST.json`](SOURCE_MANIFEST.json) | Source paths, hashes, and declared adaptations |
+
+The original LO inversion and plotting utilities remain available at their original paths, with [compatibility instructions](docs/legacy.md). They use a different checkpoint format from the current three-channel fields.
+
+The [literature guide](docs/literature.md) positions this work relative to neural CFF extraction, neural GPD reconstruction, lattice-informed methods, non-neural GUMP, and Gaussian-process reconstruction. The associated manuscript uses [arXiv:2512.21761](https://arxiv.org/abs/2512.21761); identify the repository commit and analysis snapshot when reproducing these results.
+
+Tiktaalik-derived sources retain their [upstream license](research/GPD_NLO_completion_package/frozen/fortran/LICENSE.tiktaalik). See [third-party notices](THIRD_PARTY_NOTICES.md) for scope. No new blanket license is assigned to the authors' code by this update.

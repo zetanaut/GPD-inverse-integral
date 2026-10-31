@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "input_files_verified": 81,
+  "closure_cases": 5,
+  "experimental_residual_groups": 9,
+  "field_response_groups": 6,
+  "cff_response_groups": 6,
+  "decomposition_checks": 3,
+  "forward_information_rows": 4,
+  "scope": "CFF and response arithmetic recomputed from saved arrays. Wider-chart field errors and P2B diagnostics read from bound score records; checkpoint replay is a separate command."
+}

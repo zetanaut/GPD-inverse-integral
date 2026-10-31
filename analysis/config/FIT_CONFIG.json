@@ -1,0 +1,118 @@
+{
+  "network": {
+    "architecture": "original reference-scale FiLM",
+    "no_Q2_feature": true,
+    "parameters": 3867,
+    "seeds": [
+      31,
+      43
+    ],
+    "t_mean": -0.363197,
+    "t_std": 0.22654909308690688
+  },
+  "physics": {
+    "Q02": 2.0,
+    "alpha0": 0.35691594851514724,
+    "channels": [
+      "Sigma",
+      "T_rescaled",
+      "Hg=xg"
+    ],
+    "muF_over_Q": 1.0,
+    "muR_over_Q": 1.0,
+    "nf": 3,
+    "order": "NLO",
+    "scheme": "MSbar"
+  },
+  "polynomiality": {
+    "all_allowed_coefficients_free": true,
+    "finite_moment_checks_not_global_proof": true,
+    "lambda": 1.0,
+    "spins": [
+      2,
+      4,
+      6,
+      8
+    ],
+    "t_nodes": [
+      -1.3732,
+      -1.013925,
+      -0.65465,
+      -0.562765,
+      -0.47088,
+      -0.41694,
+      -0.363,
+      -0.3215,
+      -0.28,
+      -0.245,
+      -0.21,
+      -0.16,
+      -0.11
+    ],
+    "xi_fit": [
+      0.02,
+      0.044,
+      0.068,
+      0.09200000000000001,
+      0.116,
+      0.13999999999999999,
+      0.164,
+      0.188,
+      0.212,
+      0.236,
+      0.26,
+      0.28400000000000003,
+      0.30800000000000005,
+      0.332,
+      0.35600000000000004,
+      0.38,
+      0.404,
+      0.42800000000000005,
+      0.452,
+      0.47600000000000003,
+      0.5,
+      0.524,
+      0.548,
+      0.5720000000000001,
+      0.5960000000000001,
+      0.62,
+      0.644,
+      0.668,
+      0.6920000000000001,
+      0.7160000000000001,
+      0.74,
+      0.764,
+      0.788,
+      0.812,
+      0.8360000000000001,
+      0.86,
+      0.884,
+      0.908,
+      0.932,
+      0.9560000000000001,
+      0.98
+    ]
+  },
+  "solver": {
+    "adam_lr": 0.003,
+    "adam_steps": 400,
+    "candidate_stages": [
+      0,
+      20,
+      40,
+      60
+    ],
+    "diagnostics_first": true,
+    "do_not_select_by_truth_or_unfitted_Im": true,
+    "implementation": "existing finite-budget residual-norm constrained solver; no replacement architecture",
+    "numerical_domain": "same existing source-derived numerical and moment filters mapped to this geometry; not use Im DATA in Re-only cases",
+    "ranking": [
+      "J",
+      "seed",
+      "stage"
+    ],
+    "residual_norm_iterations": 60,
+    "rule_freeze": "write exact source hash binding before any fit; same code and rules all branches",
+    "starts": "fresh fixed seed every task"
+  }
+}

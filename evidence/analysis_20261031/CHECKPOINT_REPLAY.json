@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "input_files_verified": 81,
+  "models_replayed": 54,
+  "closure_fields": 5,
+  "experimental_predictions": 7840,
+  "maximum_absolute_differences": {
+    "field_score": 0.0,
+    "curves": 4.440892098500626e-16,
+    "surfaces": 0.0,
+    "residual_RMS": 7.105427357601002e-15,
+    "cff_predictions": 4.263256414560601e-14
+  },
+  "scope": "Saved weights evaluated on field grids and bundled experimental NLO rows. Closure CFF operators, P2B trajectories, and native kernels are not rebuilt.",
+  "no_training": true,
+  "no_new_noise": true
+}

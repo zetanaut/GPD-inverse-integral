@@ -1,0 +1,105 @@
+{
+  "CFF": {
+    "experimental": {
+      "noisy_input_used_in_fit": true,
+      "numerical_refinement": {
+        "absolute_RMS": [
+          1.4570439305509074e-06,
+          2.570221259345559e-06
+        ],
+        "relative_L2": [
+          1.196963795486306e-06,
+          1.1852082371926168e-06
+        ],
+        "weighted_RMS": [
+          3.684607104638111e-06,
+          5.23607368925739e-06
+        ]
+      },
+      "truth_error": {
+        "absolute_RMS": [
+          0.0959372491654959,
+          0.939991087399341
+        ],
+        "relative_L2": [
+          0.07952348474038451,
+          0.7298662712283275
+        ],
+        "weighted_RMS": [
+          0.4343422703890849,
+          3.543377064906054
+        ]
+      }
+    },
+    "surface_check": {
+      "noisy_input_used_in_fit": false,
+      "numerical_refinement": {
+        "absolute_RMS": [
+          9.949134162007468e-07,
+          1.6220083447099117e-06
+        ],
+        "relative_L2": [
+          1.4671524711125321e-06,
+          1.1774023094807204e-06
+        ],
+        "weighted_RMS": [
+          2.4872835405018686e-05,
+          4.055020861774779e-05
+        ]
+      },
+      "truth_error": {
+        "absolute_RMS": [
+          0.3549043346079579,
+          1.4216048194364896
+        ],
+        "relative_L2": [
+          0.43929791945202984,
+          2.667270829485579
+        ],
+        "weighted_RMS": [
+          8.872608365198948,
+          35.54012048591222
+        ]
+      }
+    }
+  },
+  "checkpoint_sha256": "ad976f3c2ef6ff3223b90cb62762df2ee212439a51786bc539987bffedb00e83",
+  "field": {
+    "charge_absolute_RMS": {
+      "DGLAP": 0.11561636800458659,
+      "ERBL": 0.06075720484769724,
+      "all": 0.10351671749399641
+    },
+    "charge_max_slice_relative_L2": 1.172018266022015,
+    "charge_relative_L2": {
+      "DGLAP": 0.5129569007476978,
+      "ERBL": 0.37043473079805234,
+      "all": 0.49208865488534953
+    },
+    "internal_channel_relative_L2": [
+      0.2998076323375023,
+      1.6263083007891967,
+      1.8325674767574116
+    ],
+    "mesh": {
+      "nu": 9,
+      "nxi": 33,
+      "x_order_per_region": 160
+    },
+    "not_an_uncertainty_interval": true
+  },
+  "interpretation": "truth-error measurement after fixed selection; no confidence band or unique inversion claim",
+  "objective": 0.7756683733526664,
+  "study_sha256": "1e608af4ddecb8902037cf68d975bdb797bc4ffe75c24c9a84cd9a863a20938f",
+  "task": {
+    "branch": "exp_Re_noisy",
+    "components": [
+      0
+    ],
+    "geometry": "experimental",
+    "id": "exp_Re_noisy_Z1_s43",
+    "noise": "one frozen Re perturbation per truth",
+    "seed": 43,
+    "truth": "Z1"
+  }
+}

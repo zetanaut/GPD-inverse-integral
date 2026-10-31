@@ -1,0 +1,686 @@
+{
+  "core_tasks": [
+    {
+      "branch": "ideal_L0",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L0",
+      "id": "ideal_L0_Z1_s31",
+      "noise": "none",
+      "seed": 31,
+      "truth": "Z1"
+    },
+    {
+      "branch": "ideal_L0",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L0",
+      "id": "ideal_L0_Z1_s43",
+      "noise": "none",
+      "seed": 43,
+      "truth": "Z1"
+    },
+    {
+      "branch": "ideal_L0",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L0",
+      "id": "ideal_L0_Z2_s31",
+      "noise": "none",
+      "seed": 31,
+      "truth": "Z2"
+    },
+    {
+      "branch": "ideal_L0",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L0",
+      "id": "ideal_L0_Z2_s43",
+      "noise": "none",
+      "seed": 43,
+      "truth": "Z2"
+    },
+    {
+      "branch": "ideal_L1",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L1",
+      "id": "ideal_L1_Z1_s31",
+      "noise": "none",
+      "seed": 31,
+      "truth": "Z1"
+    },
+    {
+      "branch": "ideal_L1",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L1",
+      "id": "ideal_L1_Z1_s43",
+      "noise": "none",
+      "seed": 43,
+      "truth": "Z1"
+    },
+    {
+      "branch": "ideal_L1",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L1",
+      "id": "ideal_L1_Z2_s31",
+      "noise": "none",
+      "seed": 31,
+      "truth": "Z2"
+    },
+    {
+      "branch": "ideal_L1",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L1",
+      "id": "ideal_L1_Z2_s43",
+      "noise": "none",
+      "seed": 43,
+      "truth": "Z2"
+    },
+    {
+      "branch": "ideal_L2",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L2",
+      "id": "ideal_L2_Z1_s31",
+      "noise": "none",
+      "seed": 31,
+      "truth": "Z1"
+    },
+    {
+      "branch": "ideal_L2",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L2",
+      "id": "ideal_L2_Z1_s43",
+      "noise": "none",
+      "seed": 43,
+      "truth": "Z1"
+    },
+    {
+      "branch": "ideal_L2",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L2",
+      "id": "ideal_L2_Z2_s31",
+      "noise": "none",
+      "seed": 31,
+      "truth": "Z2"
+    },
+    {
+      "branch": "ideal_L2",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "ideal_L2",
+      "id": "ideal_L2_Z2_s43",
+      "noise": "none",
+      "seed": 43,
+      "truth": "Z2"
+    },
+    {
+      "branch": "exp_complex_exact",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "experimental",
+      "id": "exp_complex_exact_Z1_s31",
+      "noise": "none",
+      "seed": 31,
+      "truth": "Z1"
+    },
+    {
+      "branch": "exp_complex_exact",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "experimental",
+      "id": "exp_complex_exact_Z1_s43",
+      "noise": "none",
+      "seed": 43,
+      "truth": "Z1"
+    },
+    {
+      "branch": "exp_complex_exact",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "experimental",
+      "id": "exp_complex_exact_Z2_s31",
+      "noise": "none",
+      "seed": 31,
+      "truth": "Z2"
+    },
+    {
+      "branch": "exp_complex_exact",
+      "components": [
+        0,
+        1
+      ],
+      "geometry": "experimental",
+      "id": "exp_complex_exact_Z2_s43",
+      "noise": "none",
+      "seed": 43,
+      "truth": "Z2"
+    },
+    {
+      "branch": "exp_Re_exact",
+      "components": [
+        0
+      ],
+      "geometry": "experimental",
+      "id": "exp_Re_exact_Z1_s31",
+      "noise": "none",
+      "seed": 31,
+      "truth": "Z1"
+    },
+    {
+      "branch": "exp_Re_exact",
+      "components": [
+        0
+      ],
+      "geometry": "experimental",
+      "id": "exp_Re_exact_Z1_s43",
+      "noise": "none",
+      "seed": 43,
+      "truth": "Z1"
+    },
+    {
+      "branch": "exp_Re_exact",
+      "components": [
+        0
+      ],
+      "geometry": "experimental",
+      "id": "exp_Re_exact_Z2_s31",
+      "noise": "none",
+      "seed": 31,
+      "truth": "Z2"
+    },
+    {
+      "branch": "exp_Re_exact",
+      "components": [
+        0
+      ],
+      "geometry": "experimental",
+      "id": "exp_Re_exact_Z2_s43",
+      "noise": "none",
+      "seed": 43,
+      "truth": "Z2"
+    },
+    {
+      "branch": "exp_Re_noisy",
+      "components": [
+        0
+      ],
+      "geometry": "experimental",
+      "id": "exp_Re_noisy_Z1_s31",
+      "noise": "one frozen Re perturbation per truth",
+      "seed": 31,
+      "truth": "Z1"
+    },
+    {
+      "branch": "exp_Re_noisy",
+      "components": [
+        0
+      ],
+      "geometry": "experimental",
+      "id": "exp_Re_noisy_Z1_s43",
+      "noise": "one frozen Re perturbation per truth",
+      "seed": 43,
+      "truth": "Z1"
+    },
+    {
+      "branch": "exp_Re_noisy",
+      "components": [
+        0
+      ],
+      "geometry": "experimental",
+      "id": "exp_Re_noisy_Z2_s31",
+      "noise": "one frozen Re perturbation per truth",
+      "seed": 31,
+      "truth": "Z2"
+    },
+    {
+      "branch": "exp_Re_noisy",
+      "components": [
+        0
+      ],
+      "geometry": "experimental",
+      "id": "exp_Re_noisy_Z2_s43",
+      "noise": "one frozen Re perturbation per truth",
+      "seed": 43,
+      "truth": "Z2"
+    }
+  ],
+  "date": "2026-10-07",
+  "execution": "source/array preflight and one measured run before projected heavy batch; no automatic kernel construction",
+  "id": "three_stage_zero_closure_v1",
+  "network": {
+    "architecture": "original reference-scale FiLM",
+    "no_Q2_feature": true,
+    "parameters": 3867,
+    "seeds": [
+      31,
+      43
+    ],
+    "t_mean": -0.363197,
+    "t_std": 0.22654909308690688
+  },
+  "observation_rule": {
+    "experimental_covariance": "explicit diagonal working simulation law; no claim of full experimental covariance",
+    "experimental_sigma": "unchanged supplied combined statistical/systematic marginal errors",
+    "ideal_sigma": 0.04,
+    "ideal_sigma_role": "numerical component scale, no random error",
+    "loss": "sum_i mass_i * sum_supplied_components ((C_pred-y)/sigma)^2 + Lpoly",
+    "noise_seeds": {
+      "Z1": 2026100701,
+      "Z2": 2026100702
+    },
+    "normalization": "mass sums to one; removing Im removes only that term, not a factor-two rescaling",
+    "synthetic_Im_weight": "same numerical row scale as Re for the sparse exact complex bridge; no experimental Im input"
+  },
+  "physics": {
+    "Q02": 2.0,
+    "alpha0": 0.35691594851514724,
+    "channels": [
+      "Sigma",
+      "T_rescaled",
+      "Hg=xg"
+    ],
+    "muF_over_Q": 1.0,
+    "muR_over_Q": 1.0,
+    "nf": 3,
+    "order": "NLO",
+    "scheme": "MSbar"
+  },
+  "polynomiality": {
+    "all_allowed_coefficients_free": true,
+    "finite_moment_checks_not_global_proof": true,
+    "lambda": 1.0,
+    "spins": [
+      2,
+      4,
+      6,
+      8
+    ],
+    "t_nodes": [
+      -1.3732,
+      -1.013925,
+      -0.65465,
+      -0.562765,
+      -0.47088,
+      -0.41694,
+      -0.363,
+      -0.3215,
+      -0.28,
+      -0.245,
+      -0.21,
+      -0.16,
+      -0.11
+    ],
+    "xi_fit": [
+      0.02,
+      0.044,
+      0.068,
+      0.09200000000000001,
+      0.116,
+      0.13999999999999999,
+      0.164,
+      0.188,
+      0.212,
+      0.236,
+      0.26,
+      0.28400000000000003,
+      0.30800000000000005,
+      0.332,
+      0.35600000000000004,
+      0.38,
+      0.404,
+      0.42800000000000005,
+      0.452,
+      0.47600000000000003,
+      0.5,
+      0.524,
+      0.548,
+      0.5720000000000001,
+      0.5960000000000001,
+      0.62,
+      0.644,
+      0.668,
+      0.6920000000000001,
+      0.7160000000000001,
+      0.74,
+      0.764,
+      0.788,
+      0.812,
+      0.8360000000000001,
+      0.86,
+      0.884,
+      0.908,
+      0.932,
+      0.9560000000000001,
+      0.98
+    ]
+  },
+  "sampling_convergence": "three nested density levels; record achieved changes. No finite level declared a perfect continuum.",
+  "scope": "development zero closure then matched experimental-information closure; no new experimental fit or calibration",
+  "solver": {
+    "adam_lr": 0.003,
+    "adam_steps": 400,
+    "candidate_stages": [
+      0,
+      20,
+      40,
+      60
+    ],
+    "diagnostics_first": true,
+    "do_not_select_by_truth_or_unfitted_Im": true,
+    "implementation": "existing finite-budget residual-norm constrained solver; no replacement architecture",
+    "numerical_domain": "same existing source-derived numerical and moment filters mapped to this geometry; not use Im DATA in Re-only cases",
+    "ranking": [
+      "J",
+      "seed",
+      "stage"
+    ],
+    "residual_norm_iterations": 60,
+    "rule_freeze": "write exact source hash binding before any fit; same code and rules all branches",
+    "starts": "fresh fixed seed every task"
+  },
+  "source_observations_sha256": "905bc02337190eeaae2c493951cf9909de3a2f8b65cb3fbebda4c14eaa6cfedc",
+  "status": "PREPARED_NOT_FITTED",
+  "symbolic_follow_on": {
+    "count_parents": 4,
+    "dictionary": "same allowed physical-xi powers; all coefficients refitted",
+    "nominal": "always all-term; compare errors only after decisions",
+    "parents": "lowest-J finite seed of ideal_L2 and exp_Re_exact per truth",
+    "per_parent": "one candidate plus 20-step all-term matched continuation",
+    "proposal_tolerance": 0.001,
+    "total_extra_branches_at_most": 8
+  },
+  "target": "entire Hcharge_plus=(2/9)*(Sigma+T_rescaled) at Q0^2=2; also report target functionals",
+  "truths": {
+    "Z1": {
+      "D": [
+        [
+          0.0,
+          0.0,
+          0.9
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.8
+        ]
+      ],
+      "beta": 2.0,
+      "terms": [
+        [
+          [
+            0,
+            0,
+            6.0,
+            0.65
+          ],
+          [
+            0,
+            1,
+            0.9,
+            0.9
+          ],
+          [
+            1,
+            0,
+            -0.3,
+            1.05
+          ],
+          [
+            1,
+            1,
+            0.2,
+            0.7
+          ],
+          [
+            1,
+            2,
+            0.05,
+            0.8
+          ],
+          [
+            2,
+            0,
+            0.08,
+            1.2
+          ]
+        ],
+        [
+          [
+            0,
+            0,
+            2.4,
+            0.85
+          ],
+          [
+            0,
+            1,
+            -0.35,
+            0.6
+          ],
+          [
+            1,
+            0,
+            0.12,
+            1.1
+          ],
+          [
+            1,
+            1,
+            -0.08,
+            0.9
+          ],
+          [
+            2,
+            1,
+            0.025,
+            1.3
+          ]
+        ],
+        [
+          [
+            0,
+            0,
+            1.5,
+            0.55
+          ],
+          [
+            0,
+            1,
+            0.22,
+            0.75
+          ],
+          [
+            1,
+            0,
+            -0.045,
+            0.95
+          ],
+          [
+            1,
+            2,
+            0.022,
+            0.6
+          ],
+          [
+            2,
+            0,
+            0.02,
+            1.1
+          ]
+        ]
+      ]
+    },
+    "Z2": {
+      "D": [
+        [
+          0.7,
+          -0.3,
+          0.9
+        ],
+        [
+          -0.2,
+          0.08,
+          1.15
+        ],
+        [
+          0.12,
+          -0.05,
+          0.65
+        ]
+      ],
+      "beta": 1.6,
+      "terms": [
+        [
+          [
+            0,
+            0,
+            4.8,
+            0.7
+          ],
+          [
+            0,
+            1,
+            0.55,
+            0.5
+          ],
+          [
+            1,
+            0,
+            0.42,
+            1.1
+          ],
+          [
+            1,
+            1,
+            -0.31,
+            0.9
+          ],
+          [
+            1,
+            2,
+            0.12,
+            0.75
+          ],
+          [
+            2,
+            0,
+            -0.14,
+            1.35
+          ],
+          [
+            2,
+            2,
+            0.06,
+            0.8
+          ]
+        ],
+        [
+          [
+            0,
+            0,
+            1.9,
+            0.6
+          ],
+          [
+            0,
+            1,
+            -0.26,
+            1.15
+          ],
+          [
+            1,
+            0,
+            -0.19,
+            0.85
+          ],
+          [
+            1,
+            2,
+            0.08,
+            0.6
+          ],
+          [
+            2,
+            1,
+            0.05,
+            1.4
+          ]
+        ],
+        [
+          [
+            0,
+            0,
+            1.8,
+            0.75
+          ],
+          [
+            0,
+            1,
+            0.31,
+            0.5
+          ],
+          [
+            1,
+            0,
+            0.12,
+            1.05
+          ],
+          [
+            1,
+            1,
+            -0.07,
+            0.7
+          ],
+          [
+            2,
+            0,
+            -0.025,
+            1.2
+          ]
+        ]
+      ]
+    }
+  }
+}

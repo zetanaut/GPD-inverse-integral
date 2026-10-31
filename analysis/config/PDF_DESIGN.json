@@ -1,0 +1,57 @@
+{
+  "version": "P2B-synthetic-forward-v1",
+  "date": "2026-10-26",
+  "status": "PROSPECTIVE_PREPARATION",
+  "benchmark": "Z1",
+  "external_PDF_set": null,
+  "external_PDF_set_reason": "First controlled comparison uses the same structural generator as the CFF benchmark; no claim to a real proton PDF.",
+  "boundary": {"xi": 0.0, "t_GeV2": 0.0, "Q2_GeV2": 2.0},
+  "physics": {"order": "NLO", "scheme": "MSbar", "active_flavors": 3, "coupling": "unchanged accepted CFF prescription; no PDF evolution or new map"},
+  "channels": ["Sigma", "T_rescaled", "Hg=xg"],
+  "x_grid": {"minimum": 0.02, "maximum": 0.8, "count": 12, "spacing": "geometric"},
+  "covariance": {
+    "type": "declared synthetic full-rank correlated Gaussian on 36 boundary samples",
+    "ordering": "x-major, channel-minor",
+    "relative_sigma": 0.10,
+    "floor_fraction_of_channel_grid_maximum": 0.05,
+    "x_correlation": "exp(-abs(log(x_i)-log(x_j))/log_length)",
+    "log_length": 0.7,
+    "channel_correlation": [[1.0, 0.5, 0.0], [0.5, 1.0, 0.0], [0.0, 0.0, 1.0]],
+    "minimum_eigenvalue_ratio": 1e-12,
+    "CFF_PDF_noise_independence": "declared for this synthetic experiment only",
+    "claim": "Sensitivity design, not an empirical PDF covariance, universal PDF precision, prior calibration, or continuum uncertainty band"
+  },
+  "objective": {
+    "CFF_normalizer": 160,
+    "formula": "J_P1 + chi2_PDF/160",
+    "PDF_extra_multiplier": 1.0,
+    "lambda_stab": 0.0,
+    "unchanged_CFF_sigmas_and_row_masses": true,
+    "unchanged_polynomiality_term": true,
+    "interpretation": "Working metric for a fixed-estimator sensitivity study; half-amplitude CFF noise retains original sigmas and is not the joint generative likelihood"
+  },
+  "representation_check": {
+    "method": "one fixed-seed forward-boundary output-head least-squares witness; hidden weights unchanged",
+    "training_points": 81,
+    "checking_points": 161,
+    "grid": "linear within supported interval; checking points are staggered midpoints",
+    "svd_rcond": 1e-10,
+    "channel_relative_L2_max": 0.01,
+    "maximum_absolute_standardized_error": 0.25,
+    "scientific_initializer": false,
+    "scope": "Necessary forward-only finite-sample representation diagnostic, not simultaneous CFF/moment feasibility or a full fit"
+  },
+  "prospective_cases": [
+    {"id": "P2B_exact_center_s31", "CFF_input": "exp_Re_exact_Z1_s31", "PDF_input": "Z1 central boundary with finite covariance", "baseline": "reuse exact P1 endpoint", "new_joint_fits": 1, "release": "after preparation review and allocated-node integration qualification"},
+    {"id": "P2B_half_development_s31", "CFF_input": "precision160_Z1_a050_s31", "PDF_input": "one coherent Gaussian draw; PCG64 seed 2026102601; not generated in preparation", "baseline": "reuse half-amplitude P1 endpoint", "new_joint_fits": 1, "release": "only after exact-center preservation pass and review"}
+  ],
+  "fit_budget_per_case_including_continuations": {"Adam_updates": 400, "outer_iterations_max": 60, "solver_evaluations_max": 12000, "saved_stages": [0, 20, 40, 60]},
+  "exact_center_gates": {"numerically_eligible": true, "observed_Hplus_relative_L2_max": 0.02, "target_A_absolute_relative_error_max": 0.02, "target_B_absolute_relative_error_max": 0.02, "PDF_whitened_RMS_max": 1.0, "comparison": "unrounded inclusive <=; methodological safeguards, not coverage claims"},
+  "development_advancement_rule": "Observed-slice Hplus squared relative L2 improves beyond abs(S-S_base)<=1e-10+1e-6*max(abs(S),abs(S_base)); neither target absolute relative error worsens beyond the analogous tolerance. Report all outcomes; no retuning/reselection under v1.",
+  "new_joint_fits_released": 0,
+  "new_joint_fits_executed": 0,
+  "new_scientific_noise_draws": 0,
+  "prospective_joint_fit_ceiling": 2,
+  "later_assessment": "Independent CFF/PDF noise pairs require a separate prospective specification; the existing CFF development input is already inspected.",
+  "qualification_resource_ceiling": {"nodes": 1, "cpus": 1, "allocation_memory_GiB": 32, "wall_seconds": 1800, "tree_RSS_cap_GiB": 24, "full_fits": 0, "outer_diagnostic_steps": 1}
+}

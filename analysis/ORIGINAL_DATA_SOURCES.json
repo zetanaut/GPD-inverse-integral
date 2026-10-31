@@ -1,0 +1,135 @@
+{
+  "source_records": [
+    {
+      "path": "GPD_three_stage_closure/runs/ideal_L0_Z1_s31/plots/curve_arrays.npz",
+      "sha256": "f30a78361c2a82242dbb11e636ab33f714e74a2e6fc1923370da76567385b1dd"
+    },
+    {
+      "path": "GPD_three_stage_closure/runs/ideal_L0_Z1_s31/SCORES.json",
+      "sha256": "732cba3e8b802416f8751bbf30df7a9b138e351a404bc868c810b1f0aaaef24c"
+    },
+    {
+      "path": "GPD_three_stage_closure/runs/exp_Re_exact_Z1_s31/plots/curve_arrays.npz",
+      "sha256": "3649506f09687c9cab4a8722e65e499bcaea10d4a1920610df47083ac555698b"
+    },
+    {
+      "path": "GPD_three_stage_closure/runs/exp_Re_exact_Z1_s31/SCORES.json",
+      "sha256": "d3d54badc8c05647ef1cb637908e24b606bed9e19ef9cde0f9ea24fb9f656b80"
+    },
+    {
+      "path": "GPD_three_stage_closure/runs/exp_Re_exact_Z1_s43/plots/curve_arrays.npz",
+      "sha256": "8ba2cdde63f640bdcd0e0f69690e4f61d0db2b4b92097342d9e9e8292519a9f6"
+    },
+    {
+      "path": "GPD_three_stage_closure/runs/exp_Re_exact_Z1_s43/SCORES.json",
+      "sha256": "a4d3b2c69028ffa612771722d1ae5199e61b332e42fe4e7b4c8dceb872ff7adc"
+    },
+    {
+      "path": "GPD_three_stage_closure/runs/exp_Re_noisy_Z1_s31/plots/curve_arrays.npz",
+      "sha256": "98b794b0124f428bd3f0af4d68897db18f1839c9f276f64b535959509c57301f"
+    },
+    {
+      "path": "GPD_three_stage_closure/runs/exp_Re_noisy_Z1_s31/SCORES.json",
+      "sha256": "4aed93f68940fe9987d3a453092dc888bc86490e54589fab6a0d9870f3a38481"
+    },
+    {
+      "path": "GPD_three_stage_closure/runs/exp_Re_noisy_Z1_s43/plots/curve_arrays.npz",
+      "sha256": "10020a7f4fd478ab4e7d70919a7476c5a2135d0c948475c45e8cf08821af27f2"
+    },
+    {
+      "path": "GPD_three_stage_closure/runs/exp_Re_noisy_Z1_s43/SCORES.json",
+      "sha256": "4a850a38dd1e56248f39594c5d0414d907bb738e991517d46e1675861aa88af8"
+    },
+    {
+      "path": "completion_runs/ReH_coherent_budget_check/Hplus_anchor_curves.csv",
+      "sha256": "f4f3d455909ff4c4ca8ca54ce30be37ef91d106b7d706e299a4d91b9d85ca8e7"
+    },
+    {
+      "path": "completion_runs/ReH_coherent_budget_check/comparison_budget_160.csv",
+      "sha256": "ba21065aea7214e7c9855736cafa113a6f27fede3242d9a3b49c81eec27dacee"
+    },
+    {
+      "path": "GPD_experimental_closeout/results/Hplus_curves.csv",
+      "sha256": "53a5a6d1dc787bf20ede32a3f79a1daadd50d6cc9d2b108dc5bee86cb8511999"
+    },
+    {
+      "path": "GPD_coherent_budget_review/results/STAGES.csv",
+      "sha256": "fa1961520afba143055d2f6a4f632b3a188f17da5cbcb3d0db2e57660d832f5c"
+    },
+    {
+      "path": "GPD_coherent_budget_review/results/HPLUS_RESPONSE.csv",
+      "sha256": "09655382c4b96ea73b26c878dac9e90d6302f8d98baf65714198c37c33c3f66f"
+    },
+    {
+      "path": "GPD_coherent_budget_review/results/CFF_RESPONSE.csv",
+      "sha256": "101f1abb049ae61efa9ed56dc657ff26eedeb7b9a9d797d592a86ca02cfd36e3"
+    },
+    {
+      "path": "GPD_program_review_20261026/EVIDENCE.json",
+      "sha256": "b2981727ec4e2c8deccd18e7bfc66e0dc2846b2c0d4b2a232de473fc567df39f"
+    },
+    {
+      "path": "GPD_P2B_exact_center_review_20261028/REVIEW_EVIDENCE.json",
+      "sha256": "516559530c8eef9531b528de9ce324ac0db24e4d83cf5a6ba6890fe278c96d44"
+    },
+    {
+      "path": "GPD_P2B_half_development_review_20261030/REVIEW_EVIDENCE.json",
+      "sha256": "3982549cf9716b26bb6db7406006ae98cc1388c50f4dcdc7583183000dcd52fe"
+    },
+    {
+      "path": "GPD_three_stage_closure/prepared/FIT_CONFIG.json",
+      "sha256": "798a7beac2c3d0524c09cb55ce2fea28d0e1c5d09a0ba3b2299f7a9b40f69517"
+    },
+    {
+      "path": "GPD_three_stage_closure/runs/ideal_L0_Z1_s31/final.pt",
+      "sha256": "f235b57a5ad877de779c9d5102e9df41833d969ba4129d5318b7c241ea9048d8"
+    },
+    {
+      "path": "completion_runs/ReH_coherent_budget_check/ensemble_mean/STAGE_20.pt",
+      "sha256": "e8b103f31d813afb86091abebc56d037ea6ba49badb197f66fb269bec14f3310"
+    },
+    {
+      "path": "completion_runs/ReH_coherent_budget_check/replica_000/STAGE_20.pt",
+      "sha256": "7622af441dc336f46f8b4e785bc5efc1b1dfc9a1d3ae70858508a39f9aaf561b"
+    },
+    {
+      "path": "completion_runs/ReH_coherent_budget_check/replica_001/STAGE_20.pt",
+      "sha256": "e718b3f833d23b35514b4b1f951f5db8c00d8510c4a550dec93ea1f16cc9d9cd"
+    },
+    {
+      "path": "GPD_three_stage_closure/closure/truths.py",
+      "sha256": "818f4340ef7874f87647d37698848f3366e8440ecf2af44cea1d1ad4139d9ce2"
+    },
+    {
+      "path": "GPD_ReH_experimental_run/gpd_reh/model.py",
+      "sha256": "a8340038b36d8f97cdd6da8dbb2c92a1d679aa7b663a028e7a966b033658885c"
+    },
+    {
+      "path": "GPD_ReH_experimental_run/gpd_reh/reference_model.py",
+      "sha256": "b6b1370ae431b2cccad96fc449c3f8407c249a90e4cb419928b8ac93dd996f95"
+    },
+    {
+      "path": "GPD_ReH_experimental_run/gpd_reh/moments.py",
+      "sha256": "7abe487d19e631680cca743d668bd61d73ce4b30bd979ad0008f220561e3311f"
+    },
+    {
+      "path": "GPD_ReH_experimental_run/gpd_reh/polynomiality_base.py",
+      "sha256": "7992b8b82d6f1d3d2c3c390e4d4b7de6b0125371371c954261ce62735953133c"
+    },
+    {
+      "path": "GPD_P2B_preparation_v3/DESIGN.json",
+      "sha256": "19b5cf90bbd6a008c968a83ef0815b6ab333d129bec6c7971da1a4ed8ce4a80d"
+    },
+    {
+      "path": "GPD_experimental_closeout/results/fit_diagnostics.csv",
+      "sha256": "91fceec274486299bc482776ac8e7aa979332eded7d43e7386f9f5c08d35d134"
+    }
+  ],
+  "operation": "copy saved plot arrays and sample existing checkpoints at Q0; no fitting, kernel rebuild or new noise",
+  "surface_coordinates": {
+    "xi": 0.275,
+    "x_points": 121,
+    "t_points": 41,
+    "Q02": 2.0
+  }
+}

@@ -1,5 +1,9 @@
 # Software and reproduction guide
 
+## Analysis and figure reproduction
+
+The complete supported path from saved numerical inputs to the six manuscript figures is in [analysis/](../analysis/README.md). It includes table calculations, coordinate-matched response diagnostics, 54 portable saved model states, and optional experimental NLO prediction replay. The [workflow map](workflows.md) connects those public commands to the underlying fitting and numerical source scripts.
+
 ## Supported local entry points
 
 The installable source uses two namespaces: `gpd_reh` for the reference field and CFF interface, and `gpd_tools` for reusable inference components. Most modules are byte-for-byte copies of the working implementation. `SOURCE_MANIFEST.json` identifies their origins and the small import/path changes in copied tests.
@@ -50,11 +54,11 @@ The [quickstart](../examples/quickstart.py) evaluates the row map and a small mo
 
 These are research workflow snapshots, not a second turnkey package. Several entry points require the original source-hashed runtime capsule, native libraries, operator/contraction caches, configurations, or saved checkpoints. Their guards and historic paths are retained. The bundled row banks replace neither those runtime dependencies nor their numerical-domain contracts. Old job submission tools are historical source; executing the quickstart or test suite does not submit cluster work.
 
-The multi-gigabyte native caches, full fit ensembles, scheduler logs, and duplicate return archives are outside this Git source distribution. Existing paper results are represented by compact reviewed evidence. The full selected-field replay therefore requires the associated run artifacts; the repository does not claim to reproduce the complete campaigns from the quickstart.
+The multi-gigabyte native caches, full optimization histories, scheduler logs, and duplicate return archives are outside this Git source distribution. Compact arrays and 54 model states now support the current manuscript figures, closure field scoring, and experimental CFF replay from a fresh checkout. Native operator reconstruction and repeating the full optimization campaigns still require the corresponding runtime assets; the [reproduction guide](../analysis/README.md) states the boundary for each command.
 
 ## Legacy compatibility
 
-The six original root scripts are preserved without changing their scientific behavior. They use the earlier single-field checkpoint schema and CFF ensemble layout. Current FiLM fields have three channels, a different conditioning contract, and fixed-scale network outputs; applying a legacy plotter directly would be incorrect. Use the current diagnostic/plotting workflow sources with their corresponding checkpoints. No automatic checkpoint conversion is claimed.
+The six original root scripts are preserved without changing their scientific behavior. They use the earlier single-field checkpoint schema and CFF ensemble layout. Current FiLM fields have three channels, a different conditioning contract, and fixed-scale network outputs; applying a legacy plotter directly would be incorrect. Use [analysis/make_figures.py](../analysis/make_figures.py) for the current plots and [analysis/replay_checkpoints.py](../analysis/replay_checkpoints.py) for current model-state evaluation. No automatic checkpoint conversion is claimed.
 
 ## Provenance and rights
 

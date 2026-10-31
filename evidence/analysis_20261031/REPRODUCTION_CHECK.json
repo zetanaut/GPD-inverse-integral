@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "input_files_verified": 81,
+  "figures": 6,
+  "checkpoint_replay": true,
+  "operations": [
+    "saved-result analysis",
+    "figure generation",
+    "saved-checkpoint evaluation"
+  ],
+  "no_training": true,
+  "no_new_noise": true
+}

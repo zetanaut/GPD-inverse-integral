@@ -1,0 +1,5 @@
+# Preserve byte hashes of frozen analysis inputs, including original CSV CRLFs.
+analysis/data/** -text
+analysis/config/** -text
+analysis/checkpoints/** -text
+*.csv whitespace=cr-at-eol
